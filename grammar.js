@@ -48,6 +48,22 @@ module.exports = grammar({
     [$.print_statement, $.output_item],
     // label_statement: identifier ':' vs identifier followed by ':' as terminator
     [$.label_statement, $._terminator],
+    // inline_if vs block_if: 'If expr Then' could start either
+    [$.inline_if_statement, $.block_if_statement],
+    // case_condition vs expression overlap
+    [$.case_condition, $.expression],
+    // new_expression vs expression ambiguity in with_statement (With New ...)
+    [$.expression, $.new_expression],
+    // inline_statement has member_access_expression overlapping with expression
+    [$.expression, $.inline_statement],
+    // else_clause body is optional, causing ambiguity at end of block
+    [$.else_clause],
+    // case_else_clause body is optional, causing ambiguity at end of block
+    [$.case_else_clause],
+    // case_clause body is optional, causing ambiguity at end of block
+    [$.case_clause],
+    // elseif_clause body is optional, causing ambiguity at end of block
+    [$.elseif_clause],
   ],
 
   rules: {
@@ -428,14 +444,153 @@ module.exports = grammar({
       $._terminator,
     ),
 
-    // Placeholder rules — replaced in Tasks 9 and 10
-    if_statement: $ => seq(kw('If'), $.expression, kw('Then'), $._terminator, kw('End'), kw('If'), $._terminator),
-    select_case_statement: $ => seq(kw('Select'), kw('Case'), $.expression, $._terminator, kw('End'), kw('Select'), $._terminator),
-    for_next_statement: $ => seq(kw('For'), $._ambiguous_identifier, '=', $.expression, kw('To'), $.expression, $._terminator, kw('Next'), $._terminator),
-    for_each_statement: $ => seq(kw('For'), kw('Each'), $._ambiguous_identifier, kw('In'), $.expression, $._terminator, kw('Next'), $._terminator),
-    while_statement: $ => seq(kw('While'), $.expression, $._terminator, kw('Wend'), $._terminator),
-    do_loop_statement: $ => seq(kw('Do'), $._terminator, kw('Loop'), $._terminator),
-    with_statement: $ => seq(kw('With'), $.expression, $._terminator, kw('End'), kw('With'), $._terminator),
+    // ── If statement (Task 9) ──
+    if_statement: $ => choice(
+      $.inline_if_statement,
+      $.block_if_statement,
+    ),
+
+    inline_if_statement: $ => prec(2, seq(
+      kw('If'),
+      field('condition', $.expression),
+      kw('Then'),
+      field('consequence', $.inline_statement),
+      optional(seq(kw('Else'), field('alternative', $.inline_statement))),
+      $._terminator,
+    )),
+
+    // inline_statement: no $._terminator (the inline_if_statement provides it)
+    inline_statement: $ => choice(
+      seq(kw('GoTo'), field('label', $._ambiguous_identifier)),
+      seq(kw('GoSub'), field('label', $._ambiguous_identifier)),
+      seq(kw('Return')),
+      seq(kw('Exit'), choice(kw('Sub'), kw('Function'), kw('Property'), kw('For'), kw('Do'))),
+      seq(kw('Resume'), optional(choice(kw('Next'), $._ambiguous_identifier))),
+      seq(kw('Stop')),
+      seq(kw('Beep')),
+      seq(kw('End')),
+      seq(kw('Set'), field('target', $._left_hand_side), '=', field('value', $.expression)),
+      seq(kw('Let'), field('target', $._left_hand_side), '=', field('value', $.expression)),
+      seq(field('target', $._left_hand_side), '=', field('value', $.expression)),
+      seq(kw('Call'), $.expression),
+      seq($.member_access_expression, optional($.argument_list_no_parens)),
+      seq($._ambiguous_identifier, optional($.argument_list_no_parens)),
+    ),
+
+    block_if_statement: $ => seq(
+      kw('If'),
+      field('condition', $.expression),
+      kw('Then'),
+      $._terminator,
+      field('consequence', optional($.block)),
+      repeat($.elseif_clause),
+      optional($.else_clause),
+      kw('End'), kw('If'),
+      $._terminator,
+    ),
+
+    elseif_clause: $ => seq(
+      choice(kw('ElseIf'), seq(kw('Else'), kw('If'))),
+      field('condition', $.expression),
+      kw('Then'),
+      $._terminator,
+      field('body', optional($.block)),
+    ),
+
+    else_clause: $ => seq(
+      kw('Else'),
+      $._terminator,
+      field('body', optional($.block)),
+    ),
+
+    // ── Select Case statement (Task 9) ──
+    select_case_statement: $ => seq(
+      kw('Select'), kw('Case'),
+      field('value', $.expression),
+      $._terminator,
+      repeat(choice($.case_clause, $.case_else_clause)),
+      kw('End'), kw('Select'),
+      $._terminator,
+    ),
+
+    case_clause: $ => seq(
+      kw('Case'),
+      commaSep1($.case_condition),
+      $._terminator,
+      field('body', optional($.block)),
+    ),
+
+    case_else_clause: $ => seq(
+      kw('Case'), kw('Else'),
+      $._terminator,
+      field('body', optional($.block)),
+    ),
+
+    case_condition: $ => choice(
+      seq(kw('Is'), choice('=', '<>', '<', '>', '<=', '>='), $.expression),
+      seq($.expression, kw('To'), $.expression),
+      $.expression,
+    ),
+
+    // ── For Next statement (Task 9) ──
+    for_next_statement: $ => seq(
+      kw('For'),
+      field('variable', $._ambiguous_identifier),
+      optional($.type_hint),
+      optional(seq(kw('As'), field('type', $.type_expression))),
+      '=',
+      field('from', $.expression),
+      kw('To'),
+      field('to', $.expression),
+      optional(seq(kw('Step'), field('step', $.expression))),
+      $._terminator,
+      field('body', optional($.block)),
+      kw('Next'),
+      optional(field('next_variable', $._ambiguous_identifier)),
+      $._terminator,
+    ),
+
+    // ── For Each statement (Task 9) ──
+    for_each_statement: $ => seq(
+      kw('For'), kw('Each'),
+      field('variable', $._ambiguous_identifier),
+      optional($.type_hint),
+      kw('In'),
+      field('collection', $.expression),
+      $._terminator,
+      field('body', optional($.block)),
+      kw('Next'),
+      optional(field('next_variable', $._ambiguous_identifier)),
+      $._terminator,
+    ),
+
+    // ── While Wend statement (Task 9) ──
+    while_statement: $ => seq(
+      kw('While'),
+      field('condition', $.expression),
+      $._terminator,
+      field('body', optional($.block)),
+      kw('Wend'),
+      $._terminator,
+    ),
+
+    // ── Do Loop statement (Task 9) ──
+    do_loop_statement: $ => choice(
+      seq(kw('Do'), $._terminator, field('body', optional($.block)), kw('Loop'), $._terminator),
+      seq(kw('Do'), choice(kw('While'), kw('Until')), field('condition', $.expression), $._terminator, field('body', optional($.block)), kw('Loop'), $._terminator),
+      seq(kw('Do'), $._terminator, field('body', optional($.block)), kw('Loop'), choice(kw('While'), kw('Until')), field('condition', $.expression), $._terminator),
+    ),
+
+    // ── With statement (Task 9) ──
+    with_statement: $ => seq(
+      kw('With'),
+      optional(kw('New')),
+      field('object', $.expression),
+      $._terminator,
+      field('body', optional($.block)),
+      kw('End'), kw('With'),
+      $._terminator,
+    ),
     goto_statement: $ => seq(kw('GoTo'), field('label', $._ambiguous_identifier), $._terminator),
     gosub_statement: $ => seq(kw('GoSub'), field('label', $._ambiguous_identifier), $._terminator),
     return_statement: $ => seq(kw('Return'), $._terminator),

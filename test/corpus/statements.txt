@@ -142,3 +142,260 @@ End Sub
                   (expression
                     (literal
                       (integer_literal))))))))))))
+
+================================================================================
+Multi-line If statement
+================================================================================
+
+Sub Main()
+    If x > 0 Then
+        y = 1
+    End If
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (if_statement
+            (block_if_statement
+              condition: (expression
+                (binary_expression
+                  left: (expression
+                    (identifier))
+                  right: (expression
+                    (literal
+                      (integer_literal)))))
+              consequence: (block
+                (statement
+                  (assignment_statement
+                    target: (identifier)
+                    value: (expression
+                      (literal
+                        (integer_literal)))))))))))))
+
+================================================================================
+If Else If statement
+================================================================================
+
+Sub Main()
+    If x > 0 Then
+        y = 1
+    ElseIf x < 0 Then
+        y = -1
+    Else
+        y = 0
+    End If
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (if_statement
+            (block_if_statement
+              condition: (expression
+                (binary_expression
+                  left: (expression
+                    (identifier))
+                  right: (expression
+                    (literal
+                      (integer_literal)))))
+              consequence: (block
+                (statement
+                  (assignment_statement
+                    target: (identifier)
+                    value: (expression
+                      (literal
+                        (integer_literal))))))
+              (elseif_clause
+                condition: (expression
+                  (binary_expression
+                    left: (expression
+                      (identifier))
+                    right: (expression
+                      (literal
+                        (integer_literal)))))
+                body: (block
+                  (statement
+                    (assignment_statement
+                      target: (identifier)
+                      value: (expression
+                        (unary_expression
+                          operand: (expression
+                            (literal
+                              (integer_literal)))))))))
+              (else_clause
+                body: (block
+                  (statement
+                    (assignment_statement
+                      target: (identifier)
+                      value: (expression
+                        (literal
+                          (integer_literal))))))))))))))
+
+================================================================================
+Select Case statement
+================================================================================
+
+Sub Main()
+    Select Case x
+        Case 1
+            y = 1
+        Case Else
+            y = 0
+    End Select
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (select_case_statement
+            value: (expression
+              (identifier))
+            (case_clause
+              (case_condition
+                (expression
+                  (literal
+                    (integer_literal))))
+              body: (block
+                (statement
+                  (assignment_statement
+                    target: (identifier)
+                    value: (expression
+                      (literal
+                        (integer_literal)))))))
+            (case_else_clause
+              body: (block
+                (statement
+                  (assignment_statement
+                    target: (identifier)
+                    value: (expression
+                      (literal
+                        (integer_literal)))))))))))))
+
+================================================================================
+For Next statement
+================================================================================
+
+Sub Main()
+    For I = 1 To 3
+        Beep
+    Next I
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (for_next_statement
+            variable: (identifier)
+            from: (expression
+              (literal
+                (integer_literal)))
+            to: (expression
+              (literal
+                (integer_literal)))
+            body: (block
+              (statement
+                (beep_statement)))
+            next_variable: (identifier)))))))
+
+================================================================================
+While Wend statement
+================================================================================
+
+Sub Main()
+    While x < 10
+        x = x + 1
+    Wend
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (while_statement
+            condition: (expression
+              (binary_expression
+                left: (expression
+                  (identifier))
+                right: (expression
+                  (literal
+                    (integer_literal)))))
+            body: (block
+              (statement
+                (assignment_statement
+                  target: (identifier)
+                  value: (expression
+                    (binary_expression
+                      left: (expression
+                        (identifier))
+                      right: (expression
+                        (literal
+                          (integer_literal))))))))))))))
+
+================================================================================
+Do While Loop statement
+================================================================================
+
+Sub Main()
+    Do While x < 10
+        x = x + 1
+    Loop
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (do_loop_statement
+            condition: (expression
+              (binary_expression
+                left: (expression
+                  (identifier))
+                right: (expression
+                  (literal
+                    (integer_literal)))))
+            body: (block
+              (statement
+                (assignment_statement
+                  target: (identifier)
+                  value: (expression
+                    (binary_expression
+                      left: (expression
+                        (identifier))
+                      right: (expression
+                        (literal
+                          (integer_literal))))))))))))))
