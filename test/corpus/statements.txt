@@ -399,3 +399,95 @@ End Sub
                       right: (expression
                         (literal
                           (integer_literal))))))))))))))
+
+================================================================================
+Inline If statement
+================================================================================
+
+Sub Main()
+    If x > 0 Then y = 1
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (if_statement
+            (inline_if_statement
+              condition: (expression
+                (binary_expression
+                  left: (expression
+                    (identifier))
+                  right: (expression
+                    (literal
+                      (integer_literal)))))
+              consequence: (inline_statement
+                target: (identifier)
+                value: (expression
+                  (literal
+                    (integer_literal)))))))))))
+
+================================================================================
+For Each statement
+================================================================================
+
+Sub Main()
+    For Each item In myCollection
+        Beep
+    Next
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (for_each_statement
+            variable: (identifier)
+            collection: (expression
+              (identifier))
+            body: (block
+              (statement
+                (beep_statement)))))))))
+
+================================================================================
+With statement
+================================================================================
+
+Sub Main()
+    With Text1
+        Text1.Text = "Hello"
+    End With
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (with_statement
+            object: (expression
+              (identifier))
+            body: (block
+              (statement
+                (assignment_statement
+                  target: (member_access_expression
+                    object: (expression
+                      (identifier))
+                    name: (identifier))
+                  value: (expression
+                    (literal
+                      (string_literal))))))))))))
