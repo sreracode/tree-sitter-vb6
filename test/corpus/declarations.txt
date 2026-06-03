@@ -73,3 +73,173 @@ End Sub
           (dim_statement
             name: (identifier)
             type: (type_expression)))))))
+
+================================================================================
+Property Get declaration
+================================================================================
+
+Property Get PenColor() As String
+End Property
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (property_get_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      return_type: (type_expression))))
+
+================================================================================
+Property Let declaration
+================================================================================
+
+Property Let PenColor(ByVal vNewValue As String)
+End Property
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (property_let_declaration
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (modifier)
+          name: (identifier)
+          type: (type_expression))))))
+
+================================================================================
+Property Set declaration
+================================================================================
+
+Property Set MyObject(ByVal vNewObj As Object)
+End Property
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (property_set_declaration
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (modifier)
+          name: (identifier)
+          type: (type_expression))))))
+
+================================================================================
+Type declaration
+================================================================================
+
+Type Employee
+    Name As String * 20
+    ID As Integer
+End Type
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (type_declaration
+      name: (identifier)
+      (type_member
+        name: (identifier)
+        type: (type_expression
+          (integer_literal)))
+      (type_member
+        name: (identifier)
+        type: (type_expression)))))
+
+================================================================================
+Enum declaration
+================================================================================
+
+Public Enum InterfaceColors
+    icMistyRose = &HE1E4FF&
+    icSlateGray = &H908070&
+End Enum
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (enum_declaration
+      (visibility)
+      name: (identifier)
+      (enum_member
+        name: (identifier)
+        value: (expression
+          (literal
+            (integer_literal))))
+      (enum_member
+        name: (identifier)
+        value: (expression
+          (literal
+            (integer_literal)))))))
+
+================================================================================
+Declare Sub
+================================================================================
+
+Declare Sub MessageBeep Lib "User32" (ByVal N As Long)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (declare_declaration
+      name: (identifier)
+      library: (string_literal)
+      parameters: (parameter_list
+        (parameter
+          (modifier)
+          name: (identifier)
+          type: (type_expression))))))
+
+================================================================================
+Implements declaration
+================================================================================
+
+Implements IAnimal
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (implements_declaration
+      interface: (identifier))))
+
+================================================================================
+Module-level Const
+================================================================================
+
+Public Const MAX_SIZE As Integer = 100
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (const_declaration
+      (visibility)
+      (const_declarator
+        name: (identifier)
+        type: (type_expression)
+        value: (expression
+          (literal
+            (integer_literal)))))))
+
+================================================================================
+DefInt declaration
+================================================================================
+
+DefInt A-Z
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (deftype_declaration
+      (deftype_range
+        (identifier)
+        (identifier)))))
