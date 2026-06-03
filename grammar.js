@@ -31,6 +31,23 @@ module.exports = grammar({
     [$.expression, $._left_hand_side],
     // call_expression and index_expression both match expr '(' ... ')'.
     [$.call_expression, $.index_expression],
+    // foo = ... could be assignment or call_statement with no keyword
+    [$.call_statement, $.assignment_statement],
+    // foo: could be label or call/assignment starting with identifier
+    [$.assignment_statement, $.label_statement],
+    [$.call_statement, $.label_statement],
+    // Static Foo ... could be sub_declaration or dim_statement
+    [$.sub_declaration, $.dim_statement],
+    // member_access_expression could be start of call_statement or expression
+    [$.expression, $.call_statement],
+    // block repeat ambiguity
+    [$.block],
+    // On Error GoTo conflicts with On expr GoTo (on_goto uses expr which can be Error-as-identifier)
+    [$.on_error_statement, $._ambiguous_identifier],
+    // print_statement has optional file_number prefix which conflicts with output_list
+    [$.print_statement, $.output_item],
+    // label_statement: identifier ':' vs identifier followed by ':' as terminator
+    [$.label_statement, $._terminator],
   ],
 
   rules: {
@@ -164,11 +181,67 @@ module.exports = grammar({
 
     block: $ => repeat1(choice($.statement, $._newline)),
 
-    // Placeholder statement — expanded in Task 8
     statement: $ => choice(
-      $.dim_statement,
       $.assignment_statement,
+      $.let_statement,
       $.set_statement,
+      $.call_statement,
+      $.dim_statement,
+      $.redim_statement,
+      $.const_statement,
+      $.if_statement,
+      $.select_case_statement,
+      $.for_next_statement,
+      $.for_each_statement,
+      $.while_statement,
+      $.do_loop_statement,
+      $.with_statement,
+      $.goto_statement,
+      $.gosub_statement,
+      $.return_statement,
+      $.on_error_statement,
+      $.on_goto_statement,
+      $.on_gosub_statement,
+      $.resume_statement,
+      $.exit_statement,
+      $.label_statement,
+      $.raise_event_statement,
+      $.mid_statement,
+      $.lset_statement,
+      $.rset_statement,
+      $.open_statement,
+      $.close_statement,
+      $.print_statement,
+      $.write_statement,
+      $.input_statement,
+      $.line_input_statement,
+      $.get_statement,
+      $.put_statement,
+      $.seek_statement,
+      $.beep_statement,
+      $.stop_statement,
+      $.end_statement,
+      $.kill_statement,
+      $.name_statement,
+      $.chdir_statement,
+      $.chdrive_statement,
+      $.mkdir_statement,
+      $.rmdir_statement,
+      $.filecopy_statement,
+      $.date_statement,
+      $.time_statement,
+      $.load_statement,
+      $.unload_statement,
+      $.randomize_statement,
+      $.erase_statement,
+      $.lock_statement,
+      $.unlock_statement,
+      $.send_keys_statement,
+      $.app_activate_statement,
+      $.save_setting_statement,
+      $.delete_setting_statement,
+      $.error_statement,
+      $.reset_statement,
     ),
 
     subscripts: $ => commaSep1($.subscript),
@@ -249,14 +322,14 @@ module.exports = grammar({
       ')',
     )),
 
-    call_expression: $ => prec(9, seq(
+    call_expression: $ => prec(10, seq(
       field('function', $.expression),
       '(',
-      optional(commaSep($.argument)),
+      optional(field('arguments', $.argument_list)),
       ')',
     )),
 
-    argument_list: $ => commaSep($.argument),
+    argument_list: $ => commaSep1($.argument),
 
     argument: $ => choice(
       // Named argument: foo := expr
@@ -288,6 +361,134 @@ module.exports = grammar({
       field('value', $.expression),
       $._terminator,
     ),
+
+    let_statement: $ => seq(
+      kw('Let'),
+      field('target', $._left_hand_side),
+      '=',
+      field('value', $.expression),
+      $._terminator,
+    ),
+
+    call_statement: $ => choice(
+      seq(kw('Call'), field('call', $.expression), $._terminator),
+      seq(
+        field('call', choice($.member_access_expression, $._ambiguous_identifier)),
+        optional(field('arguments', $.argument_list_no_parens)),
+        $._terminator,
+      ),
+    ),
+
+    argument_list_no_parens: $ => commaSep1($.argument),
+
+    const_statement: $ => seq(
+      kw('Const'),
+      commaSep1($.const_declarator),
+      $._terminator,
+    ),
+
+    redim_statement: $ => seq(
+      kw('ReDim'),
+      optional(kw('Preserve')),
+      commaSep1($.redim_declarator),
+      $._terminator,
+    ),
+
+    redim_declarator: $ => seq(
+      field('name', $._ambiguous_identifier),
+      optional($.type_hint),
+      '(',
+      field('dimensions', $.subscripts),
+      ')',
+      optional(seq(kw('As'), field('type', $.type_expression))),
+    ),
+
+    exit_statement: $ => seq(
+      kw('Exit'),
+      choice(kw('Sub'), kw('Function'), kw('Property'), kw('For'), kw('Do')),
+      $._terminator,
+    ),
+
+    erase_statement: $ => seq(
+      kw('Erase'),
+      commaSep1(field('array', $._ambiguous_identifier)),
+      $._terminator,
+    ),
+
+    randomize_statement: $ => seq(
+      kw('Randomize'),
+      optional(field('seed', $.expression)),
+      $._terminator,
+    ),
+
+    raise_event_statement: $ => seq(
+      kw('RaiseEvent'),
+      field('event', $._ambiguous_identifier),
+      optional(seq('(', optional($.argument_list), ')')),
+      $._terminator,
+    ),
+
+    // Placeholder rules — replaced in Tasks 9 and 10
+    if_statement: $ => seq(kw('If'), $.expression, kw('Then'), $._terminator, kw('End'), kw('If'), $._terminator),
+    select_case_statement: $ => seq(kw('Select'), kw('Case'), $.expression, $._terminator, kw('End'), kw('Select'), $._terminator),
+    for_next_statement: $ => seq(kw('For'), $._ambiguous_identifier, '=', $.expression, kw('To'), $.expression, $._terminator, kw('Next'), $._terminator),
+    for_each_statement: $ => seq(kw('For'), kw('Each'), $._ambiguous_identifier, kw('In'), $.expression, $._terminator, kw('Next'), $._terminator),
+    while_statement: $ => seq(kw('While'), $.expression, $._terminator, kw('Wend'), $._terminator),
+    do_loop_statement: $ => seq(kw('Do'), $._terminator, kw('Loop'), $._terminator),
+    with_statement: $ => seq(kw('With'), $.expression, $._terminator, kw('End'), kw('With'), $._terminator),
+    goto_statement: $ => seq(kw('GoTo'), field('label', $._ambiguous_identifier), $._terminator),
+    gosub_statement: $ => seq(kw('GoSub'), field('label', $._ambiguous_identifier), $._terminator),
+    return_statement: $ => seq(kw('Return'), $._terminator),
+    on_error_statement: $ => seq(kw('On'), kw('Error'), kw('GoTo'), $._ambiguous_identifier, $._terminator),
+    on_goto_statement: $ => seq(kw('On'), $.expression, kw('GoTo'), commaSep1($._ambiguous_identifier), $._terminator),
+    on_gosub_statement: $ => seq(kw('On'), $.expression, kw('GoSub'), commaSep1($._ambiguous_identifier), $._terminator),
+    resume_statement: $ => seq(kw('Resume'), optional(choice(kw('Next'), $._ambiguous_identifier)), $._terminator),
+    label_statement: $ => seq(field('name', $._ambiguous_identifier), ':', $._terminator),
+    mid_statement: $ => prec(2, seq(kw('Mid'), '(', $.expression, ',', $.expression, optional(seq(',', $.expression)), ')', '=', $.expression, $._terminator)),
+    lset_statement: $ => seq(kw('LSet'), field('target', $._left_hand_side), '=', field('value', $.expression), $._terminator),
+    rset_statement: $ => seq(kw('RSet'), field('target', $._left_hand_side), '=', field('value', $.expression), $._terminator),
+    open_statement: $ => prec(2, seq(kw('Open'), $.expression, kw('For'), choice(kw('Append'), kw('Binary'), kw('Input'), kw('Output'), kw('Random')), optional(seq(kw('Access'), choice(kw('Read'), kw('Write'), seq(kw('Read'), kw('Write'))))), kw('As'), optional('#'), field('file_number', $.expression), optional(seq(kw('Len'), '=', field('record_length', $.expression))), $._terminator)),
+    close_statement: $ => prec(2, seq(kw('Close'), commaSep(seq(optional('#'), $.expression)), $._terminator)),
+    print_statement: $ => seq(kw('Print'), optional(seq(optional('#'), $.expression, ',')), optional($.output_list), $._terminator),
+    write_statement: $ => seq(kw('Write'), optional('#'), $.expression, ',', optional($.output_list), $._terminator),
+    input_statement: $ => prec(2, seq(kw('Input'), optional('#'), $.expression, repeat1(seq(',', field('variable', $._ambiguous_identifier))), $._terminator)),
+    line_input_statement: $ => seq(kw('Line'), kw('Input'), optional('#'), $.expression, ',', field('variable', $._ambiguous_identifier), $._terminator),
+    get_statement: $ => seq(kw('Get'), optional('#'), $.expression, ',', optional($.expression), ',', field('variable', $.expression), $._terminator),
+    put_statement: $ => seq(kw('Put'), optional('#'), $.expression, ',', optional($.expression), ',', field('data', $.expression), $._terminator),
+    seek_statement: $ => seq(kw('Seek'), optional('#'), $.expression, ',', field('position', $.expression), $._terminator),
+    beep_statement: $ => seq(kw('Beep'), $._terminator),
+    stop_statement: $ => seq(kw('Stop'), $._terminator),
+    end_statement: $ => seq(kw('End'), $._terminator),
+    kill_statement: $ => seq(kw('Kill'), field('path', $.expression), $._terminator),
+    name_statement: $ => prec(2, seq(kw('Name'), field('old_path', $.expression), kw('As'), field('new_path', $.expression), $._terminator)),
+    chdir_statement: $ => seq(kw('ChDir'), field('path', $.expression), $._terminator),
+    chdrive_statement: $ => seq(kw('ChDrive'), field('drive', $.expression), $._terminator),
+    mkdir_statement: $ => seq(kw('MkDir'), field('path', $.expression), $._terminator),
+    rmdir_statement: $ => seq(kw('RmDir'), field('path', $.expression), $._terminator),
+    filecopy_statement: $ => seq(kw('FileCopy'), field('source', $.expression), ',', field('destination', $.expression), $._terminator),
+    date_statement: $ => prec(2, seq(kw('Date'), '=', field('value', $.expression), $._terminator)),
+    time_statement: $ => prec(2, seq(kw('Time'), '=', field('value', $.expression), $._terminator)),
+    load_statement: $ => seq(kw('Load'), field('object', $.expression), $._terminator),
+    unload_statement: $ => seq(kw('Unload'), field('object', $.expression), $._terminator),
+    send_keys_statement: $ => seq(kw('SendKeys'), field('keys', $.expression), optional(seq(',', field('wait', $.expression))), $._terminator),
+    app_activate_statement: $ => seq(kw('AppActivate'), field('title', $.expression), optional(seq(',', field('wait', $.expression))), $._terminator),
+    save_setting_statement: $ => seq(kw('SaveSetting'), field('app', $.expression), ',', field('section', $.expression), ',', field('key', $.expression), ',', field('setting', $.expression), $._terminator),
+    delete_setting_statement: $ => seq(kw('DeleteSetting'), field('app', $.expression), ',', field('section', $.expression), optional(seq(',', field('key', $.expression))), $._terminator),
+    error_statement: $ => prec(2, seq(kw('Error'), field('number', $.expression), $._terminator)),
+    reset_statement: $ => prec(2, seq(kw('Reset'), $._terminator)),
+
+    output_list: $ => seq(
+      $.output_item,
+      repeat(seq(choice(';', ','), optional($.output_item))),
+    ),
+
+    output_item: $ => choice(
+      seq(choice(kw('Spc'), kw('Tab')), '(', $.expression, ')'),
+      $.expression,
+    ),
+
+    lock_statement: $ => seq(kw('Lock'), optional('#'), $.expression, optional(seq(',', optional(seq($.expression, kw('To'))), $.expression)), $._terminator),
+    unlock_statement: $ => seq(kw('Unlock'), optional('#'), $.expression, optional(seq(',', optional(seq($.expression, kw('To'))), $.expression)), $._terminator),
 
     // ── Property declarations (Task 5) ──
     property_get_declaration: $ => seq(
@@ -423,11 +624,16 @@ module.exports = grammar({
 
     dim_statement: $ => seq(
       choice(kw('Dim'), kw('Static'), kw('Public'), kw('Private')),
+      optional(kw('WithEvents')),
+      commaSep1($.variable_declarator),
+      $._terminator,
+    ),
+
+    variable_declarator: $ => seq(
       field('name', $._ambiguous_identifier),
       optional($.type_hint),
       optional(seq('(', optional($.subscripts), ')')),
       optional(seq(kw('As'), optional(kw('New')), field('type', $.type_expression))),
-      $._terminator,
     ),
 
     // ── Literals ──

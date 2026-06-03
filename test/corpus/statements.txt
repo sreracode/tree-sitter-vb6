@@ -1,0 +1,144 @@
+================================================================================
+Dim statement
+================================================================================
+
+Sub Main()
+    Dim x As Integer
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (dim_statement
+            (variable_declarator
+              name: (identifier)
+              type: (type_expression))))))))
+
+================================================================================
+Const statement in block
+================================================================================
+
+Sub Main()
+    Const MyVar = 459
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (const_statement
+            (const_declarator
+              name: (identifier)
+              value: (expression
+                (literal
+                  (integer_literal))))))))))
+
+================================================================================
+Set statement
+================================================================================
+
+Sub Main()
+    Set obj = New MyClass
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (set_statement
+            target: (identifier)
+            value: (expression
+              (new_expression
+                type: (identifier)))))))))
+
+================================================================================
+Explicit Let statement
+================================================================================
+
+Sub Main()
+    Let x = 42
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (let_statement
+            target: (identifier)
+            value: (expression
+              (literal
+                (integer_literal)))))))))
+
+================================================================================
+Call statement with Call keyword
+================================================================================
+
+Sub Main()
+    Call MsgBox("Hello")
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (call_statement
+            call: (expression
+              (index_expression
+                object: (expression
+                  (identifier))
+                (argument
+                  value: (expression
+                    (literal
+                      (string_literal))))))))))))
+
+================================================================================
+ReDim statement
+================================================================================
+
+Sub Main()
+    ReDim Preserve arr(10)
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (redim_statement
+            (redim_declarator
+              name: (identifier)
+              dimensions: (subscripts
+                (subscript
+                  (expression
+                    (literal
+                      (integer_literal))))))))))))
