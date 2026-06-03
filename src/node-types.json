@@ -1866,15 +1866,31 @@
     }
   },
   {
+    "type": "on_error_resume_next_statement",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "on_error_statement",
     "named": true,
-    "fields": {},
+    "fields": {
+      "label": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": false,
-      "required": true,
+      "required": false,
       "types": [
         {
-          "type": "identifier",
+          "type": "on_error_resume_next_statement",
           "named": true
         }
       ]
@@ -2778,6 +2794,10 @@
           "named": true
         },
         {
+          "type": "on_error_resume_next_statement",
+          "named": true
+        },
+        {
           "type": "on_error_statement",
           "named": true
         },
@@ -3307,6 +3327,10 @@
   },
   {
     "type": "/",
+    "named": false
+  },
+  {
+    "type": "0",
     "named": false
   },
   {

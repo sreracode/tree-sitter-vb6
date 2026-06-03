@@ -1288,6 +1288,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "on_error_resume_next_statement"
+        },
+        {
+          "type": "SYMBOL",
           "name": "on_goto_statement"
         },
         {
@@ -4686,6 +4690,111 @@
       ]
     },
     "on_error_statement": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "TOKEN",
+              "content": {
+                "type": "PREC",
+                "value": 1,
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[oO][nN]"
+                }
+              }
+            },
+            {
+              "type": "TOKEN",
+              "content": {
+                "type": "PREC",
+                "value": 1,
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[eE][rR][rR][oO][rR]"
+                }
+              }
+            },
+            {
+              "type": "TOKEN",
+              "content": {
+                "type": "PREC",
+                "value": 1,
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[gG][oO][tT][oO]"
+                }
+              }
+            },
+            {
+              "type": "FIELD",
+              "name": "label",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_ambiguous_identifier"
+              }
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_terminator"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "on_error_resume_next_statement"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "TOKEN",
+              "content": {
+                "type": "PREC",
+                "value": 1,
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[oO][nN]"
+                }
+              }
+            },
+            {
+              "type": "TOKEN",
+              "content": {
+                "type": "PREC",
+                "value": 1,
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[eE][rR][rR][oO][rR]"
+                }
+              }
+            },
+            {
+              "type": "TOKEN",
+              "content": {
+                "type": "PREC",
+                "value": 1,
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[gG][oO][tT][oO]"
+                }
+              }
+            },
+            {
+              "type": "STRING",
+              "value": "0"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_terminator"
+            }
+          ]
+        }
+      ]
+    },
+    "on_error_resume_next_statement": {
       "type": "SEQ",
       "members": [
         {
@@ -4717,13 +4826,20 @@
             "value": 1,
             "content": {
               "type": "PATTERN",
-              "value": "[gG][oO][tT][oO]"
+              "value": "[rR][eE][sS][uU][mM][eE]"
             }
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_ambiguous_identifier"
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 1,
+            "content": {
+              "type": "PATTERN",
+              "value": "[nN][eE][xX][tT]"
+            }
+          }
         },
         {
           "type": "SYMBOL",
@@ -8790,6 +8906,10 @@
     [
       "on_error_statement",
       "_ambiguous_identifier"
+    ],
+    [
+      "statement",
+      "on_error_statement"
     ],
     [
       "print_statement",

@@ -562,3 +562,132 @@ End Sub
                   value: (expression
                     (literal
                       (string_literal))))))))))))
+
+================================================================================
+GoTo and label
+================================================================================
+
+Sub Main()
+    GoTo LastLine
+LastLine:
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (goto_statement
+            label: (identifier)))
+        (statement
+          (label_statement
+            name: (identifier)))))))
+
+================================================================================
+GoSub and Return
+================================================================================
+
+Sub Main()
+    GoSub MyRoutine
+    Exit Sub
+MyRoutine:
+    Beep
+    Return
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (gosub_statement
+            label: (identifier)))
+        (statement
+          (exit_statement))
+        (statement
+          (label_statement
+            name: (identifier)))
+        (statement
+          (beep_statement))
+        (statement
+          (return_statement))))))
+
+================================================================================
+On Error GoTo
+================================================================================
+
+Sub Main()
+    On Error GoTo ErrHandler
+    Exit Sub
+ErrHandler:
+    Resume Next
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (on_error_statement
+            label: (identifier)))
+        (statement
+          (exit_statement))
+        (statement
+          (label_statement
+            name: (identifier)))
+        (statement
+          (resume_statement))))))
+
+================================================================================
+On Error Resume Next
+================================================================================
+
+Sub Main()
+    On Error Resume Next
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (on_error_resume_next_statement))))))
+
+================================================================================
+On GoTo
+================================================================================
+
+Sub Main()
+    On x GoTo Line1, Line2
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (on_goto_statement
+            (expression
+              (identifier))
+            (identifier)
+            (identifier)))))))

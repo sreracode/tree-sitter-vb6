@@ -44,6 +44,8 @@ module.exports = grammar({
     [$.block],
     // On Error GoTo conflicts with On expr GoTo (on_goto uses expr which can be Error-as-identifier)
     [$.on_error_statement, $._ambiguous_identifier],
+    // on_error_resume_next_statement appears in both on_error_statement and statement
+    [$.statement, $.on_error_statement],
     // print_statement has optional file_number prefix which conflicts with output_list
     [$.print_statement, $.output_item],
     // label_statement: identifier ':' vs identifier followed by ':' as terminator
@@ -216,6 +218,7 @@ module.exports = grammar({
       $.gosub_statement,
       $.return_statement,
       $.on_error_statement,
+      $.on_error_resume_next_statement,
       $.on_goto_statement,
       $.on_gosub_statement,
       $.resume_statement,
@@ -592,7 +595,16 @@ module.exports = grammar({
     goto_statement: $ => seq(kw('GoTo'), field('label', $._ambiguous_identifier), $._terminator),
     gosub_statement: $ => seq(kw('GoSub'), field('label', $._ambiguous_identifier), $._terminator),
     return_statement: $ => seq(kw('Return'), $._terminator),
-    on_error_statement: $ => seq(kw('On'), kw('Error'), kw('GoTo'), $._ambiguous_identifier, $._terminator),
+    on_error_statement: $ => choice(
+      seq(kw('On'), kw('Error'), kw('GoTo'), field('label', $._ambiguous_identifier), $._terminator),
+      $.on_error_resume_next_statement,
+      seq(kw('On'), kw('Error'), kw('GoTo'), '0', $._terminator),
+    ),
+
+    on_error_resume_next_statement: $ => seq(
+      kw('On'), kw('Error'), kw('Resume'), kw('Next'),
+      $._terminator,
+    ),
     on_goto_statement: $ => seq(kw('On'), $.expression, kw('GoTo'), commaSep1($._ambiguous_identifier), $._terminator),
     on_gosub_statement: $ => seq(kw('On'), $.expression, kw('GoSub'), commaSep1($._ambiguous_identifier), $._terminator),
     resume_statement: $ => seq(kw('Resume'), optional(choice(kw('Next'), $._ambiguous_identifier)), $._terminator),
