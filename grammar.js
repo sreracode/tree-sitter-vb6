@@ -18,6 +18,8 @@ module.exports = grammar({
   ],
 
   conflicts: $ => [
+    // _newline appears in both source_file (leading blank lines) and
+    // module_body (blank lines between declarations), causing ambiguity.
     [$.source_file, $.module_body],
   ],
 
