@@ -27,6 +27,10 @@ module.exports = grammar({
     // dim_statement uses Public/Private as leading tokens; visibility also
     // matches those tokens, so the parser needs a GLR split.
     [$.visibility, $.dim_statement],
+    // expression and _left_hand_side both match _ambiguous_identifier.
+    [$.expression, $._left_hand_side],
+    // call_expression and index_expression both match expr '(' ... ')'.
+    [$.call_expression, $.index_expression],
   ],
 
   rules: {
@@ -160,8 +164,12 @@ module.exports = grammar({
 
     block: $ => repeat1(choice($.statement, $._newline)),
 
-    // Placeholder statement — replaced in Task 8
-    statement: $ => $.dim_statement,
+    // Placeholder statement — expanded in Task 8
+    statement: $ => choice(
+      $.dim_statement,
+      $.assignment_statement,
+      $.set_statement,
+    ),
 
     subscripts: $ => commaSep1($.subscript),
     subscript: $ => seq(
@@ -169,8 +177,117 @@ module.exports = grammar({
       $.expression,
     ),
 
-    // Placeholder expression — replaced in Task 7
-    expression: $ => choice($.literal, $._ambiguous_identifier),
+    // ── Full expression hierarchy ──
+    expression: $ => choice(
+      $.literal,
+      $.new_expression,
+      $.typeof_is_expression,
+      $.addressof_expression,
+      $.parenthesized_expression,
+      $.unary_expression,
+      $.binary_expression,
+      $.member_access_expression,
+      $.index_expression,
+      $.call_expression,
+      $._ambiguous_identifier,
+    ),
+
+    new_expression: $ => seq(
+      kw('New'),
+      field('type', $._ambiguous_identifier),
+    ),
+
+    typeof_is_expression: $ => prec.right(1, seq(
+      kw('TypeOf'),
+      field('object', $.expression),
+      kw('Is'),
+      field('type', $._ambiguous_identifier),
+    )),
+
+    addressof_expression: $ => prec.right(0, seq(
+      kw('AddressOf'),
+      field('procedure', $.expression),
+    )),
+
+    parenthesized_expression: $ => seq('(', $.expression, ')'),
+
+    unary_expression: $ => prec(8, seq(
+      field('operator', choice(kw('Not'), '-', '+')),
+      field('operand', $.expression),
+    )),
+
+    binary_expression: $ => {
+      const table = [
+        [7,  '^'],
+        [6,  choice('*', '/', '\\', kw('Mod'))],
+        [5,  choice('+', '-')],
+        [4,  '&'],
+        [3,  choice('=', '<>', '<', '>', '<=', '>=', kw('Is'), kw('Like'))],
+        [2,  kw('And')],
+        [1,  choice(kw('Or'), kw('Xor'))],
+        [0,  choice(kw('Eqv'), kw('Imp'))],
+      ];
+      return choice(...table.map(([precedence, op]) =>
+        prec.left(precedence, seq(
+          field('left', $.expression),
+          field('operator', op),
+          field('right', $.expression),
+        ))
+      ));
+    },
+
+    member_access_expression: $ => prec.left(10, seq(
+      field('object', $.expression),
+      '.',
+      field('name', $._ambiguous_identifier),
+    )),
+
+    index_expression: $ => prec(9, seq(
+      field('object', $.expression),
+      '(',
+      commaSep1($.argument),
+      ')',
+    )),
+
+    call_expression: $ => prec(9, seq(
+      field('function', $.expression),
+      '(',
+      optional(commaSep($.argument)),
+      ')',
+    )),
+
+    argument_list: $ => commaSep($.argument),
+
+    argument: $ => choice(
+      // Named argument: foo := expr
+      seq(field('keyword', $.identifier), ':=', optional(field('value', $.expression))),
+      // Positional with modifier: ByVal expr or ByRef expr
+      seq(choice(kw('ByVal'), kw('ByRef')), field('value', $.expression)),
+      // Plain expression
+      field('value', $.expression),
+    ),
+
+    _left_hand_side: $ => choice(
+      $.member_access_expression,
+      $.index_expression,
+      $._ambiguous_identifier,
+    ),
+
+    // ── Assignment and Set statements ──
+    assignment_statement: $ => seq(
+      field('target', $._left_hand_side),
+      '=',
+      field('value', $.expression),
+      $._terminator,
+    ),
+
+    set_statement: $ => seq(
+      kw('Set'),
+      field('target', $._left_hand_side),
+      '=',
+      field('value', $.expression),
+      $._terminator,
+    ),
 
     // ── Property declarations (Task 5) ──
     property_get_declaration: $ => seq(

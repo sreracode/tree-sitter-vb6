@@ -1,0 +1,252 @@
+================================================================================
+String literal
+================================================================================
+
+Sub Main()
+    x = "hello"
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (assignment_statement
+            target: (identifier)
+            value: (expression
+              (literal
+                (string_literal)))))))))
+
+================================================================================
+Integer literal
+================================================================================
+
+Sub Main()
+    x = 42
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (assignment_statement
+            target: (identifier)
+            value: (expression
+              (literal
+                (integer_literal)))))))))
+
+================================================================================
+Boolean literal
+================================================================================
+
+Sub Main()
+    x = True
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (assignment_statement
+            target: (identifier)
+            value: (expression
+              (literal
+                (boolean_literal)))))))))
+
+================================================================================
+Member access expression
+================================================================================
+
+Sub Main()
+    x = obj.Property
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (assignment_statement
+            target: (identifier)
+            value: (expression
+              (member_access_expression
+                object: (expression
+                  (identifier))
+                name: (identifier)))))))))
+
+================================================================================
+Call expression
+================================================================================
+
+Sub Main()
+    x = Len("hello")
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (assignment_statement
+            target: (identifier)
+            value: (expression
+              (index_expression
+                object: (expression
+                  (identifier))
+                (argument
+                  value: (expression
+                    (literal
+                      (string_literal))))))))))))
+
+================================================================================
+Binary expression addition
+================================================================================
+
+Sub Main()
+    x = a + b
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (assignment_statement
+            target: (identifier)
+            value: (expression
+              (binary_expression
+                left: (expression
+                  (identifier))
+                right: (expression
+                  (identifier))))))))))
+
+================================================================================
+Comparison expression
+================================================================================
+
+Sub Main()
+    x = a > b
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (assignment_statement
+            target: (identifier)
+            value: (expression
+              (binary_expression
+                left: (expression
+                  (identifier))
+                right: (expression
+                  (identifier))))))))))
+
+================================================================================
+Unary Not expression
+================================================================================
+
+Sub Main()
+    x = Not flag
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (assignment_statement
+            target: (identifier)
+            value: (expression
+              (unary_expression
+                operand: (expression
+                  (identifier))))))))))
+
+================================================================================
+New expression
+================================================================================
+
+Sub Main()
+    Set obj = New MyClass
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (set_statement
+            target: (identifier)
+            value: (expression
+              (new_expression
+                type: (identifier)))))))))
+
+================================================================================
+Parenthesized expression
+================================================================================
+
+Sub Main()
+    x = (a + b) * c
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (assignment_statement
+            target: (identifier)
+            value: (expression
+              (binary_expression
+                left: (expression
+                  (parenthesized_expression
+                    (expression
+                      (binary_expression
+                        left: (expression
+                          (identifier))
+                        right: (expression
+                          (identifier))))))
+                right: (expression
+                  (identifier))))))))))
