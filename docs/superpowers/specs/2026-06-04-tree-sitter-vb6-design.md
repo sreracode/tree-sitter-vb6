@@ -8,7 +8,7 @@
 Build `tree-sitter-vb6`: a tree-sitter parser for Visual Basic 6.0 targeting static analysis and migration tooling use cases.
 
 **Sources:**
-- Scaffold: `../tree-sitter-vb-dotnet/` (project files, helpers)
+- Scaffold: `../tree-sitter-vb6/` (project files, helpers)
 - Grammar reference: `../proleap-vb6-parser/src/main/antlr4/io/proleap/vb6/VisualBasic6.g4`
 - Test inputs: `../proleap-vb6-parser/src/test/resources/` (`.cls` files)
 
@@ -19,7 +19,7 @@ Build `tree-sitter-vb6`: a tree-sitter parser for Visual Basic 6.0 targeting sta
 | Use case | Static analysis + migration tooling | Needs precise structure and full VB6 fidelity |
 | File scope | `.cls` and `.bas` only | Skip `.frm` form designer `BEGIN...END` blocks |
 | Node naming | `snake_case` (tree-sitter convention) | Ecosystem compatibility; renaming later is mechanical |
-| Approach | Hybrid: vb-dotnet scaffold + helpers, grammar written fresh | Avoids VB.NET assumption leaks and ANTLR4 impedance mismatch |
+| Approach | Hybrid: vb6 scaffold + helpers, grammar written fresh | Avoids VB6 assumption leaks and ANTLR4 impedance mismatch |
 | Tests | Convert proleap `.cls` files to tree-sitter corpus format | Maximum coverage from proven VB6 examples |
 
 ## Project Structure
@@ -48,7 +48,7 @@ tree-sitter-vb6/
         └── declarations.txt
 ```
 
-Scaffold files copied from `tree-sitter-vb-dotnet` with `vb_dotnet` → `vb6` substitution throughout.
+Scaffold files copied from `tree-sitter-vb6` with `vb6` → `vb6` substitution throughout.
 
 ## Grammar Architecture
 
@@ -133,7 +133,7 @@ Binary operator precedence (high to low): `^` → `* / \ Mod` → `+ -` → `&` 
 
 Unary operators (`Not`, `-`, `+`) handled separately in `unary_expression`.
 
-### Helpers (from vb-dotnet)
+### Helpers (from vb6)
 
 - `kw(word)` — case-insensitive keyword token with precedence
 - `ci(keyword)` — builds case-insensitive regex
@@ -211,7 +211,7 @@ Proleap `.tree` files used as **semantic reference only** — not copied verbati
 
 | Phase | Work |
 |---|---|
-| 1 — Scaffold | Copy + rename vb-dotnet project files; init grammar.js skeleton |
+| 1 — Scaffold | Copy + rename vb6 project files; init grammar.js skeleton |
 | 2 — Module structure | `source_file`, `module_header`, `attribute_statement`, `module_options`, `module_body` |
 | 3 — Declarations | `sub_declaration`, `function_declaration`, `property_*`, `type_declaration`, `enum_declaration`, `declare_declaration` |
 | 4 — Core statements | `dim`, `assignment`, `let`, `set`, `call`, `if`, `select_case`, `for_next`, `for_each`, `while`, `do_loop`, `with`, `exit` |

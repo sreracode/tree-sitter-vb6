@@ -2,14 +2,14 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build a tree-sitter parser for Visual Basic 6.0 targeting static analysis and migration tooling, by combining tree-sitter-vb-dotnet's project scaffold with a fresh grammar derived from the proleap VB6 ANTLR4 grammar.
+**Goal:** Build a tree-sitter parser for Visual Basic 6.0 targeting static analysis and migration tooling, by combining tree-sitter-vb6's project scaffold with a fresh grammar derived from the proleap VB6 ANTLR4 grammar.
 
-**Architecture:** Copy non-generated scaffold files from `../tree-sitter-vb-dotnet/` and rename all `vb_dotnet` identifiers to `vb6`. Write `grammar.js` from scratch using `../proleap-vb6-parser/src/main/antlr4/io/proleap/vb6/VisualBasic6.g4` as the language spec. Build incrementally: add grammar rules, generate parser, add corpus test, verify green, commit.
+**Architecture:** Copy non-generated scaffold files from `../tree-sitter-vb6/` and rename all `vb6` identifiers to `vb6`. Write `grammar.js` from scratch using `../proleap-vb6-parser/src/main/antlr4/io/proleap/vb6/VisualBasic6.g4` as the language spec. Build incrementally: add grammar rules, generate parser, add corpus test, verify green, commit.
 
 **Tech Stack:** tree-sitter-cli ^0.25.x, Node.js ≥18, grammar.js (tree-sitter PEG DSL), C compiler for `src/parser.c` generation.
 
 **Reference paths** (absolute, used throughout this plan):
-- `DOTNET=/Users/asteroid/Code/tree-sitter-vb-dotnet`
+- `DOTNET=/Users/asteroid/Code/tree-sitter-vb6`
 - `VB6=/Users/asteroid/Code/tree-sitter-vb6`
 - `PROLEAP=/Users/asteroid/Code/proleap-vb6-parser`
 
@@ -41,7 +41,7 @@
 
 ---
 
-## Task 1: Copy and rename scaffold from tree-sitter-vb-dotnet
+## Task 1: Copy and rename scaffold from tree-sitter-vb6
 
 **Files:**
 - Create: all project config files (package.json, Cargo.toml, etc.)
@@ -50,7 +50,7 @@
 - [ ] **Step 1: Copy non-generated files**
 
 ```bash
-DOTNET=/Users/asteroid/Code/tree-sitter-vb-dotnet
+DOTNET=/Users/asteroid/Code/tree-sitter-vb6
 VB6=/Users/asteroid/Code/tree-sitter-vb6
 
 cp -r $DOTNET/bindings $VB6/
@@ -70,21 +70,21 @@ cp $DOTNET/.gitattributes $VB6/
 # Do NOT copy grammar.js (write fresh) or src/ (generated)
 ```
 
-- [ ] **Step 2: Rename all vb_dotnet identifiers to vb6**
+- [ ] **Step 2: Rename all vb6 identifiers to vb6**
 
 ```bash
 VB6=/Users/asteroid/Code/tree-sitter-vb6
 
 # Rename all string occurrences in file contents
-find $VB6 -type f -not -path '*/.git/*' | xargs grep -l "vb.dotnet\|vb_dotnet\|VbDotnet\|TreeSitterVbDotnet\|tree-sitter-vb-dotnet\|VB\.NET\|vb-dotnet" | while read f; do
+find $VB6 -type f -not -path '*/.git/*' | xargs grep -l "vb.dotnet\|vb6\|Vb6\|TreeSitterVb6\|tree-sitter-vb6\|VB\.NET\|vb6" | while read f; do
   sed -i '' \
-    -e 's/tree-sitter-vb-dotnet/tree-sitter-vb6/g' \
-    -e 's/tree_sitter_vb_dotnet/tree_sitter_vb6/g' \
-    -e 's/vb_dotnet/vb6/g' \
-    -e 's/VbDotnet/Vb6/g' \
-    -e 's/TreeSitterVbDotnet/TreeSitterVb6/g' \
+    -e 's/tree-sitter-vb6/tree-sitter-vb6/g' \
+    -e 's/tree_sitter_vb6/tree_sitter_vb6/g' \
+    -e 's/vb6/vb6/g' \
+    -e 's/Vb6/Vb6/g' \
+    -e 's/TreeSitterVb6/TreeSitterVb6/g' \
     -e 's/VB\.NET/VB6/g' \
-    -e 's/vb-dotnet/vb6/g' \
+    -e 's/vb6/vb6/g' \
     "$f"
 done
 ```
@@ -95,8 +95,8 @@ done
 VB6=/Users/asteroid/Code/tree-sitter-vb6
 
 # Rename node binding file if it has the language name
-find $VB6/bindings -name "*vb-dotnet*" -o -name "*vb_dotnet*" | while read f; do
-  newf=$(echo "$f" | sed -e 's/vb-dotnet/vb6/g' -e 's/vb_dotnet/vb6/g')
+find $VB6/bindings -name "*vb6*" -o -name "*vb6*" | while read f; do
+  newf=$(echo "$f" | sed -e 's/vb6/vb6/g' -e 's/vb6/vb6/g')
   mv "$f" "$newf"
 done
 ```
@@ -149,7 +149,7 @@ touch $VB6/queries/highlights.scm $VB6/queries/locals.scm
 ```bash
 cd /Users/asteroid/Code/tree-sitter-vb6
 git add -A
-git commit -m "feat: copy and rename scaffold from tree-sitter-vb-dotnet"
+git commit -m "feat: copy and rename scaffold from tree-sitter-vb6"
 ```
 
 ---
@@ -2679,7 +2679,7 @@ tree-sitter parse your_file.cls
 ## Grammar sources
 
 - Grammar spec reference: [proleap-vb6-parser](https://github.com/uwol/proleap-vb6-parser) ANTLR4 grammar
-- Project scaffold: [tree-sitter-vb-dotnet](https://github.com/CodeAnt-AI/tree-sitter-vb-dotnet)
+- Project scaffold: [tree-sitter-vb6](https://github.com/CodeAnt-AI/tree-sitter-vb6)
 
 ## Development
 
