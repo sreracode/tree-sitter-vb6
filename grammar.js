@@ -537,7 +537,6 @@ module.exports = grammar({
       kw('For'),
       field('variable', $._ambiguous_identifier),
       optional($.type_hint),
-      optional(seq(kw('As'), field('type', $.type_expression))),
       '=',
       field('from', $.expression),
       kw('To'),
@@ -584,7 +583,6 @@ module.exports = grammar({
     // ── With statement (Task 9) ──
     with_statement: $ => seq(
       kw('With'),
-      optional(kw('New')),
       field('object', $.expression),
       $._terminator,
       field('body', optional($.block)),

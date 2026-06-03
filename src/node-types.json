@@ -1120,16 +1120,6 @@
           }
         ]
       },
-      "type": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "type_expression",
-            "named": true
-          }
-        ]
-      },
       "variable": {
         "multiple": false,
         "required": true,
