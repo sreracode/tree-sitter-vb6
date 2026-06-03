@@ -1,0 +1,75 @@
+================================================================================
+Empty Sub declaration
+================================================================================
+
+Sub Main()
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list))))
+
+================================================================================
+Private Sub
+================================================================================
+
+Private Sub Command1_Click()
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      (visibility)
+      name: (identifier)
+      parameters: (parameter_list))))
+
+================================================================================
+Function with return type
+================================================================================
+
+Function Add(ByVal a As Integer, ByVal b As Integer) As Integer
+End Function
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (function_declaration
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (modifier)
+          name: (identifier)
+          type: (type_expression))
+        (parameter
+          (modifier)
+          name: (identifier)
+          type: (type_expression)))
+      return_type: (type_expression))))
+
+================================================================================
+Sub with body
+================================================================================
+
+Sub Greet()
+    Dim x As Integer
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (dim_statement
+            name: (identifier)
+            type: (type_expression)))))))

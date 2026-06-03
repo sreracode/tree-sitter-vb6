@@ -21,6 +21,9 @@ module.exports = grammar({
     // _newline appears in both source_file (leading blank lines) and
     // module_body (blank lines between declarations), causing ambiguity.
     [$.source_file, $.module_body],
+    // type_expression ends with _ambiguous_identifier, causing ambiguity
+    // when parsing type annotations vs bare identifiers.
+    [$.type_expression, $._ambiguous_identifier],
   ],
 
   rules: {
@@ -99,9 +102,74 @@ module.exports = grammar({
       )
     ),
 
-    // ── Placeholder declarations (replaced in Tasks 4-6) ──
-    sub_declaration: $ => seq(kw('Sub'), field('name', $.identifier), '(', ')', $._terminator, kw('End'), kw('Sub'), $._terminator),
-    function_declaration: $ => seq(kw('Function'), field('name', $.identifier), '(', ')', $._terminator, kw('End'), kw('Function'), $._terminator),
+    // ── Visibility ──
+    visibility: $ => choice(kw('Public'), kw('Private'), kw('Friend')),
+
+    // ── Sub and Function declarations ──
+    sub_declaration: $ => seq(
+      optional($.visibility),
+      optional(kw('Static')),
+      kw('Sub'),
+      field('name', $._ambiguous_identifier),
+      field('parameters', $.parameter_list),
+      $._terminator,
+      optional(field('body', $.block)),
+      kw('End'), kw('Sub'),
+      $._terminator,
+    ),
+
+    function_declaration: $ => seq(
+      optional($.visibility),
+      optional(kw('Static')),
+      kw('Function'),
+      field('name', $._ambiguous_identifier),
+      field('parameters', $.parameter_list),
+      optional(seq(kw('As'), field('return_type', $.type_expression))),
+      $._terminator,
+      optional(field('body', $.block)),
+      kw('End'), kw('Function'),
+      $._terminator,
+    ),
+
+    parameter_list: $ => seq('(', commaSep($.parameter), ')'),
+
+    parameter: $ => seq(
+      optional(kw('Optional')),
+      optional($.modifier),
+      field('name', $._ambiguous_identifier),
+      optional($.type_hint),
+      optional(seq('(', optional($.subscripts), ')')),
+      optional(seq(kw('As'), optional(kw('New')), field('type', $.type_expression))),
+      optional(seq('=', field('default', $.expression))),
+    ),
+
+    modifier: $ => choice(kw('ByVal'), kw('ByRef'), kw('ParamArray')),
+
+    type_expression: $ => choice(
+      kw('Boolean'), kw('Byte'),    kw('Integer'), kw('Long'),
+      kw('Single'),  kw('Double'),  kw('Currency'), kw('Date'),
+      kw('String'),  kw('Object'),  kw('Variant'),  kw('Any'),
+      seq(kw('String'), '*', choice($.integer_literal, $.identifier)),
+      $._ambiguous_identifier,
+    ),
+
+    type_hint: $ => /[$%&!#@]/,
+
+    block: $ => repeat1(choice($.statement, $._newline)),
+
+    // Placeholder statement — replaced in Task 8
+    statement: $ => $.dim_statement,
+
+    subscripts: $ => commaSep1($.subscript),
+    subscript: $ => seq(
+      optional(seq($.expression, kw('To'))),
+      $.expression,
+    ),
+
+    // Placeholder expression — replaced in Task 7
+    expression: $ => choice($.literal, $._ambiguous_identifier),
+
+    // ── Placeholder declarations (replaced in Tasks 5-6) ──
     property_get_declaration: $ => seq(kw('Property'), kw('Get'), field('name', $.identifier), '(', ')', $._terminator, kw('End'), kw('Property'), $._terminator),
     property_set_declaration: $ => seq(kw('Property'), kw('Set'), field('name', $.identifier), '(', ')', $._terminator, kw('End'), kw('Property'), $._terminator),
     property_let_declaration: $ => seq(kw('Property'), kw('Let'), field('name', $.identifier), '(', ')', $._terminator, kw('End'), kw('Property'), $._terminator),
@@ -110,7 +178,14 @@ module.exports = grammar({
     enum_declaration: $ => seq(kw('Enum'), field('name', $.identifier), $._terminator, kw('End'), kw('Enum'), $._terminator),
     event_declaration: $ => seq(kw('Event'), field('name', $.identifier), '(', ')', $._terminator),
     const_declaration: $ => seq(kw('Const'), field('name', $.identifier), '=', $.integer_literal, $._terminator),
-    dim_statement: $ => seq(kw('Dim'), field('name', $.identifier), $._terminator),
+    dim_statement: $ => seq(
+      choice(kw('Dim'), kw('Static'), kw('Public'), kw('Private')),
+      field('name', $._ambiguous_identifier),
+      optional($.type_hint),
+      optional(seq('(', optional($.subscripts), ')')),
+      optional(seq(kw('As'), optional(kw('New')), field('type', $.type_expression))),
+      $._terminator,
+    ),
     deftype_declaration: $ => seq(kw('DefInt'), /[A-Za-z]/, $._terminator),
     implements_declaration: $ => seq(kw('Implements'), field('interface', $.identifier), $._terminator),
 
