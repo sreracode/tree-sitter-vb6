@@ -5,7 +5,8 @@ Tree-sitter grammar for Visual Basic 6.0, targeting static analysis and migratio
 ## Installation
 
 ```bash
-pip install tree-sitter tree-sitter-vb6
+pip install tree-sitter
+pip install git+https://github.com/Comet0322/tree-sitter-vb6.git
 ```
 
 ## Usage
