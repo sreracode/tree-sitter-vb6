@@ -6,7 +6,7 @@
       "camelcase": "Vb6",
       "title": "VB6",
       "scope": "source.vb6",
-      "file-types": ["bas", "cls"],
+      "file-types": ["bas", "cls", "frm"],
       "injection-regex": "^vb6$",
       "class-name": "TreeSitterVb6"
     }
@@ -19,7 +19,7 @@
       { "name": "tree-sitter-vb6 contributors" }
     ],
     "links": {
-      "repository": "https://github.com/tree-sitter/tree-sitter-vb6"
+      "repository": "https://github.com/Comet0322/tree-sitter-vb6"
     }
   },
   "bindings": {

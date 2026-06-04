@@ -24,6 +24,14 @@
 ; Labels
 (label_statement name: (identifier) @label)
 
+; Operators
+(binary_expression operator: _ @operator)
+(unary_expression operator: _ @operator)
+
+; Punctuation
+["(" ")"] @punctuation.bracket
+["," "."] @punctuation.delimiter
+
 ; Comments
 (comment) @comment
 
