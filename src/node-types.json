@@ -2037,11 +2037,6 @@
     }
   },
   {
-    "type": "option_statement",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "output_item",
     "named": true,
     "fields": {},
@@ -2859,10 +2854,6 @@
         },
         {
           "type": "open_statement",
-          "named": true
-        },
-        {
-          "type": "option_statement",
           "named": true
         },
         {

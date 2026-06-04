@@ -554,14 +554,18 @@ End Sub
               (identifier))
             body: (block
               (statement
-                (assignment_statement
-                  target: (member_access_expression
-                    object: (expression
-                      (identifier))
-                    name: (identifier))
-                  value: (expression
-                    (literal
-                      (string_literal))))))))))))
+                (call_statement
+                  call: (identifier)
+                  arguments: (argument_list_no_parens
+                    (argument
+                      value: (expression
+                        (binary_expression
+                          left: (expression
+                            (with_member_access_expression
+                              name: (identifier)))
+                          right: (expression
+                            (literal
+                              (string_literal))))))))))))))))
 
 ================================================================================
 GoTo and label
@@ -761,19 +765,26 @@ End Sub
       body: (block
         (statement
           (print_statement
-            (expression
-              (literal
-                (integer_literal)))
             (output_list
+              (output_item
+                (expression
+                  (file_number_expression
+                    (expression
+                      (literal
+                        (integer_literal))))))
               (output_item
                 (expression
                   (literal
                     (string_literal)))))))
         (statement
           (print_statement
-            (expression
-              (literal
-                (integer_literal)))))))))
+            (output_list
+              (output_item
+                (expression
+                  (file_number_expression
+                    (expression
+                      (literal
+                        (integer_literal)))))))))))))
 
 ================================================================================
 Write statement

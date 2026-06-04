@@ -1293,10 +1293,6 @@
         {
           "type": "SYMBOL",
           "name": "reset_statement"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "option_statement"
         }
       ]
     },

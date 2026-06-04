@@ -271,7 +271,6 @@ module.exports = grammar({
       $.delete_setting_statement,
       $.error_statement,
       $.reset_statement,
-      $.option_statement,
     ),
 
     subscripts: $ => commaSep1($.subscript),
