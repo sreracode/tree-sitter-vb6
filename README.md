@@ -42,6 +42,44 @@ parser.setLanguage(VB6);
 const tree = parser.parse(sourceCode);
 ```
 
+### Neovim (nvim-treesitter)
+
+1. Register the parser in your nvim-treesitter config (e.g. `after/plugin/treesitter.lua`):
+
+```lua
+vim.opt.runtimepath:append("/path/to/tree-sitter-vb6")
+
+local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+parser_config.vb6 = {
+  install_info = {
+    url = "/path/to/tree-sitter-vb6",
+    files = { "src/parser.c" },
+    generate_requires_npm = false,
+    requires_generate_from_grammar = false,
+  },
+  filetype = "vb6",
+}
+
+vim.filetype.add({
+  extension = {
+    bas = "vb6",
+    frm = "vb6",
+    cls = "vb6",
+  },
+})
+```
+
+2. Install the parser:
+
+```
+:TSInstall vb6
+```
+
+> **Note:** The parser must be compiled with ABI 14 for current nvim-treesitter versions.
+> Run `npx tree-sitter generate --abi 14` if you see an ABI mismatch error.
+
+> **Note:** Mapping `.cls` overrides other filetypes (Java, C#). Remove `cls = "vb6"` if this causes conflicts and use `:set ft=vb6` manually instead.
+
 ## Development
 
 ```bash
