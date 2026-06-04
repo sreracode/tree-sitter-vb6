@@ -250,3 +250,63 @@ End Sub
                           (identifier))))))
                 right: (expression
                   (identifier))))))))))
+
+================================================================================
+String literal with escaped double quotes
+================================================================================
+
+Sub Main()
+    x = "say ""hello"" now"
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (assignment_statement
+            target: (identifier)
+            value: (expression
+              (literal
+                (string_literal)))))))))
+
+================================================================================
+String literal with hash and HTML content
+================================================================================
+
+Sub Main()
+    x = "<div id=""main"" style=""color:#ff0000"">"
+    y = "file #1 opened"
+    z = "date: #2024/01/01#"
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (assignment_statement
+            target: (identifier)
+            value: (expression
+              (literal
+                (string_literal)))))
+        (statement
+          (assignment_statement
+            target: (identifier)
+            value: (expression
+              (literal
+                (string_literal)))))
+        (statement
+          (assignment_statement
+            target: (identifier)
+            value: (expression
+              (literal
+                (string_literal)))))))))
