@@ -2,27 +2,42 @@
 
 Tree-sitter grammar for Visual Basic 6.0, targeting static analysis and migration tooling.
 
+## Status
+
+- **82/82** corpus tests passing
+- **192/197** [proleap-vb6-parser](https://github.com/uwol/proleap-vb6-parser) integration files parse clean (5 remaining failures are intentional skips: `Circle` graphics, compound assignment `I -= 1`, and invalid VB6 constructs)
+
 ## Supported file types
 
 - `.cls` — Class modules
 - `.bas` — Standard modules
+- `.frm` — Form files (including `Begin VB.Form ... End` control blocks)
 
 ## Features
 
-- Full module structure: `VERSION` header, `Attribute`, `Option` directives
+- Full module structure: `VERSION` header, `Attribute`, `Option` directives, `.frm` form blocks
 - Declarations: `Sub`, `Function`, `Property Get/Let/Set`, `Type`, `Enum`, `Declare`, `Event`, `Const`, `Dim`, `Implements`, `DefType`
 - Expressions: binary/unary operators, member access, call/index, `New`, `TypeOf`, `AddressOf`
-- Statements: assignment, `Let`, `Set`, `Call`, `ReDim`, `If`/`ElseIf`/`Else`, `Select Case`, `For`/`For Each`, `While`/`Wend`, `Do`/`Loop`, `With`, `GoTo`, `GoSub`, `On Error`, `Resume`, all file I/O statements
+- Statements: assignment, `Let`, `Set`, `Call`, `ReDim`, `If`/`ElseIf`/`Else`, `Select Case`, `For`/`For Each`, `While`/`Wend`, `Do`/`Loop`, `With`, `GoTo`, `GoSub`, `On Error` (including `On Local Error`), `Resume`, all file I/O statements
 - Dot-prefix member access inside `With` blocks (`.Property = value`)
-- File number expressions (`#n`) for I/O statements
-
-## Known limitations
-
-- `Circle` graphics statement (special `(x,y),radius` syntax not implemented)
-- `#If Win32 Then ... #End If` macro conditionals produce partial parses
-- Dot-prefix `With` access works but `with_member_access_expression` is a separate node type from `member_access_expression`
+- `Me` keyword, dotted type names (e.g. `VB.CommandButton`), `On Local Error GoTo`
 
 ## Usage
+
+### Python
+
+```bash
+pip install tree-sitter tree-sitter-vb6
+```
+
+```python
+from tree_sitter import Language, Parser
+import tree_sitter_vb6
+
+parser = Parser(Language(tree_sitter_vb6.language()))
+tree = parser.parse(b"Public Sub Hello()\n    MsgBox \"Hello\"\nEnd Sub\n")
+print(tree.root_node.sexp())
+```
 
 ### CLI
 
@@ -80,12 +95,25 @@ vim.filetype.add({
 
 > **Note:** Mapping `.cls` overrides other filetypes (Java, C#). Remove `cls = "vb6"` if this causes conflicts and use `:set ft=vb6` manually instead.
 
+## Known limitations
+
+- `Circle` graphics statement (special `(x,y),radius` syntax)
+- `#If Win32 Then ... #End If` conditional compilation directives
+- VB6 keywords (`Sub`, `If`, `Dim`, etc.) are not syntax-highlighted — `kw()` uses case-insensitive regex which cannot be matched by string in tree-sitter queries
+
 ## Development
 
 ```bash
 npm install
 npx tree-sitter generate
 npx tree-sitter test
+```
+
+Integration test against proleap corpus:
+
+```bash
+find test/proleap -name "*.cls" -o -name "*.bas" -o -name "*.frm" | \
+  xargs npx tree-sitter parse | grep -c ERROR || echo "0 errors"
 ```
 
 ## Grammar sources
