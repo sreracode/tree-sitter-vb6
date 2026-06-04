@@ -2,33 +2,15 @@
 
 Tree-sitter grammar for Visual Basic 6.0, targeting static analysis and migration tooling.
 
-## Status
-
-- **82/82** corpus tests passing
-- **192/197** [proleap-vb6-parser](https://github.com/uwol/proleap-vb6-parser) integration files parse clean (5 remaining failures are intentional skips: `Circle` graphics, compound assignment `I -= 1`, and invalid VB6 constructs)
-
-## Supported file types
-
-- `.cls` — Class modules
-- `.bas` — Standard modules
-- `.frm` — Form files (including `Begin VB.Form ... End` control blocks)
-
-## Features
-
-- Full module structure: `VERSION` header, `Attribute`, `Option` directives, `.frm` form blocks
-- Declarations: `Sub`, `Function`, `Property Get/Let/Set`, `Type`, `Enum`, `Declare`, `Event`, `Const`, `Dim`, `Implements`, `DefType`
-- Expressions: binary/unary operators, member access, call/index, `New`, `TypeOf`, `AddressOf`
-- Statements: assignment, `Let`, `Set`, `Call`, `ReDim`, `If`/`ElseIf`/`Else`, `Select Case`, `For`/`For Each`, `While`/`Wend`, `Do`/`Loop`, `With`, `GoTo`, `GoSub`, `On Error` (including `On Local Error`), `Resume`, all file I/O statements
-- Dot-prefix member access inside `With` blocks (`.Property = value`)
-- `Me` keyword, dotted type names (e.g. `VB.CommandButton`), `On Local Error GoTo`
-
-## Usage
-
-### Python
+## Installation
 
 ```bash
 pip install tree-sitter tree-sitter-vb6
 ```
+
+## Usage
+
+### Python
 
 ```python
 from tree_sitter import Language, Parser
@@ -39,14 +21,6 @@ tree = parser.parse(b"Public Sub Hello()\n    MsgBox \"Hello\"\nEnd Sub\n")
 print(tree.root_node.sexp())
 ```
 
-### CLI
-
-```bash
-npm install
-npx tree-sitter generate
-npx tree-sitter parse your_file.cls
-```
-
 ### Node.js
 
 ```js
@@ -55,6 +29,14 @@ const VB6 = require('tree-sitter-vb6');
 const parser = new Parser();
 parser.setLanguage(VB6);
 const tree = parser.parse(sourceCode);
+```
+
+### CLI
+
+```bash
+npm install
+npx tree-sitter generate
+npx tree-sitter parse your_file.cls
 ```
 
 ### Neovim (nvim-treesitter)
@@ -95,6 +77,33 @@ vim.filetype.add({
 
 > **Note:** Mapping `.cls` overrides other filetypes (Java, C#). Remove `cls = "vb6"` if this causes conflicts and use `:set ft=vb6` manually instead.
 
+## Supported file types
+
+- `.cls` — Class modules
+- `.bas` — Standard modules
+- `.frm` — Form files (including `Begin VB.Form ... End` control blocks)
+
+## Features
+
+- Full module structure: `VERSION` header, `Attribute`, `Option` directives, `.frm` form blocks
+- Declarations: `Sub`, `Function`, `Property Get/Let/Set`, `Type`, `Enum`, `Declare`, `Event`, `Const`, `Dim`, `Implements`, `DefType`
+- Expressions: binary/unary operators, member access, call/index, `New`, `TypeOf`, `AddressOf`
+- Statements: assignment, `Let`, `Set`, `Call`, `ReDim`, `If`/`ElseIf`/`Else`, `Select Case`, `For`/`For Each`, `While`/`Wend`, `Do`/`Loop`, `With`, `GoTo`, `GoSub`, `On Error` (including `On Local Error`), `Resume`, all file I/O statements
+- Dot-prefix member access inside `With` blocks (`.Property = value`)
+- `Me` keyword, dotted type names (e.g. `VB.CommandButton`), `On Local Error GoTo`
+
+## Test status
+
+- **82/82** corpus tests passing
+- **192/197** [proleap-vb6-parser](https://github.com/uwol/proleap-vb6-parser) integration files parse clean
+
+Run integration tests:
+
+```bash
+find test/proleap -name "*.cls" -o -name "*.bas" -o -name "*.frm" | \
+  xargs npx tree-sitter parse | grep -c ERROR || echo "0 errors"
+```
+
 ## Known limitations
 
 - `Circle` graphics statement (special `(x,y),radius` syntax)
@@ -107,13 +116,6 @@ vim.filetype.add({
 npm install
 npx tree-sitter generate
 npx tree-sitter test
-```
-
-Integration test against proleap corpus:
-
-```bash
-find test/proleap -name "*.cls" -o -name "*.bas" -o -name "*.frm" | \
-  xargs npx tree-sitter parse | grep -c ERROR || echo "0 errors"
 ```
 
 ## Grammar sources
