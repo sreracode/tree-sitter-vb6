@@ -94,7 +94,7 @@ vim.filetype.add({
 
 ## Test status
 
-- **82/82** corpus tests passing
+- **84/84** corpus tests passing
 - **192/197** [proleap-vb6-parser](https://github.com/uwol/proleap-vb6-parser) integration files parse clean
 
 Run integration tests:
@@ -118,7 +118,9 @@ npx tree-sitter generate
 npx tree-sitter test
 ```
 
-## Grammar sources
+## References
 
-- Language spec reference: [proleap-vb6-parser](https://github.com/uwol/proleap-vb6-parser) ANTLR4 grammar
-- Project scaffold: [tree-sitter-vb-dotnet](https://github.com/CodeAnt-AI/tree-sitter-vb-dotnet)
+This project is based on and references:
+
+- [tree-sitter-vb-dotnet](https://github.com/CodeAnt-AI/tree-sitter-vb-dotnet) — project scaffold and binding structure
+- [proleap-vb6-parser](https://github.com/uwol/proleap-vb6-parser) — VB6 ANTLR4 grammar used as language spec reference and integration test corpus
