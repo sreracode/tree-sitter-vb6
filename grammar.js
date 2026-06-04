@@ -66,6 +66,14 @@ module.exports = grammar({
     [$.case_clause],
     // elseif_clause body is optional, causing ambiguity at end of block
     [$.elseif_clause],
+    // module_body now accepts statement, which includes dim_statement and const_statement
+    [$.module_body, $.statement],
+    // const_declaration (module-level) vs const_statement (block-level) both match 'Const ...'
+    [$.const_statement, $.const_declaration],
+    // module_options repeat conflict when option_statement also in statement
+    [$.module_options],
+    // module_body used inside compiler_directive, repeat ambiguity
+    [$.module_body],
   ],
 
   rules: {
@@ -140,6 +148,8 @@ module.exports = grammar({
         $.dim_statement,
         $.deftype_declaration,
         $.implements_declaration,
+        $.compiler_directive,
+        $.statement,
         $._newline,
       )
     ),
@@ -153,7 +163,7 @@ module.exports = grammar({
       optional(kw('Static')),
       kw('Sub'),
       field('name', $._ambiguous_identifier),
-      field('parameters', $.parameter_list),
+      optional(field('parameters', $.parameter_list)),
       $._terminator,
       optional(field('body', $.block)),
       kw('End'), kw('Sub'),
@@ -165,7 +175,7 @@ module.exports = grammar({
       optional(kw('Static')),
       kw('Function'),
       field('name', $._ambiguous_identifier),
-      field('parameters', $.parameter_list),
+      optional(field('parameters', $.parameter_list)),
       optional(seq(kw('As'), field('return_type', $.type_expression))),
       $._terminator,
       optional(field('body', $.block)),
@@ -261,6 +271,7 @@ module.exports = grammar({
       $.delete_setting_statement,
       $.error_statement,
       $.reset_statement,
+      $.option_statement,
     ),
 
     subscripts: $ => commaSep1($.subscript),
@@ -279,10 +290,21 @@ module.exports = grammar({
       $.unary_expression,
       $.binary_expression,
       $.member_access_expression,
+      $.with_member_access_expression,
       $.index_expression,
       $.call_expression,
+      $.file_number_expression,
       $._ambiguous_identifier,
     ),
+
+    // File number expression: #n — used as argument to Input(), LOF(), etc.
+    file_number_expression: $ => prec(11, seq('#', $.expression)),
+
+    // Dot-prefix member access used inside With blocks: .Property or .Method(args)
+    with_member_access_expression: $ => prec.left(10, seq(
+      '.',
+      field('name', $._ambiguous_identifier),
+    )),
 
     new_expression: $ => seq(
       kw('New'),
@@ -337,7 +359,7 @@ module.exports = grammar({
     index_expression: $ => prec(9, seq(
       field('object', $.expression),
       '(',
-      commaSep1($.argument),
+      seq($.argument, repeat(seq(',', optional($.argument)))),
       ')',
     )),
 
@@ -348,11 +370,14 @@ module.exports = grammar({
       ')',
     )),
 
-    argument_list: $ => commaSep1($.argument),
+    argument_list: $ => seq(
+      $.argument,
+      repeat(seq(',', optional($.argument))),
+    ),
 
     argument: $ => choice(
-      // Named argument: foo := expr
-      seq(field('keyword', $.identifier), ':=', optional(field('value', $.expression))),
+      // Named argument: foo := expr  (keyword can be a reserved word used as name)
+      prec(1, seq(field('keyword', $._ambiguous_identifier), ':=', optional(field('value', $.expression)))),
       // Positional with modifier: ByVal expr or ByRef expr
       seq(choice(kw('ByVal'), kw('ByRef')), field('value', $.expression)),
       // Plain expression
@@ -361,6 +386,7 @@ module.exports = grammar({
 
     _left_hand_side: $ => choice(
       $.member_access_expression,
+      $.with_member_access_expression,
       $.index_expression,
       $._ambiguous_identifier,
     ),
@@ -398,7 +424,10 @@ module.exports = grammar({
       ),
     ),
 
-    argument_list_no_parens: $ => commaSep1($.argument),
+    argument_list_no_parens: $ => seq(
+      $.argument,
+      repeat(seq(',', optional($.argument))),
+    ),
 
     const_statement: $ => seq(
       kw('Const'),
@@ -641,6 +670,31 @@ module.exports = grammar({
     delete_setting_statement: $ => seq(kw('DeleteSetting'), $.argument, ',', $.argument, optional(seq(',', $.argument)), $._terminator),
     error_statement: $ => prec(2, seq(kw('Error'), field('number', $.expression), $._terminator)),
     reset_statement: $ => prec(2, seq(kw('Reset'), $._terminator)),
+    option_statement: $ => prec(2, seq(
+      kw('Option'),
+      choice(
+        kw('Explicit'),
+        seq(kw('Base'), /[01]/),
+        seq(kw('Compare'), choice(kw('Binary'), kw('Text'))),
+        seq(kw('Private'), kw('Module')),
+      ),
+      $._terminator,
+    )),
+
+    // Conditional compilation directives (#If/#ElseIf/#Else/#End If)
+    compiler_directive: $ => seq(
+      '#',
+      choice(
+        seq(
+          kw('If'), $.expression, kw('Then'), $._terminator,
+          optional($.module_body),
+          repeat(seq('#', kw('ElseIf'), $.expression, kw('Then'), $._terminator, optional($.module_body))),
+          optional(seq('#', kw('Else'), $._terminator, optional($.module_body))),
+          '#', kw('End'), kw('If'), $._terminator,
+        ),
+        seq(kw('Const'), field('name', $.identifier), '=', field('value', $.expression), $._terminator),
+      ),
+    ),
 
     output_list: $ => seq(
       $.output_item,
@@ -649,6 +703,7 @@ module.exports = grammar({
 
     output_item: $ => choice(
       seq(choice(kw('Spc'), kw('Tab')), '(', $.expression, ')'),
+      seq(choice(kw('Spc'), kw('Tab'))),
       $.expression,
     ),
 
@@ -709,7 +764,7 @@ module.exports = grammar({
       $._terminator,
     ),
 
-    type_declaration: $ => seq(
+    type_declaration: $ => prec(2, seq(
       optional($.visibility),
       kw('Type'),
       field('name', $._ambiguous_identifier),
@@ -717,7 +772,7 @@ module.exports = grammar({
       repeat1($.type_member),
       kw('End'), kw('Type'),
       $._terminator,
-    ),
+    )),
 
     type_member: $ => seq(
       field('name', $._ambiguous_identifier),
@@ -727,7 +782,7 @@ module.exports = grammar({
       $._terminator,
     ),
 
-    enum_declaration: $ => seq(
+    enum_declaration: $ => prec(2, seq(
       optional($.visibility),
       kw('Enum'),
       field('name', $._ambiguous_identifier),
@@ -735,7 +790,7 @@ module.exports = grammar({
       repeat1($.enum_member),
       kw('End'), kw('Enum'),
       $._terminator,
-    ),
+    )),
 
     enum_member: $ => seq(
       field('name', $._ambiguous_identifier),
@@ -743,13 +798,13 @@ module.exports = grammar({
       $._terminator,
     ),
 
-    event_declaration: $ => seq(
+    event_declaration: $ => prec(2, seq(
       optional($.visibility),
       kw('Event'),
       field('name', $._ambiguous_identifier),
       field('parameters', $.parameter_list),
       $._terminator,
-    ),
+    )),
 
     const_declaration: $ => seq(
       optional($.visibility),
@@ -871,7 +926,7 @@ module.exports = grammar({
 // ──────────────── helpers ────────────────
 
 function kw(word) {
-  return token(prec(1, ci(word)));
+  return token(ci(word));
 }
 
 function commaSep(rule) {
