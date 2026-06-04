@@ -74,12 +74,20 @@ module.exports = grammar({
     [$.module_options],
     // module_body used inside compiler_directive, repeat ambiguity
     [$.module_body],
+    // module_header's optional(module_config) vs source_file's optional(form_block): both start with Begin
+    [$.module_header],
+    // _newline in module_options (blank lines between options) conflicts with source_file and module_body
+    [$.source_file, $.module_options, $.module_body],
+    [$.source_file, $.module_options],
+    [$.module_options, $.module_body],
   ],
 
   rules: {
     source_file: $ => seq(
       repeat($._newline),
       optional($.module_header),
+      repeat($.object_declaration),
+      optional($.form_block),
       repeat($.attribute_statement),
       optional($.module_options),
       optional($.module_body),
@@ -104,9 +112,39 @@ module.exports = grammar({
     module_config_element: $ => seq(
       field('name', $._ambiguous_identifier),
       '=',
+      optional('-'),
       field('value', $.literal),
       $._terminator,
     ),
+
+    object_declaration: $ => seq(
+      kw('Object'),
+      '=',
+      $.string_literal,
+      ';',
+      $.string_literal,
+      $._terminator,
+    ),
+
+    form_block: $ => seq(
+      kw('Begin'),
+      field('type', $.dotted_name),
+      field('name', $._ambiguous_identifier),
+      $._terminator,
+      repeat(choice($.form_property, $.form_block, $._newline)),
+      kw('End'),
+      $._terminator,
+    ),
+
+    form_property: $ => seq(
+      field('name', $._left_hand_side),
+      '=',
+      optional('-'),
+      field('value', choice($.frx_reference, $.literal)),
+      $._terminator,
+    ),
+
+    frx_reference: $ => token(seq('"', /[^"\r\n]*/, '"', ':', /[0-9A-Fa-f]+/)),
 
     attribute_statement: $ => seq(
       kw('Attribute'),
@@ -122,14 +160,17 @@ module.exports = grammar({
     ),
 
     module_options: $ => repeat1(
-      seq(
-        choice(
-          seq(kw('Option'), kw('Explicit')),
-          seq(kw('Option'), kw('Base'), /[01]/),
-          seq(kw('Option'), kw('Compare'), choice(kw('Binary'), kw('Text'))),
-          seq(kw('Option'), kw('Private'), kw('Module')),
+      choice(
+        seq(
+          choice(
+            seq(kw('Option'), kw('Explicit')),
+            seq(kw('Option'), kw('Base'), /[01]/),
+            seq(kw('Option'), kw('Compare'), choice(kw('Binary'), kw('Text'))),
+            seq(kw('Option'), kw('Private'), kw('Module')),
+          ),
+          $._terminator,
         ),
-        $._terminator,
+        $._newline,
       )
     ),
 
@@ -202,6 +243,7 @@ module.exports = grammar({
       kw('Single'),  kw('Double'),  kw('Currency'), kw('Date'),
       kw('String'),  kw('Object'),  kw('Variant'),  kw('Any'),
       seq(kw('String'), '*', choice($.integer_literal, $.identifier)),
+      seq($._ambiguous_identifier, repeat1(seq('.', $._ambiguous_identifier))),
       $._ambiguous_identifier,
     ),
 
@@ -417,7 +459,7 @@ module.exports = grammar({
     call_statement: $ => choice(
       seq(kw('Call'), field('call', $.expression), $._terminator),
       seq(
-        field('call', choice($.member_access_expression, $._ambiguous_identifier)),
+        field('call', choice($.member_access_expression, $.with_member_access_expression, $._ambiguous_identifier)),
         optional(field('arguments', $.argument_list_no_parens)),
         $._terminator,
       ),
@@ -624,9 +666,9 @@ module.exports = grammar({
     gosub_statement: $ => seq(kw('GoSub'), field('label', $._ambiguous_identifier), $._terminator),
     return_statement: $ => seq(kw('Return'), $._terminator),
     on_error_statement: $ => choice(
-      seq(kw('On'), kw('Error'), kw('GoTo'), field('label', $._ambiguous_identifier), $._terminator),
+      seq(kw('On'), optional(kw('Local')), kw('Error'), kw('GoTo'), field('label', $._ambiguous_identifier), $._terminator),
       $.on_error_resume_next_statement,
-      seq(kw('On'), kw('Error'), kw('GoTo'), '0', $._terminator),
+      seq(kw('On'), optional(kw('Local')), kw('Error'), kw('GoTo'), '0', $._terminator),
     ),
 
     on_error_resume_next_statement: $ => seq(
@@ -768,7 +810,7 @@ module.exports = grammar({
       kw('Type'),
       field('name', $._ambiguous_identifier),
       $._terminator,
-      repeat1($.type_member),
+      repeat1(choice($.type_member, $._newline)),
       kw('End'), kw('Type'),
       $._terminator,
     )),
@@ -907,6 +949,7 @@ module.exports = grammar({
       alias(kw('Type'),  $.identifier),
       alias(kw('Enum'),  $.identifier),
       alias(kw('Event'), $.identifier),
+      alias(kw('Me'),    $.identifier),
     ),
 
     identifier: $ => token(/[A-Za-z_][A-Za-z_0-9]*[$%&!#@]?/),

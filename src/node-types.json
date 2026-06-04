@@ -360,6 +360,10 @@
           {
             "type": "member_access_expression",
             "named": true
+          },
+          {
+            "type": "with_member_access_expression",
+            "named": true
           }
         ]
       }
@@ -1189,6 +1193,88 @@
     }
   },
   {
+    "type": "form_block",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "dotted_name",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "form_block",
+          "named": true
+        },
+        {
+          "type": "form_property",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "form_property",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "index_expression",
+            "named": true
+          },
+          {
+            "type": "member_access_expression",
+            "named": true
+          },
+          {
+            "type": "with_member_access_expression",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "frx_reference",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "function_declaration",
     "named": true,
     "fields": {
@@ -1929,6 +2015,21 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "object_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "string_literal",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -2678,6 +2779,10 @@
           "named": true
         },
         {
+          "type": "form_block",
+          "named": true
+        },
+        {
           "type": "module_body",
           "named": true
         },
@@ -2687,6 +2792,10 @@
         },
         {
           "type": "module_options",
+          "named": true
+        },
+        {
+          "type": "object_declaration",
           "named": true
         }
       ]
@@ -3061,7 +3170,7 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "type_member",
@@ -3079,7 +3188,7 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "types": [
         {
@@ -3451,6 +3560,10 @@
   },
   {
     "type": "float_literal",
+    "named": true
+  },
+  {
+    "type": "frx_reference",
     "named": true
   },
   {
