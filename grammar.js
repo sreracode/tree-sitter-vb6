@@ -612,15 +612,15 @@ module.exports = grammar({
     mid_statement: $ => prec(2, seq(kw('Mid'), '(', $.expression, ',', $.expression, optional(seq(',', $.expression)), ')', '=', $.expression, $._terminator)),
     lset_statement: $ => seq(kw('LSet'), field('target', $._left_hand_side), '=', field('value', $.expression), $._terminator),
     rset_statement: $ => seq(kw('RSet'), field('target', $._left_hand_side), '=', field('value', $.expression), $._terminator),
-    open_statement: $ => prec(2, seq(kw('Open'), $.expression, kw('For'), choice(kw('Append'), kw('Binary'), kw('Input'), kw('Output'), kw('Random')), optional(seq(kw('Access'), choice(kw('Read'), kw('Write'), seq(kw('Read'), kw('Write'))))), kw('As'), optional('#'), field('file_number', $.expression), optional(seq(kw('Len'), '=', field('record_length', $.expression))), $._terminator)),
-    close_statement: $ => prec(2, seq(kw('Close'), commaSep(seq(optional('#'), $.expression)), $._terminator)),
-    print_statement: $ => seq(kw('Print'), optional(seq(optional('#'), $.expression, ',')), optional($.output_list), $._terminator),
-    write_statement: $ => seq(kw('Write'), optional('#'), $.expression, ',', optional($.output_list), $._terminator),
-    input_statement: $ => prec(2, seq(kw('Input'), optional('#'), $.expression, repeat1(seq(',', field('variable', $._ambiguous_identifier))), $._terminator)),
-    line_input_statement: $ => seq(kw('Line'), kw('Input'), optional('#'), $.expression, ',', field('variable', $._ambiguous_identifier), $._terminator),
-    get_statement: $ => seq(kw('Get'), optional('#'), $.expression, ',', optional($.expression), ',', field('variable', $.expression), $._terminator),
-    put_statement: $ => seq(kw('Put'), optional('#'), $.expression, ',', optional($.expression), ',', field('data', $.expression), $._terminator),
-    seek_statement: $ => seq(kw('Seek'), optional('#'), $.expression, ',', field('position', $.expression), $._terminator),
+    open_statement: $ => prec(2, seq(kw('Open'), $.expression, kw('For'), choice(kw('Append'), kw('Binary'), kw('Input'), kw('Output'), kw('Random')), optional(seq(kw('Access'), choice(kw('Read'), kw('Write'), seq(kw('Read'), kw('Write'))))), optional(choice(kw('Shared'), seq(kw('Lock'), choice(kw('Read'), kw('Write'), seq(kw('Read'), kw('Write')))))), kw('As'), '#', field('file_number', $.expression), optional(seq(kw('Len'), '=', field('record_length', $.expression))), $._terminator)),
+    close_statement: $ => prec(2, seq(kw('Close'), optional(commaSep1(seq('#', $.expression))), $._terminator)),
+    print_statement: $ => seq(kw('Print'), optional(seq('#', $.expression, ',')), optional($.output_list), $._terminator),
+    write_statement: $ => seq(kw('Write'), '#', $.expression, ',', optional($.output_list), $._terminator),
+    input_statement: $ => prec(2, seq(kw('Input'), '#', $.expression, repeat1(seq(',', field('variable', $._ambiguous_identifier))), $._terminator)),
+    line_input_statement: $ => seq(kw('Line'), kw('Input'), '#', $.expression, ',', field('variable', $._ambiguous_identifier), $._terminator),
+    get_statement: $ => seq(kw('Get'), '#', $.expression, ',', optional($.expression), ',', field('variable', $.expression), $._terminator),
+    put_statement: $ => seq(kw('Put'), '#', $.expression, ',', optional($.expression), ',', field('data', $.expression), $._terminator),
+    seek_statement: $ => seq(kw('Seek'), '#', $.expression, ',', field('position', $.expression), $._terminator),
     beep_statement: $ => seq(kw('Beep'), $._terminator),
     stop_statement: $ => seq(kw('Stop'), $._terminator),
     end_statement: $ => seq(kw('End'), $._terminator),
@@ -637,8 +637,8 @@ module.exports = grammar({
     unload_statement: $ => seq(kw('Unload'), field('object', $.expression), $._terminator),
     send_keys_statement: $ => seq(kw('SendKeys'), field('keys', $.expression), optional(seq(',', field('wait', $.expression))), $._terminator),
     app_activate_statement: $ => seq(kw('AppActivate'), field('title', $.expression), optional(seq(',', field('wait', $.expression))), $._terminator),
-    save_setting_statement: $ => seq(kw('SaveSetting'), field('app', $.expression), ',', field('section', $.expression), ',', field('key', $.expression), ',', field('setting', $.expression), $._terminator),
-    delete_setting_statement: $ => seq(kw('DeleteSetting'), field('app', $.expression), ',', field('section', $.expression), optional(seq(',', field('key', $.expression))), $._terminator),
+    save_setting_statement: $ => seq(kw('SaveSetting'), $.argument, ',', $.argument, ',', $.argument, ',', $.argument, $._terminator),
+    delete_setting_statement: $ => seq(kw('DeleteSetting'), $.argument, ',', $.argument, optional(seq(',', $.argument)), $._terminator),
     error_statement: $ => prec(2, seq(kw('Error'), field('number', $.expression), $._terminator)),
     reset_statement: $ => prec(2, seq(kw('Reset'), $._terminator)),
 
@@ -652,8 +652,8 @@ module.exports = grammar({
       $.expression,
     ),
 
-    lock_statement: $ => seq(kw('Lock'), optional('#'), $.expression, optional(seq(',', optional(seq($.expression, kw('To'))), $.expression)), $._terminator),
-    unlock_statement: $ => seq(kw('Unlock'), optional('#'), $.expression, optional(seq(',', optional(seq($.expression, kw('To'))), $.expression)), $._terminator),
+    lock_statement: $ => seq(kw('Lock'), '#', $.expression, optional(seq(',', optional(seq($.expression, kw('To'))), $.expression)), $._terminator),
+    unlock_statement: $ => seq(kw('Unlock'), '#', $.expression, optional(seq(',', optional(seq($.expression, kw('To'))), $.expression)), $._terminator),
 
     // ── Property declarations (Task 5) ──
     property_get_declaration: $ => seq(
@@ -833,7 +833,7 @@ module.exports = grammar({
 
     string_literal: $ => token(seq('"', repeat(choice(/[^"\r\n]/, '""')), '"')),
 
-    date_literal: $ => token(seq('#', /[^#\r\n]+/, '#')),
+    date_literal: $ => token(seq('#', /[^#\r\n]*[A-Za-z\/\-:][^#\r\n]*/, '#')),
 
     // ── ambiguous identifier: identifier OR keyword-as-identifier ──
     _ambiguous_identifier: $ => choice(

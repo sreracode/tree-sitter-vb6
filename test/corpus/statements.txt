@@ -691,3 +691,810 @@ End Sub
               (identifier))
             (identifier)
             (identifier)))))))
+
+================================================================================
+Open statement
+================================================================================
+
+Sub Main()
+    Open "TESTFILE" For Input As #1
+    Close #1
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (open_statement
+            (expression
+              (literal
+                (string_literal)))
+            file_number: (expression
+              (literal
+                (integer_literal)))))
+        (statement
+          (close_statement
+            (expression
+              (literal
+                (integer_literal)))))))))
+
+================================================================================
+Close statement (no args)
+================================================================================
+
+Sub Main()
+    Close
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (close_statement))))))
+
+================================================================================
+Print statement
+================================================================================
+
+Sub Main()
+    Print #1, "Hello"
+    Print #1,
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (print_statement
+            (expression
+              (literal
+                (integer_literal)))
+            (output_list
+              (output_item
+                (expression
+                  (literal
+                    (string_literal)))))))
+        (statement
+          (print_statement
+            (expression
+              (literal
+                (integer_literal)))))))))
+
+================================================================================
+Write statement
+================================================================================
+
+Sub Main()
+    Write #1, "Hello World", 234
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (write_statement
+            (expression
+              (literal
+                (integer_literal)))
+            (output_list
+              (output_item
+                (expression
+                  (literal
+                    (string_literal))))
+              (output_item
+                (expression
+                  (literal
+                    (integer_literal)))))))))))
+
+================================================================================
+Input statement
+================================================================================
+
+Sub Main()
+    Input #1, MyString, MyNumber
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (input_statement
+            (expression
+              (literal
+                (integer_literal)))
+            variable: (identifier)
+            variable: (identifier)))))))
+
+================================================================================
+Line Input statement
+================================================================================
+
+Sub Main()
+    Line Input #1, TextLine
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (line_input_statement
+            (expression
+              (literal
+                (integer_literal)))
+            variable: (identifier)))))))
+
+================================================================================
+Get statement
+================================================================================
+
+Sub Main()
+    Get #1, Position, MyRecord
+    Get #1, , MyRecord
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (get_statement
+            (expression
+              (literal
+                (integer_literal)))
+            (expression
+              (identifier))
+            variable: (expression
+              (identifier))))
+        (statement
+          (get_statement
+            (expression
+              (literal
+                (integer_literal)))
+            variable: (expression
+              (identifier))))))))
+
+================================================================================
+Put statement
+================================================================================
+
+Sub Main()
+    Put #1, RecordNumber, MyRecord
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (put_statement
+            (expression
+              (literal
+                (integer_literal)))
+            (expression
+              (identifier))
+            data: (expression
+              (identifier))))))))
+
+================================================================================
+Seek statement
+================================================================================
+
+Sub Main()
+    Seek #1, RecordNumber
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (seek_statement
+            (expression
+              (literal
+                (integer_literal)))
+            position: (expression
+              (identifier))))))))
+
+================================================================================
+Lock and Unlock statements
+================================================================================
+
+Sub Main()
+    Lock #1, RecordNumber
+    Unlock #1, RecordNumber
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (lock_statement
+            (expression
+              (literal
+                (integer_literal)))
+            (expression
+              (identifier))))
+        (statement
+          (unlock_statement
+            (expression
+              (literal
+                (integer_literal)))
+            (expression
+              (identifier))))))))
+
+================================================================================
+Date statement
+================================================================================
+
+Sub Main()
+    Date = MyDate
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (date_statement
+            value: (expression
+              (identifier))))))))
+
+================================================================================
+Time statement
+================================================================================
+
+Sub Main()
+    Time = MyTime
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (time_statement
+            value: (expression
+              (identifier))))))))
+
+================================================================================
+FileCopy statement
+================================================================================
+
+Sub Main()
+    FileCopy SourceFile, DestinationFile
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (filecopy_statement
+            source: (expression
+              (identifier))
+            destination: (expression
+              (identifier))))))))
+
+================================================================================
+Kill statement
+================================================================================
+
+Sub Main()
+    Kill "TestFile"
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (kill_statement
+            path: (expression
+              (literal
+                (string_literal)))))))))
+
+================================================================================
+Name statement
+================================================================================
+
+Sub Main()
+    Name OldName As NewName
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (name_statement
+            old_path: (expression
+              (identifier))
+            new_path: (expression
+              (identifier))))))))
+
+================================================================================
+ChDir statement
+================================================================================
+
+Sub Main()
+    ChDir "MYDIR"
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (chdir_statement
+            path: (expression
+              (literal
+                (string_literal)))))))))
+
+================================================================================
+MkDir statement
+================================================================================
+
+Sub Main()
+    MkDir "MYDIR"
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (mkdir_statement
+            path: (expression
+              (literal
+                (string_literal)))))))))
+
+================================================================================
+RmDir statement
+================================================================================
+
+Sub Main()
+    RmDir "MYDIR"
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (rmdir_statement
+            path: (expression
+              (literal
+                (string_literal)))))))))
+
+================================================================================
+Randomize statement
+================================================================================
+
+Sub Main()
+    Randomize
+    Randomize 5
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (randomize_statement))
+        (statement
+          (randomize_statement
+            seed: (expression
+              (literal
+                (integer_literal)))))))))
+
+================================================================================
+Erase statement
+================================================================================
+
+Sub Main()
+    Erase NumArray
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (erase_statement
+            array: (identifier)))))))
+
+================================================================================
+Mid statement
+================================================================================
+
+Sub Main()
+    Mid(MyString, 5, 3) = "fox"
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (mid_statement
+            (expression
+              (identifier))
+            (expression
+              (literal
+                (integer_literal)))
+            (expression
+              (literal
+                (integer_literal)))
+            (expression
+              (literal
+                (string_literal)))))))))
+
+================================================================================
+LSet statement
+================================================================================
+
+Sub Main()
+    LSet MyString = "<-Left"
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (lset_statement
+            target: (identifier)
+            value: (expression
+              (literal
+                (string_literal)))))))))
+
+================================================================================
+RSet statement
+================================================================================
+
+Sub Main()
+    RSet MyString = "Right->"
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (rset_statement
+            target: (identifier)
+            value: (expression
+              (literal
+                (string_literal)))))))))
+
+================================================================================
+Stop statement
+================================================================================
+
+Sub Main()
+    Stop
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (stop_statement))))))
+
+================================================================================
+End statement
+================================================================================
+
+Sub Main()
+    End
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (end_statement))))))
+
+================================================================================
+Reset statement
+================================================================================
+
+Sub Main()
+    Reset
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (reset_statement))))))
+
+================================================================================
+SendKeys statement
+================================================================================
+
+Sub Main()
+    SendKeys "=", True
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (send_keys_statement
+            keys: (expression
+              (literal
+                (string_literal)))
+            wait: (expression
+              (literal
+                (boolean_literal)))))))))
+
+================================================================================
+AppActivate statement
+================================================================================
+
+Sub Main()
+    AppActivate "Microsoft Word"
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (app_activate_statement
+            title: (expression
+              (literal
+                (string_literal)))))))))
+
+================================================================================
+SaveSetting statement
+================================================================================
+
+Sub Main()
+    SaveSetting "MyApp", "Startup", "Left", 50
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (save_setting_statement
+            (argument
+              value: (expression
+                (literal
+                  (string_literal))))
+            (argument
+              value: (expression
+                (literal
+                  (string_literal))))
+            (argument
+              value: (expression
+                (literal
+                  (string_literal))))
+            (argument
+              value: (expression
+                (literal
+                  (integer_literal))))))))))
+
+================================================================================
+DeleteSetting statement
+================================================================================
+
+Sub Main()
+    DeleteSetting "MyApp", "Startup"
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (delete_setting_statement
+            (argument
+              value: (expression
+                (literal
+                  (string_literal))))
+            (argument
+              value: (expression
+                (literal
+                  (string_literal))))))))))
+
+================================================================================
+Error statement
+================================================================================
+
+Sub Main()
+    On Error Resume Next
+    Error 11
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (on_error_resume_next_statement))
+        (statement
+          (error_statement
+            number: (expression
+              (literal
+                (integer_literal)))))))))
+
+================================================================================
+Load statement
+================================================================================
+
+Sub Main()
+    Load Form1
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (load_statement
+            object: (expression
+              (identifier))))))))
+
+================================================================================
+Unload statement
+================================================================================
+
+Sub Main()
+    Unload Form1
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (unload_statement
+            object: (expression
+              (identifier))))))))
