@@ -243,13 +243,17 @@ module.exports = grammar({
 
     modifier: $ => choice(kw('ByVal'), kw('ByRef'), kw('ParamArray')),
 
-    type_expression: $ => choice(
-      kw('Boolean'), kw('Byte'),    kw('Integer'), kw('Long'),
-      kw('Single'),  kw('Double'),  kw('Currency'), kw('Date'),
-      kw('String'),  kw('Object'),  kw('Variant'),  kw('Any'),
-      seq(kw('String'), '*', choice($.integer_literal, $.identifier)),
-      seq($._ambiguous_identifier, repeat1(seq('.', $._ambiguous_identifier))),
-      $._ambiguous_identifier,
+    type_expression: $ => seq(
+      choice(
+        kw('Boolean'), kw('Byte'),    kw('Integer'), kw('Long'),
+        kw('Single'),  kw('Double'),  kw('Currency'), kw('Date'),
+        kw('String'),  kw('Object'),  kw('Variant'),  kw('Any'),
+        seq(kw('String'), '*', choice($.integer_literal, $.identifier)),
+        seq($._ambiguous_identifier, repeat1(seq('.', $._ambiguous_identifier))),
+        $._ambiguous_identifier,
+      ),
+      // Optional () suffix denotes an array return type (e.g. As String(), As Item())
+      optional(seq('(', ')')),
     ),
 
     type_hint: $ => /[$%&!#@]/,

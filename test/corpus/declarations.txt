@@ -231,6 +231,39 @@ Public Const MAX_SIZE As Integer = 100
             (integer_literal)))))))
 
 ================================================================================
+Array return type in Property Get
+================================================================================
+
+Property Get entries() As String()
+End Property
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (property_get_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      return_type: (type_expression))))
+
+================================================================================
+Array return type in Function
+================================================================================
+
+Function GetItems() As Item()
+End Function
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (function_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      return_type: (type_expression
+        (identifier)))))
+
+================================================================================
 DefInt declaration
 ================================================================================
 
