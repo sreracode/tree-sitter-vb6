@@ -258,7 +258,7 @@ module.exports = grammar({
 
     type_hint: $ => /[$%&!#@]/,
 
-    block: $ => repeat1(choice($.statement, $._newline)),
+    block: $ => repeat1(choice($.statement, $.compiler_directive, $._newline)),
 
     statement: $ => choice(
       $.assignment_statement,

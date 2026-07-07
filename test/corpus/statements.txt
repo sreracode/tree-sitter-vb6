@@ -1509,3 +1509,50 @@ End Sub
           (unload_statement
             object: (expression
               (identifier))))))))
+
+================================================================================
+Compiler directive inside Sub body
+================================================================================
+
+Sub Main()
+    #If Win32 Then
+        Beep
+    #End If
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (compiler_directive
+          (expression
+            (identifier))
+          (module_body
+            (statement
+              (beep_statement))))))))
+
+================================================================================
+#Const inside Sub body
+================================================================================
+
+Sub Main()
+    #Const DEBUG = 1
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (compiler_directive
+          name: (identifier)
+          value: (expression
+            (literal
+              (integer_literal))))))))

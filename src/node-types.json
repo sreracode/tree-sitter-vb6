@@ -259,6 +259,10 @@
       "required": false,
       "types": [
         {
+          "type": "compiler_directive",
+          "named": true
+        },
+        {
           "type": "statement",
           "named": true
         }
