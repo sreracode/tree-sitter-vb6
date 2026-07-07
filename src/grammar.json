@@ -2937,12 +2937,38 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "FIELD",
-              "name": "array",
-              "content": {
-                "type": "SYMBOL",
-                "name": "_ambiguous_identifier"
-              }
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "FIELD",
+                  "name": "array",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_ambiguous_identifier"
+                  }
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SEQ",
+                      "members": [
+                        {
+                          "type": "STRING",
+                          "value": "("
+                        },
+                        {
+                          "type": "STRING",
+                          "value": ")"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
+                }
+              ]
             },
             {
               "type": "REPEAT",
@@ -2954,12 +2980,38 @@
                     "value": ","
                   },
                   {
-                    "type": "FIELD",
-                    "name": "array",
-                    "content": {
-                      "type": "SYMBOL",
-                      "name": "_ambiguous_identifier"
-                    }
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "FIELD",
+                        "name": "array",
+                        "content": {
+                          "type": "SYMBOL",
+                          "name": "_ambiguous_identifier"
+                        }
+                      },
+                      {
+                        "type": "CHOICE",
+                        "members": [
+                          {
+                            "type": "SEQ",
+                            "members": [
+                              {
+                                "type": "STRING",
+                                "value": "("
+                              },
+                              {
+                                "type": "STRING",
+                                "value": ")"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "BLANK"
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }

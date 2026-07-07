@@ -1202,6 +1202,32 @@ End Sub
             array: (identifier)))))))
 
 ================================================================================
+Erase statement with explicit array parens
+================================================================================
+
+Sub Main()
+    Erase Files()
+    Erase arr1(), arr2, arr3()
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (erase_statement
+            array: (identifier)))
+        (statement
+          (erase_statement
+            array: (identifier)
+            array: (identifier)
+            array: (identifier)))))))
+
+================================================================================
 Mid statement
 ================================================================================
 

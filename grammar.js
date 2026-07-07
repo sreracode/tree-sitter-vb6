@@ -509,7 +509,10 @@ module.exports = grammar({
 
     erase_statement: $ => seq(
       kw('Erase'),
-      commaSep1(field('array', $._ambiguous_identifier)),
+      commaSep1(seq(
+        field('array', $._ambiguous_identifier),
+        optional(seq('(', ')')),
+      )),
       $._terminator,
     ),
 
