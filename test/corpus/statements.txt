@@ -719,8 +719,10 @@ End Sub
               (literal
                 (string_literal)))
             file_number: (expression
-              (literal
-                (integer_literal)))))
+              (file_number_expression
+                (expression
+                  (literal
+                    (integer_literal)))))))
         (statement
           (close_statement
             (expression
@@ -943,8 +945,10 @@ End Sub
         (statement
           (seek_statement
             (expression
-              (literal
-                (integer_literal)))
+              (file_number_expression
+                (expression
+                  (literal
+                    (integer_literal)))))
             position: (expression
               (identifier))))))))
 

@@ -22,7 +22,7 @@ Attribute VB_Name = "MyClass"
   (attribute_statement
     name: (dotted_name
       (identifier))
-    value: (literal
+    (literal
       (string_literal))))
 
 ================================================================================
@@ -52,6 +52,23 @@ Option Explicit
   (attribute_statement
     name: (dotted_name
       (identifier))
-    value: (literal
+    (literal
       (string_literal)))
   (module_options))
+
+================================================================================
+Attribute with multi-value (comma-separated)
+================================================================================
+
+Attribute VB_Ext_KEY = "SavedWithClassBuilder6" ,"Yes"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (attribute_statement
+    name: (dotted_name
+      (identifier))
+    (literal
+      (string_literal))
+    (literal
+      (string_literal))))

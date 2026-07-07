@@ -148,17 +148,17 @@
             "named": true
           }
         ]
-      },
-      "value": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "literal",
-            "named": true
-          }
-        ]
       }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "literal",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1554,6 +1554,10 @@
         },
         {
           "type": "member_access_expression",
+          "named": true
+        },
+        {
+          "type": "redim_declarator",
           "named": true
         }
       ]
