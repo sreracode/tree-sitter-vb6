@@ -886,8 +886,10 @@ End Sub
         (statement
           (get_statement
             (expression
-              (literal
-                (integer_literal)))
+              (file_number_expression
+                (expression
+                  (literal
+                    (integer_literal)))))
             (expression
               (identifier))
             variable: (expression
@@ -895,8 +897,10 @@ End Sub
         (statement
           (get_statement
             (expression
-              (literal
-                (integer_literal)))
+              (file_number_expression
+                (expression
+                  (literal
+                    (integer_literal)))))
             variable: (expression
               (identifier))))))))
 
@@ -919,8 +923,10 @@ End Sub
         (statement
           (put_statement
             (expression
-              (literal
-                (integer_literal)))
+              (file_number_expression
+                (expression
+                  (literal
+                    (integer_literal)))))
             (expression
               (identifier))
             data: (expression

@@ -13,7 +13,7 @@ module.exports = grammar({
 
   extras: $ => [
     $.comment,
-    /[ \t\f ]+/,
+    /[ \t\f\x00]+/,
     $._line_continuation,
   ],
 
@@ -85,6 +85,8 @@ module.exports = grammar({
     [$.print_statement, $._ambiguous_identifier],
     [$.write_statement, $._ambiguous_identifier],
     [$.line_input_statement, $._ambiguous_identifier],
+    // keyword-as-identifier followed by '(' may be call_statement or index_expression LHS
+    [$.call_statement, $.index_expression],
   ],
 
   rules: {
@@ -261,6 +263,7 @@ module.exports = grammar({
     block: $ => repeat1(choice($.statement, $.compiler_directive, $._newline)),
 
     statement: $ => choice(
+      $.array_copy_statement,
       $.assignment_statement,
       $.let_statement,
       $.set_statement,
@@ -292,6 +295,7 @@ module.exports = grammar({
       $.open_statement,
       $.close_statement,
       $.print_statement,
+      $.debug_print_statement,
       $.write_statement,
       $.input_statement,
       $.line_input_statement,
@@ -409,7 +413,7 @@ module.exports = grammar({
     index_expression: $ => prec(9, seq(
       field('object', $.expression),
       '(',
-      seq($.argument, repeat(seq(',', optional($.argument)))),
+      optional(seq($.argument, repeat(seq(',', optional($.argument))))),
       ')',
     )),
 
@@ -442,6 +446,17 @@ module.exports = grammar({
     ),
 
     // ── Assignment and Set statements ──
+    // array() = val — VB6 array copy assigns a whole array to another.
+    // The LHS `arr()` with empty parens conflicts with call_expression, so we
+    // match it as a dedicated high-precedence statement before the general form.
+    array_copy_statement: $ => prec(3, seq(
+      field('target', $._ambiguous_identifier),
+      '(', ')',
+      '=',
+      field('value', $.expression),
+      $._terminator,
+    )),
+
     assignment_statement: $ => seq(
       field('target', $._left_hand_side),
       '=',
@@ -692,17 +707,23 @@ module.exports = grammar({
     on_gosub_statement: $ => seq(kw('On'), $.expression, kw('GoSub'), commaSep1($._ambiguous_identifier), $._terminator),
     resume_statement: $ => seq(kw('Resume'), optional(choice(kw('Next'), $._ambiguous_identifier)), $._terminator),
     label_statement: $ => seq(field('name', $._ambiguous_identifier), ':', $._terminator),
-    mid_statement: $ => prec(2, seq(kw('Mid'), '(', $.expression, ',', $.expression, optional(seq(',', $.expression)), ')', '=', $.expression, $._terminator)),
+    mid_statement: $ => prec(2, seq(choice(kw('Mid'), kw('MidB'), /Mid\$/, /MidB\$/), '(', $.expression, ',', $.expression, optional(seq(',', $.expression)), ')', '=', $.expression, $._terminator)),
     lset_statement: $ => seq(kw('LSet'), field('target', $._left_hand_side), '=', field('value', $.expression), $._terminator),
     rset_statement: $ => seq(kw('RSet'), field('target', $._left_hand_side), '=', field('value', $.expression), $._terminator),
     open_statement: $ => prec(2, seq(kw('Open'), $.expression, kw('For'), choice(kw('Append'), kw('Binary'), kw('Input'), kw('Output'), kw('Random')), optional(seq(kw('Access'), choice(kw('Read'), kw('Write'), seq(kw('Read'), kw('Write'))))), optional(choice(kw('Shared'), seq(kw('Lock'), choice(kw('Read'), kw('Write'), seq(kw('Read'), kw('Write')))))), kw('As'), optional('#'), field('file_number', $.expression), optional(seq(kw('Len'), '=', field('record_length', $.expression))), $._terminator)),
     close_statement: $ => prec(2, seq(kw('Close'), optional(commaSep1(seq('#', $.expression))), $._terminator)),
     print_statement: $ => seq(kw('Print'), optional(seq('#', $.expression, ',')), optional($.output_list), $._terminator),
+    // Debug.Print arg1; arg2 — member-access form of Print with output_list
+    debug_print_statement: $ => prec(2, seq(
+      kw('Debug'), '.', kw('Print'),
+      optional($.output_list),
+      $._terminator,
+    )),
     write_statement: $ => seq(kw('Write'), '#', $.expression, ',', optional($.output_list), $._terminator),
     input_statement: $ => prec(2, seq(kw('Input'), '#', $.expression, repeat1(seq(',', field('variable', $._ambiguous_identifier))), $._terminator)),
     line_input_statement: $ => seq(kw('Line'), kw('Input'), '#', $.expression, ',', field('variable', $._ambiguous_identifier), $._terminator),
-    get_statement: $ => seq(kw('Get'), '#', $.expression, ',', optional($.expression), ',', field('variable', $.expression), $._terminator),
-    put_statement: $ => seq(kw('Put'), '#', $.expression, ',', optional($.expression), ',', field('data', $.expression), $._terminator),
+    get_statement: $ => seq(kw('Get'), optional('#'), $.expression, ',', optional($.expression), ',', field('variable', $.expression), $._terminator),
+    put_statement: $ => seq(kw('Put'), optional('#'), $.expression, ',', optional($.expression), ',', field('data', $.expression), $._terminator),
     seek_statement: $ => seq(kw('Seek'), optional('#'), $.expression, ',', field('position', $.expression), $._terminator),
     beep_statement: $ => seq(kw('Beep'), $._terminator),
     stop_statement: $ => seq(kw('Stop'), $._terminator),
@@ -841,7 +862,7 @@ module.exports = grammar({
       kw('Enum'),
       field('name', $._ambiguous_identifier),
       $._terminator,
-      repeat1($.enum_member),
+      repeat1(choice($.enum_member, $._newline)),
       kw('End'), kw('Enum'),
       $._terminator,
     )),
@@ -968,6 +989,7 @@ module.exports = grammar({
       alias(kw('Line'),  $.identifier),
       alias(kw('Write'), $.identifier),
       alias(kw('Read'),  $.identifier),
+      alias(kw('Lib'),   $.identifier),
     ),
 
     identifier: $ => token(/[A-Za-z_][A-Za-z_0-9]*[$%&!#@]?/),
