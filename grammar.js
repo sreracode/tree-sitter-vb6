@@ -80,6 +80,11 @@ module.exports = grammar({
     [$.source_file, $.module_options, $.module_body],
     [$.source_file, $.module_options],
     [$.module_options, $.module_body],
+    // Print/Write/Line are keywords-as-identifiers in member access (Debug.Print, ts.Write, obj.Line)
+    // but also start their own statements — GLR resolves which at parse time.
+    [$.print_statement, $._ambiguous_identifier],
+    [$.write_statement, $._ambiguous_identifier],
+    [$.line_input_statement, $._ambiguous_identifier],
   ],
 
   rules: {
@@ -950,6 +955,11 @@ module.exports = grammar({
       alias(kw('Enum'),  $.identifier),
       alias(kw('Event'), $.identifier),
       alias(kw('Me'),    $.identifier),
+      // Keywords commonly used as property/method names in member access (e.g. Debug.Print, obj.Line)
+      alias(kw('Print'), $.identifier),
+      alias(kw('Line'),  $.identifier),
+      alias(kw('Write'), $.identifier),
+      alias(kw('Read'),  $.identifier),
     ),
 
     identifier: $ => token(/[A-Za-z_][A-Za-z_0-9]*[$%&!#@]?/),

@@ -8316,6 +8316,54 @@
           },
           "named": true,
           "value": "identifier"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "TOKEN",
+            "content": {
+              "type": "PATTERN",
+              "value": "[pP][rR][iI][nN][tT]"
+            }
+          },
+          "named": true,
+          "value": "identifier"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "TOKEN",
+            "content": {
+              "type": "PATTERN",
+              "value": "[lL][iI][nN][eE]"
+            }
+          },
+          "named": true,
+          "value": "identifier"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "TOKEN",
+            "content": {
+              "type": "PATTERN",
+              "value": "[wW][rR][iI][tT][eE]"
+            }
+          },
+          "named": true,
+          "value": "identifier"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "TOKEN",
+            "content": {
+              "type": "PATTERN",
+              "value": "[rR][eE][aA][dD]"
+            }
+          },
+          "named": true,
+          "value": "identifier"
         }
       ]
     },
@@ -8520,6 +8568,18 @@
     [
       "module_options",
       "module_body"
+    ],
+    [
+      "print_statement",
+      "_ambiguous_identifier"
+    ],
+    [
+      "write_statement",
+      "_ambiguous_identifier"
+    ],
+    [
+      "line_input_statement",
+      "_ambiguous_identifier"
     ]
   ],
   "precedences": [],
