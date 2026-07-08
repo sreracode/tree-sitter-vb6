@@ -97,6 +97,7 @@ vim.filetype.add({
 
 - **90/90** corpus tests passing (`npx tree-sitter test`)
 - **781/784** real-world `.cls`/`.bas` files parse without errors (99.6%)
+- **191/196** [proleap-vb6-parser](https://github.com/uwol/proleap-vb6-parser) integration files parse clean
 
 ### Real-world test corpus
 
@@ -138,6 +139,8 @@ Sub DrawImage(imlst As Control, ...)
     ImageList_Draw ...                  ' shared body
 End Sub
 ```
+
+The 5 remaining proleap failures are intentional or known limitations: 2× `DoLoop.cls` (VBA-specific `f(x).Method` chain + named-argument `key1:=val` syntax), `MyClassArray.cls` (`f(x).Method args`), `SavePicture.cls` (`Circle` statement), `InvalidKeyword.cls` (intentionally illegal keyword, tests error recovery).
 
 ## Known limitations
 

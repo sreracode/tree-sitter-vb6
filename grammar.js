@@ -898,8 +898,7 @@ module.exports = grammar({
     type_member: $ => seq(
       field('name', $._ambiguous_identifier),
       optional(seq('(', optional($.subscripts), ')')),
-      kw('As'),
-      field('type', $.type_expression),
+      optional(seq(kw('As'), field('type', $.type_expression))),
       $._terminator,
     ),
 
