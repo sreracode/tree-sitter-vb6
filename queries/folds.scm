@@ -1,0 +1,15 @@
+(sub_declaration) @fold
+(function_declaration) @fold
+(property_get_declaration) @fold
+(property_set_declaration) @fold
+(property_let_declaration) @fold
+(type_declaration) @fold
+(enum_declaration) @fold
+(block_if_statement) @fold
+(for_next_statement) @fold
+(for_each_statement) @fold
+(while_statement) @fold
+(do_loop_statement) @fold
+(with_statement) @fold
+(select_case_statement) @fold
+(compiler_directive) @fold

@@ -93,6 +93,36 @@ vim.filetype.add({
 - Dot-prefix member access inside `With` blocks (`.Property = value`)
 - `Me` keyword, dotted type names (e.g. `VB.CommandButton`), `On Local Error GoTo`
 - `Option` directives parsed as `option_statement` nodes (queryable in tree-sitter queries)
+- Case-insensitive keyword matching — all keywords appear as queryable anonymous nodes in the CST
+
+## Query files
+
+| File | Purpose | Editors |
+|------|---------|---------|
+| `queries/highlights.scm` | Syntax highlighting — keywords, types, literals, operators, comments | Neovim, Helix, Zed, VS Code |
+| `queries/locals.scm` | Scope tracking — definitions and references for rename/highlight | Neovim, Helix |
+| `queries/tags.scm` | Symbol navigation — Sub, Function, Property, Type, Enum, Event, Const, label | Neovim telescope, Helix `goto-definition` |
+| `queries/folds.scm` | Code folding — all block constructs | Neovim, Helix, Zed |
+| `queries/indents.scm` | Auto-indentation — `@indent.begin` / `@indent.end` / `@indent.branch` | Helix, Zed, nvim-treesitter |
+| `queries/textobjects.scm` | Text objects — `@function`, `@class`, `@parameter`, `@conditional`, `@loop`, `@call`, `@comment` | nvim-treesitter-textobjects |
+
+All query files are mirrored under `queries/vb6/` for nvim-treesitter's directory layout.
+
+### Highlight captures
+
+| Capture | Examples |
+|---------|---------|
+| `@keyword.function` | `Sub`, `Function`, `Property`, `End`, `Declare` |
+| `@keyword.modifier` | `Public`, `Private`, `Friend`, `Static`, `ByVal`, `ByRef`, `Optional` |
+| `@keyword.control` | `If`, `For`, `While`, `Do`, `GoTo`, `On Error`, `Select Case` |
+| `@keyword.return` | `Exit`, `Resume` |
+| `@keyword.operator` | `And`, `Or`, `Not`, `Mod`, `Is`, `Like` |
+| `@type.builtin` | `Integer`, `Long`, `String`, `Boolean`, `Variant` (inside type expressions) |
+| `@constant.builtin` | `True`, `False`, `Nothing`, `Empty`, `Null` |
+| `@function` | Sub / Function names at declaration |
+| `@variable.parameter` | Parameter names |
+| `@string` / `@number` | String and numeric literals |
+| `@comment` | `'` and `Rem` comments |
 
 ## Test status
 
@@ -126,7 +156,6 @@ The 5 remaining proleap failures are intentional or known limitations: 2× `DoLo
 
 - `Circle` graphics statement (special `(x,y),radius` syntax)
 - `f(x).Method args` call syntax (method call on a function/index result without `Call` keyword)
-- VB6 keywords (`Sub`, `If`, `Dim`, etc.) are not syntax-highlighted — `kw()` uses case-insensitive regex which cannot be matched by string in tree-sitter queries
 
 ## Development
 

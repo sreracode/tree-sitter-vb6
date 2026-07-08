@@ -261,6 +261,38 @@
           {
             "type": "^",
             "named": false
+          },
+          {
+            "type": "and",
+            "named": false
+          },
+          {
+            "type": "eqv",
+            "named": false
+          },
+          {
+            "type": "imp",
+            "named": false
+          },
+          {
+            "type": "is",
+            "named": false
+          },
+          {
+            "type": "like",
+            "named": false
+          },
+          {
+            "type": "mod",
+            "named": false
+          },
+          {
+            "type": "or",
+            "named": false
+          },
+          {
+            "type": "xor",
+            "named": false
           }
         ]
       },
@@ -3546,6 +3578,10 @@
           {
             "type": "-",
             "named": false
+          },
+          {
+            "type": "not",
+            "named": false
           }
         ]
       }
@@ -3803,8 +3839,104 @@
     "named": false
   },
   {
+    "type": "access",
+    "named": false
+  },
+  {
+    "type": "addressof",
+    "named": false
+  },
+  {
+    "type": "alias",
+    "named": false
+  },
+  {
+    "type": "and",
+    "named": false
+  },
+  {
+    "type": "any",
+    "named": false
+  },
+  {
+    "type": "appactivate",
+    "named": false
+  },
+  {
+    "type": "append",
+    "named": false
+  },
+  {
+    "type": "as",
+    "named": false
+  },
+  {
+    "type": "assert",
+    "named": false
+  },
+  {
+    "type": "attribute",
+    "named": false
+  },
+  {
+    "type": "base",
+    "named": false
+  },
+  {
+    "type": "beep",
+    "named": false
+  },
+  {
+    "type": "begin",
+    "named": false
+  },
+  {
+    "type": "binary",
+    "named": false
+  },
+  {
+    "type": "boolean",
+    "named": false
+  },
+  {
     "type": "boolean_literal",
     "named": true
+  },
+  {
+    "type": "byref",
+    "named": false
+  },
+  {
+    "type": "byte",
+    "named": false
+  },
+  {
+    "type": "byval",
+    "named": false
+  },
+  {
+    "type": "call",
+    "named": false
+  },
+  {
+    "type": "case",
+    "named": false
+  },
+  {
+    "type": "chdir",
+    "named": false
+  },
+  {
+    "type": "chdrive",
+    "named": false
+  },
+  {
+    "type": "class",
+    "named": false
+  },
+  {
+    "type": "close",
+    "named": false
   },
   {
     "type": "comment",
@@ -3812,31 +3944,535 @@
     "extra": true
   },
   {
+    "type": "compare",
+    "named": false
+  },
+  {
+    "type": "const",
+    "named": false
+  },
+  {
+    "type": "currency",
+    "named": false
+  },
+  {
+    "type": "date",
+    "named": false
+  },
+  {
     "type": "date_literal",
     "named": true
+  },
+  {
+    "type": "debug",
+    "named": false
+  },
+  {
+    "type": "declare",
+    "named": false
+  },
+  {
+    "type": "defbool",
+    "named": false
+  },
+  {
+    "type": "defbyte",
+    "named": false
+  },
+  {
+    "type": "defcur",
+    "named": false
+  },
+  {
+    "type": "defdate",
+    "named": false
+  },
+  {
+    "type": "defdbl",
+    "named": false
+  },
+  {
+    "type": "defdec",
+    "named": false
+  },
+  {
+    "type": "defint",
+    "named": false
+  },
+  {
+    "type": "deflng",
+    "named": false
+  },
+  {
+    "type": "defobj",
+    "named": false
+  },
+  {
+    "type": "defsng",
+    "named": false
+  },
+  {
+    "type": "defstr",
+    "named": false
+  },
+  {
+    "type": "defvar",
+    "named": false
+  },
+  {
+    "type": "deletesetting",
+    "named": false
+  },
+  {
+    "type": "dim",
+    "named": false
+  },
+  {
+    "type": "do",
+    "named": false
+  },
+  {
+    "type": "double",
+    "named": false
+  },
+  {
+    "type": "each",
+    "named": false
+  },
+  {
+    "type": "else",
+    "named": false
+  },
+  {
+    "type": "elseif",
+    "named": false
+  },
+  {
+    "type": "empty",
+    "named": false
+  },
+  {
+    "type": "end",
+    "named": false
+  },
+  {
+    "type": "enum",
+    "named": false
+  },
+  {
+    "type": "eqv",
+    "named": false
+  },
+  {
+    "type": "erase",
+    "named": false
+  },
+  {
+    "type": "error",
+    "named": false
+  },
+  {
+    "type": "event",
+    "named": false
+  },
+  {
+    "type": "exit",
+    "named": false
+  },
+  {
+    "type": "explicit",
+    "named": false
+  },
+  {
+    "type": "filecopy",
+    "named": false
   },
   {
     "type": "float_literal",
     "named": true
   },
   {
+    "type": "for",
+    "named": false
+  },
+  {
+    "type": "friend",
+    "named": false
+  },
+  {
     "type": "frx_reference",
     "named": true
+  },
+  {
+    "type": "function",
+    "named": false
+  },
+  {
+    "type": "get",
+    "named": false
+  },
+  {
+    "type": "gosub",
+    "named": false
+  },
+  {
+    "type": "goto",
+    "named": false
   },
   {
     "type": "identifier",
     "named": true
   },
   {
+    "type": "if",
+    "named": false
+  },
+  {
+    "type": "imp",
+    "named": false
+  },
+  {
+    "type": "implements",
+    "named": false
+  },
+  {
+    "type": "in",
+    "named": false
+  },
+  {
+    "type": "input",
+    "named": false
+  },
+  {
+    "type": "integer",
+    "named": false
+  },
+  {
     "type": "integer_literal",
     "named": true
+  },
+  {
+    "type": "is",
+    "named": false
+  },
+  {
+    "type": "kill",
+    "named": false
+  },
+  {
+    "type": "len",
+    "named": false
+  },
+  {
+    "type": "let",
+    "named": false
+  },
+  {
+    "type": "lib",
+    "named": false
+  },
+  {
+    "type": "like",
+    "named": false
+  },
+  {
+    "type": "line",
+    "named": false
+  },
+  {
+    "type": "load",
+    "named": false
+  },
+  {
+    "type": "local",
+    "named": false
+  },
+  {
+    "type": "lock",
+    "named": false
+  },
+  {
+    "type": "long",
+    "named": false
+  },
+  {
+    "type": "loop",
+    "named": false
+  },
+  {
+    "type": "lset",
+    "named": false
+  },
+  {
+    "type": "mid",
+    "named": false
+  },
+  {
+    "type": "midb",
+    "named": false
+  },
+  {
+    "type": "mkdir",
+    "named": false
+  },
+  {
+    "type": "mod",
+    "named": false
+  },
+  {
+    "type": "module",
+    "named": false
+  },
+  {
+    "type": "name",
+    "named": false
+  },
+  {
+    "type": "new",
+    "named": false
+  },
+  {
+    "type": "next",
+    "named": false
+  },
+  {
+    "type": "not",
+    "named": false
+  },
+  {
+    "type": "nothing",
+    "named": false
+  },
+  {
+    "type": "null",
+    "named": false
+  },
+  {
+    "type": "object",
+    "named": false
+  },
+  {
+    "type": "on",
+    "named": false
+  },
+  {
+    "type": "open",
+    "named": false
+  },
+  {
+    "type": "option",
+    "named": false
+  },
+  {
+    "type": "optional",
+    "named": false
+  },
+  {
+    "type": "or",
+    "named": false
+  },
+  {
+    "type": "output",
+    "named": false
+  },
+  {
+    "type": "paramarray",
+    "named": false
+  },
+  {
+    "type": "preserve",
+    "named": false
+  },
+  {
+    "type": "print",
+    "named": false
+  },
+  {
+    "type": "private",
+    "named": false
+  },
+  {
+    "type": "property",
+    "named": false
+  },
+  {
+    "type": "public",
+    "named": false
+  },
+  {
+    "type": "put",
+    "named": false
+  },
+  {
+    "type": "raiseevent",
+    "named": false
+  },
+  {
+    "type": "random",
+    "named": false
+  },
+  {
+    "type": "randomize",
+    "named": false
+  },
+  {
+    "type": "read",
+    "named": false
+  },
+  {
+    "type": "redim",
+    "named": false
+  },
+  {
+    "type": "reset",
+    "named": false
+  },
+  {
+    "type": "resume",
+    "named": false
+  },
+  {
+    "type": "return",
+    "named": false
+  },
+  {
+    "type": "rmdir",
+    "named": false
+  },
+  {
+    "type": "rset",
+    "named": false
+  },
+  {
+    "type": "savesetting",
+    "named": false
+  },
+  {
+    "type": "seek",
+    "named": false
+  },
+  {
+    "type": "select",
+    "named": false
+  },
+  {
+    "type": "sendkeys",
+    "named": false
+  },
+  {
+    "type": "set",
+    "named": false
+  },
+  {
+    "type": "shared",
+    "named": false
+  },
+  {
+    "type": "single",
+    "named": false
+  },
+  {
+    "type": "spc",
+    "named": false
+  },
+  {
+    "type": "static",
+    "named": false
+  },
+  {
+    "type": "step",
+    "named": false
+  },
+  {
+    "type": "stop",
+    "named": false
+  },
+  {
+    "type": "string",
+    "named": false
   },
   {
     "type": "string_literal",
     "named": true
   },
   {
+    "type": "sub",
+    "named": false
+  },
+  {
+    "type": "tab",
+    "named": false
+  },
+  {
+    "type": "text",
+    "named": false
+  },
+  {
+    "type": "then",
+    "named": false
+  },
+  {
+    "type": "time",
+    "named": false
+  },
+  {
+    "type": "to",
+    "named": false
+  },
+  {
+    "type": "type",
+    "named": false
+  },
+  {
     "type": "type_hint",
     "named": true
+  },
+  {
+    "type": "typeof",
+    "named": false
+  },
+  {
+    "type": "unload",
+    "named": false
+  },
+  {
+    "type": "unlock",
+    "named": false
+  },
+  {
+    "type": "until",
+    "named": false
+  },
+  {
+    "type": "variant",
+    "named": false
+  },
+  {
+    "type": "version",
+    "named": false
+  },
+  {
+    "type": "wend",
+    "named": false
+  },
+  {
+    "type": "while",
+    "named": false
+  },
+  {
+    "type": "with",
+    "named": false
+  },
+  {
+    "type": "withevents",
+    "named": false
+  },
+  {
+    "type": "write",
+    "named": false
+  },
+  {
+    "type": "xor",
+    "named": false
   }
 ]

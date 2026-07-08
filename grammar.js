@@ -763,7 +763,7 @@ module.exports = grammar({
     line_draw_statement: $ => seq(
       field('object', $._ambiguous_identifier),
       '.',
-      alias(kw('Line'), $.identifier),
+      alias(ci_token('Line'), $.identifier),
       optional($.coord_pair),
       '-',
       $.coord_pair,
@@ -1024,29 +1024,29 @@ module.exports = grammar({
     // ── ambiguous identifier: identifier OR keyword-as-identifier ──
     _ambiguous_identifier: $ => choice(
       $.identifier,
-      alias(kw('Name'),  $.identifier),
-      alias(kw('Date'),  $.identifier),
-      alias(kw('Time'),  $.identifier),
-      alias(kw('Error'), $.identifier),
-      alias(kw('Input'), $.identifier),
-      alias(kw('Left'),  $.identifier),
-      alias(kw('Right'), $.identifier),
-      alias(kw('Mid'),   $.identifier),
-      alias(kw('Open'),  $.identifier),
-      alias(kw('Close'), $.identifier),
-      alias(kw('Reset'), $.identifier),
-      alias(kw('Width'), $.identifier),
-      alias(kw('Type'),  $.identifier),
-      alias(kw('Enum'),  $.identifier),
-      alias(kw('Event'), $.identifier),
-      alias(kw('Me'),    $.identifier),
+      alias(ci_token('Name'),  $.identifier),
+      alias(ci_token('Date'),  $.identifier),
+      alias(ci_token('Time'),  $.identifier),
+      alias(ci_token('Error'), $.identifier),
+      alias(ci_token('Input'), $.identifier),
+      alias(ci_token('Left'),  $.identifier),
+      alias(ci_token('Right'), $.identifier),
+      alias(ci_token('Mid'),   $.identifier),
+      alias(ci_token('Open'),  $.identifier),
+      alias(ci_token('Close'), $.identifier),
+      alias(ci_token('Reset'), $.identifier),
+      alias(ci_token('Width'), $.identifier),
+      alias(ci_token('Type'),  $.identifier),
+      alias(ci_token('Enum'),  $.identifier),
+      alias(ci_token('Event'), $.identifier),
+      alias(ci_token('Me'),    $.identifier),
       // Keywords commonly used as property/method names in member access (e.g. Debug.Print, obj.Line)
-      alias(kw('Print'), $.identifier),
-      alias(kw('Line'),  $.identifier),
-      alias(kw('Write'), $.identifier),
-      alias(kw('Read'),  $.identifier),
-      alias(kw('Lib'),   $.identifier),
-      alias(kw('Load'),  $.identifier),
+      alias(ci_token('Print'), $.identifier),
+      alias(ci_token('Line'),  $.identifier),
+      alias(ci_token('Write'), $.identifier),
+      alias(ci_token('Read'),  $.identifier),
+      alias(ci_token('Lib'),   $.identifier),
+      alias(ci_token('Load'),  $.identifier),
     ),
 
     identifier: $ => token(choice(
@@ -1067,8 +1067,12 @@ module.exports = grammar({
 
 // ──────────────── helpers ────────────────
 
-function kw(word) {
+function ci_token(word) {
   return token(ci(word));
+}
+
+function kw(word) {
+  return alias(ci_token(word), word.toLowerCase());
 }
 
 function commaSep(rule) {

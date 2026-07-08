@@ -61,7 +61,7 @@ Sub signature 被 `#If` 切開，需要 grammar 跨 compiler-directive 邊界解
 - `Circle (x,y), r, color` — 特殊座標語法，需專用 rule（低優先）
 - `f(x).Method args` — 在 function/index 結果上呼叫方法，無 `Call` 關鍵字；GLR 無法穩定偏好 member_access 路徑
 - 數字行號前綴（`100 GoTo 200`）— BASIC 式行號，尚未支援
-- VB6 keywords 不會被 syntax highlight — `kw()` 產生 case-insensitive regex，tree-sitter query 無法用字串匹配
+- ~~VB6 keywords 不會被 syntax highlight~~ — 已修，見 `kw()` / `ci_token()` 說明於「待新增功能 §1」
 
 ---
 
@@ -109,6 +109,129 @@ module_options: $ => repeat1(choice($.option_statement, $._newline)),
 可能新增一個 conflict（`$.module_options` 或 `$.module_body` 相關），加進 `conflicts` 即可。
 若 generate 成功且 90/90 + 781/784 + 191/196 全部通過，則是淨收益。
 若 generate 卡 Unresolved conflict 且無法解決，revert。
+
+---
+
+## 待新增功能（優先順序排列）
+
+### ✅ 1. 補全 `queries/highlights.scm`（已完成）
+
+目前完全缺少關鍵字 highlight，在任何編輯器裡看起來都是白色一片。
+
+需要加的 captures（以下只是骨架，完整 pattern 請查 grammar.js rule 名稱）：
+
+```scheme
+; 關鍵字 — 宣告
+["Sub" "End" "Function" "Property" "Get" "Set" "Let"
+ "Dim" "Public" "Private" "Friend" "Static" "Declare"
+ "Type" "Enum" "Event" "Implements" "WithEvents"
+ "Lib" "Alias" "As" "New"] @keyword
+
+; 關鍵字 — 控制流
+["If" "Then" "ElseIf" "Else" "End If"
+ "Select" "Case" "For" "Each" "Next" "To" "Step"
+ "While" "Wend" "Do" "Loop" "Until"
+ "With" "GoTo" "GoSub" "Return"
+ "Exit" "Resume" "On" "Error"] @keyword.control
+
+; 關鍵字 — 運算子
+["And" "Or" "Not" "Xor" "Is" "Like" "Mod" "Eqv" "Imp"] @keyword.operator
+
+; 修飾子
+["ByVal" "ByRef" "Optional" "ParamArray"] @keyword.modifier
+
+; 函式呼叫
+(call_expression function: _ @function.call)
+(call_statement call: _ @function.call)
+
+; 常數
+[(nothing_literal) (empty_literal) (null_literal)] @constant.builtin
+
+; 字串跳脫
+(string_literal "\"\"" @string.escape)
+```
+
+**實作方式**：`kw()` 原本回傳 `token(ci(word))`（regex token，在 CST 中完全隱形）。
+解法是拆成兩個 helper：
+- `ci_token(word)` — 原本的 `kw()` 行為，用於 `_ambiguous_identifier` 的 `alias(ci_token('X'), $.identifier)` 以避免 alias 嵌套
+- `kw(word)` — 改為 `alias(ci_token(word), word.toLowerCase())`，讓關鍵字在 CST 中出現為可查詢的 anonymous node（如 `"sub"`、`"dim"`）
+
+`line_draw_statement` 中的 `alias(kw('Line'), $.identifier)` 同樣改為 `alias(ci_token('Line'), $.identifier)`。
+
+---
+
+### ✅ 2. 新增 `queries/tags.scm`（已完成）
+
+讓 `tree-sitter tags`、Neovim telescope、Helix `goto-definition` 能找到符號。
+
+```scheme
+(sub_declaration name: (identifier) @name) @definition.function
+(function_declaration name: (identifier) @name) @definition.function
+(property_get_declaration name: (identifier) @name) @definition.method
+(property_set_declaration name: (identifier) @name) @definition.method
+(property_let_declaration name: (identifier) @name) @definition.method
+(type_declaration name: (identifier) @name) @definition.class
+(enum_declaration name: (identifier) @name) @definition.enum
+(enum_member name: (identifier) @name) @definition.constant
+(event_declaration name: (identifier) @name) @definition.event
+(label_statement name: (identifier) @name) @definition.label
+(const_declaration (const_declarator name: (identifier) @name)) @definition.constant
+```
+
+驗證：`tree-sitter tags test/corpus/declarations.txt` 應輸出所有符號。
+
+---
+
+### ✅ 3. 新增 `queries/folds.scm`（已完成）
+
+Neovim (`nvim-treesitter`)、Helix、VS Code 等用此折疊區塊。
+
+```scheme
+[
+  (sub_declaration)
+  (function_declaration)
+  (property_get_declaration)
+  (property_set_declaration)
+  (property_let_declaration)
+  (block_if_statement)
+  (for_next_statement)
+  (for_each_statement)
+  (while_statement)
+  (do_loop_statement)
+  (with_statement)
+  (select_case_statement)
+  (type_declaration)
+  (enum_declaration)
+  (compiler_directive)
+] @fold
+```
+
+---
+
+### ✅ 4. 新增 `queries/indents.scm`（已完成）
+
+Helix 和 Zed 需要此檔案才能正確縮排。基本規則：
+
+- `Sub/Function/Property/If/For/While/Do/With/Type/Enum/Select` 後增加縮排
+- 對應的 `End *` / `Next` / `Wend` / `Loop` 減少縮排
+- `Else` / `ElseIf` / `Case` 需要「先減後增」（outdent + indent）
+
+格式：Helix 使用 `@indent` / `@dedent` captures；nvim-treesitter 使用不同的 `@indent.begin` / `@indent.end` schema。先針對一個平台實作，再擴展。
+
+---
+
+### ✅ 5. 新增 `queries/textobjects.scm`（已完成）
+
+讓 `vap`（select outer function）、`vic`（select inner call argument）等操作可用。
+
+```scheme
+(sub_declaration) @function.outer
+(function_declaration) @function.outer
+(block) @function.inner
+(parameter) @parameter.outer
+(call_expression arguments: (argument_list) @parameter.inner)
+(comment) @comment.outer
+```
 
 ---
 
