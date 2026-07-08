@@ -33,6 +33,8 @@ module.exports = grammar({
     [$.call_expression, $.index_expression],
     // foo = ... could be assignment or call_statement with no keyword
     [$.call_statement, $.assignment_statement],
+    // arr(i, j) = val: index_expression LHS vs call_statement argument
+    [$.assignment_statement, $.call_statement, $.index_expression],
     // foo: could be label or call/assignment starting with identifier
     [$.assignment_statement, $.label_statement],
     [$.call_statement, $.label_statement],
@@ -40,6 +42,9 @@ module.exports = grammar({
     [$.sub_declaration, $.dim_statement],
     // member_access_expression could be start of call_statement or expression
     [$.expression, $.call_statement],
+    // obj.Line (x,y)-(x,y) conflicts with call_statement and expression
+    [$.expression, $.call_statement, $.line_draw_statement],
+    [$.line_draw_statement, $._ambiguous_identifier],
     // block repeat ambiguity
     [$.block],
     // On Error GoTo conflicts with On expr GoTo (on_goto uses expr which can be Error-as-identifier)
@@ -87,6 +92,8 @@ module.exports = grammar({
     [$.line_input_statement, $._ambiguous_identifier],
     // keyword-as-identifier followed by '(' may be call_statement or index_expression LHS
     [$.call_statement, $.index_expression],
+    // Load is both a statement keyword and used as identifier (Load = True)
+    [$.load_statement, $._ambiguous_identifier],
   ],
 
   rules: {
@@ -264,6 +271,7 @@ module.exports = grammar({
 
     statement: $ => choice(
       $.array_copy_statement,
+      $.indexed_assignment_statement,
       $.assignment_statement,
       $.let_statement,
       $.set_statement,
@@ -296,6 +304,7 @@ module.exports = grammar({
       $.close_statement,
       $.print_statement,
       $.debug_print_statement,
+      $.debug_assert_statement,
       $.write_statement,
       $.input_statement,
       $.line_input_statement,
@@ -326,6 +335,7 @@ module.exports = grammar({
       $.delete_setting_statement,
       $.error_statement,
       $.reset_statement,
+      $.line_draw_statement,
     ),
 
     subscripts: $ => commaSep1($.subscript),
@@ -424,9 +434,9 @@ module.exports = grammar({
       ')',
     )),
 
-    argument_list: $ => seq(
-      $.argument,
-      repeat(seq(',', optional($.argument))),
+    argument_list: $ => choice(
+      seq($.argument, repeat(seq(',', optional($.argument)))),
+      seq(repeat1(seq(',', optional($.argument)))),
     ),
 
     argument: $ => choice(
@@ -452,6 +462,18 @@ module.exports = grammar({
     array_copy_statement: $ => prec(3, seq(
       field('target', $._ambiguous_identifier),
       '(', ')',
+      '=',
+      field('value', $.expression),
+      $._terminator,
+    )),
+
+    // arr(i, j) = val — multi-dim LHS assignment. The comma inside parens causes
+    // call_statement to mis-parse this, so we match it explicitly at high prec.
+    indexed_assignment_statement: $ => prec(3, seq(
+      field('target', $._ambiguous_identifier),
+      '(',
+      field('indices', seq($.argument, repeat1(seq(',', $.argument)))),
+      ')',
       '=',
       field('value', $.expression),
       $._terminator,
@@ -508,7 +530,7 @@ module.exports = grammar({
     ),
 
     redim_declarator: $ => seq(
-      field('name', $._ambiguous_identifier),
+      field('name', seq($._ambiguous_identifier, repeat(seq('.', $._ambiguous_identifier)))),
       optional($.type_hint),
       '(',
       field('dimensions', $.subscripts),
@@ -561,6 +583,8 @@ module.exports = grammar({
 
     // inline_statement: no $._terminator (the inline_if_statement provides it)
     inline_statement: $ => choice(
+      // Nested inline if: no terminator (the outer inline_if_statement provides it)
+      prec.right(2, seq(kw('If'), field('condition', $.expression), kw('Then'), field('consequence', $.inline_statement), optional(seq(kw('Else'), field('alternative', $.inline_statement))))),
       seq(kw('GoTo'), field('label', $._ambiguous_identifier)),
       seq(kw('GoSub'), field('label', $._ambiguous_identifier)),
       seq(kw('Return')),
@@ -571,10 +595,12 @@ module.exports = grammar({
       seq(kw('End')),
       seq(kw('Set'), field('target', $._left_hand_side), '=', field('value', $.expression)),
       seq(kw('Let'), field('target', $._left_hand_side), '=', field('value', $.expression)),
+      seq(field('target', $._ambiguous_identifier), '(', field('indices', seq($.argument, repeat1(seq(',', $.argument)))), ')', '=', field('value', $.expression)),
       seq(field('target', $._left_hand_side), '=', field('value', $.expression)),
       seq(kw('Call'), $.expression),
       seq(kw('ReDim'), optional(kw('Preserve')), commaSep1($.redim_declarator)),
       seq($.member_access_expression, optional($.argument_list_no_parens)),
+      seq($.with_member_access_expression, optional($.argument_list_no_parens)),
       seq($._ambiguous_identifier, optional($.argument_list_no_parens)),
     ),
 
@@ -609,6 +635,7 @@ module.exports = grammar({
       kw('Select'), kw('Case'),
       field('value', $.expression),
       $._terminator,
+      repeat($._newline),
       repeat(choice($.case_clause, $.case_else_clause)),
       kw('End'), kw('Select'),
       $._terminator,
@@ -719,9 +746,28 @@ module.exports = grammar({
       optional($.output_list),
       $._terminator,
     )),
+    debug_assert_statement: $ => prec(2, seq(
+      kw('Debug'), '.', kw('Assert'),
+      field('condition', $.expression),
+      $._terminator,
+    )),
     write_statement: $ => seq(kw('Write'), '#', $.expression, ',', optional($.output_list), $._terminator),
     input_statement: $ => prec(2, seq(kw('Input'), '#', $.expression, repeat1(seq(',', field('variable', $._ambiguous_identifier))), $._terminator)),
-    line_input_statement: $ => seq(kw('Line'), kw('Input'), '#', $.expression, ',', field('variable', $._ambiguous_identifier), $._terminator),
+    line_input_statement: $ => seq(kw('Line'), kw('Input'), '#', $.expression, ',', field('variable', $._left_hand_side), $._terminator),
+
+    // obj.Line [(x1,y1)]-(x2,y2) [,color [,B[F]]]  — VB6 graphics Line method
+    coord_pair: $ => seq('(', $.expression, ',', $.expression, ')'),
+    line_draw_statement: $ => seq(
+      field('object', $._ambiguous_identifier),
+      '.',
+      alias(kw('Line'), $.identifier),
+      optional($.coord_pair),
+      '-',
+      $.coord_pair,
+      optional(seq(',', optional($.expression))),
+      optional(seq(',', optional($.expression))),
+      $._terminator,
+    ),
     get_statement: $ => seq(kw('Get'), optional('#'), $.expression, ',', optional($.expression), ',', field('variable', $.expression), $._terminator),
     put_statement: $ => seq(kw('Put'), optional('#'), $.expression, ',', optional($.expression), ',', field('data', $.expression), $._terminator),
     seek_statement: $ => seq(kw('Seek'), optional('#'), $.expression, ',', field('position', $.expression), $._terminator),
@@ -741,7 +787,7 @@ module.exports = grammar({
     unload_statement: $ => seq(kw('Unload'), field('object', $.expression), $._terminator),
     send_keys_statement: $ => seq(kw('SendKeys'), field('keys', $.expression), optional(seq(',', field('wait', $.expression))), $._terminator),
     app_activate_statement: $ => seq(kw('AppActivate'), field('title', $.expression), optional(seq(',', field('wait', $.expression))), $._terminator),
-    save_setting_statement: $ => seq(kw('SaveSetting'), $.argument, ',', $.argument, ',', $.argument, ',', $.argument, $._terminator),
+    save_setting_statement: $ => seq(kw('SaveSetting'), $.argument, ',', $.argument, ',', $.argument, optional(seq(',', $.argument)), $._terminator),
     delete_setting_statement: $ => seq(kw('DeleteSetting'), $.argument, optional(seq(',', $.argument, optional(seq(',', $.argument)))), $._terminator),
     error_statement: $ => prec(2, seq(kw('Error'), field('number', $.expression), $._terminator)),
     reset_statement: $ => prec(2, seq(kw('Reset'), $._terminator)),
@@ -913,7 +959,7 @@ module.exports = grammar({
 
     implements_declaration: $ => seq(
       kw('Implements'),
-      field('interface', $._ambiguous_identifier),
+      field('interface', seq($._ambiguous_identifier, repeat(seq('.', $._ambiguous_identifier)))),
       $._terminator,
     ),
 
@@ -963,7 +1009,7 @@ module.exports = grammar({
 
     string_literal: $ => token(seq('"', repeat(choice(/[^"\r\n]/, '""')), '"')),
 
-    date_literal: $ => token(seq('#', /[^#\r\n]*[A-Za-z\/\-:][^#\r\n]*/, '#')),
+    date_literal: $ => token(seq('#', /[^#"\r\n]*[A-Za-z\/\-:][^#"\r\n]*/, '#')),
 
     // ── ambiguous identifier: identifier OR keyword-as-identifier ──
     _ambiguous_identifier: $ => choice(
@@ -990,9 +1036,13 @@ module.exports = grammar({
       alias(kw('Write'), $.identifier),
       alias(kw('Read'),  $.identifier),
       alias(kw('Lib'),   $.identifier),
+      alias(kw('Load'),  $.identifier),
     ),
 
-    identifier: $ => token(/[A-Za-z_][A-Za-z_0-9]*[$%&!#@]?/),
+    identifier: $ => token(choice(
+      /[A-Za-z_][A-Za-z_0-9]*[$%&!#@]?/,
+      seq('[', /[^\]\r\n]+/, ']'),
+    )),
 
     comment: $ => token(choice(
       seq("'", /.*/),

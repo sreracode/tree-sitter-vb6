@@ -73,7 +73,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "argument",
@@ -624,10 +624,41 @@
     }
   },
   {
+    "type": "coord_pair",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "date_statement",
     "named": true,
     "fields": {
       "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "debug_assert_statement",
+    "named": true,
+    "fields": {
+      "condition": {
         "multiple": false,
         "required": true,
         "types": [
@@ -1457,9 +1488,13 @@
     "named": true,
     "fields": {
       "interface": {
-        "multiple": false,
+        "multiple": true,
         "required": true,
         "types": [
+          {
+            "type": ".",
+            "named": false
+          },
           {
             "type": "identifier",
             "named": true
@@ -1492,6 +1527,46 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "indexed_assignment_statement",
+    "named": true,
+    "fields": {
+      "indices": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "argument",
+            "named": true
+          }
+        ]
+      },
+      "target": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -1534,6 +1609,50 @@
     "type": "inline_statement",
     "named": true,
     "fields": {
+      "alternative": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "inline_statement",
+            "named": true
+          }
+        ]
+      },
+      "condition": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      },
+      "consequence": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "inline_statement",
+            "named": true
+          }
+        ]
+      },
+      "indices": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "argument",
+            "named": true
+          }
+        ]
+      },
       "label": {
         "multiple": false,
         "required": false,
@@ -1599,6 +1718,10 @@
         },
         {
           "type": "redim_declarator",
+          "named": true
+        },
+        {
+          "type": "with_member_access_expression",
           "named": true
         }
       ]
@@ -1701,6 +1824,40 @@
     }
   },
   {
+    "type": "line_draw_statement",
+    "named": true,
+    "fields": {
+      "object": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "coord_pair",
+          "named": true
+        },
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "line_input_statement",
     "named": true,
     "fields": {
@@ -1710,6 +1867,18 @@
         "types": [
           {
             "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "index_expression",
+            "named": true
+          },
+          {
+            "type": "member_access_expression",
+            "named": true
+          },
+          {
+            "type": "with_member_access_expression",
             "named": true
           }
         ]
@@ -2554,9 +2723,13 @@
         ]
       },
       "name": {
-        "multiple": false,
+        "multiple": true,
         "required": true,
         "types": [
+          {
+            "type": ".",
+            "named": false
+          },
           {
             "type": "identifier",
             "named": true
@@ -2899,6 +3072,10 @@
           "named": true
         },
         {
+          "type": "debug_assert_statement",
+          "named": true
+        },
+        {
           "type": "debug_print_statement",
           "named": true
         },
@@ -2959,6 +3136,10 @@
           "named": true
         },
         {
+          "type": "indexed_assignment_statement",
+          "named": true
+        },
+        {
           "type": "input_statement",
           "named": true
         },
@@ -2972,6 +3153,10 @@
         },
         {
           "type": "let_statement",
+          "named": true
+        },
+        {
+          "type": "line_draw_statement",
           "named": true
         },
         {

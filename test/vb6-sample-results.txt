@@ -1,0 +1,793 @@
+OK: test/vb6-sample/[Include]/ClassTemplate/Array.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/BooleanArray.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/BooleanMap.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/ByteArray.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/ByteMap.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/CHashTable.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/Good/CArray.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/Good/cHashTable.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/Good/CStringArray.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/Good/cStringVentor.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/Good/TArray.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/Good/THash.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/Good/THashTable.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/HashTable.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/IndexTable.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/IntegerArray.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/IntegerLink.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/IntegerMap.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/KeysetsStrInt.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/Link.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/LongArray.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/LongLink.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/LongMap.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/LongStack.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/LongVector.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/Map.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/ObjectArray.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/ObjectLink.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/ObjectMap.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/ObjectStack.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/ObjectVector.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/Stack.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/StringArray.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/StringLink.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/StringMap.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/StringStack.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/StringVector.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/TArray.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/TDictionary.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/THash.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/THashTable.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/TKeysets.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/TLink.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/TMap.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/TStack.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/TVector.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/UniqueStringVector.cls
+OK: test/vb6-sample/[Include]/ClassTemplate/Vector.cls
+OK: test/vb6-sample/[Include]/Components/Algorithms.bas
+OK: test/vb6-sample/[Include]/Components/ApiFileSystem.bas
+OK: test/vb6-sample/[Include]/Components/ApiHelper.bas
+OK: test/vb6-sample/[Include]/Components/ApiTime.bas
+OK: test/vb6-sample/[Include]/Components/App.bas
+OK: test/vb6-sample/[Include]/Components/App.cls
+OK: test/vb6-sample/[Include]/Components/AppendString.cls
+OK: test/vb6-sample/[Include]/Components/AppSetting.bas
+OK: test/vb6-sample/[Include]/Components/Arrays.bas
+OK: test/vb6-sample/[Include]/Components/AssistComboBox.cls
+OK: test/vb6-sample/[Include]/Components/AutoSetting.cls
+OK: test/vb6-sample/[Include]/Components/bookUrl.cls
+OK: test/vb6-sample/[Include]/Components/Bytes.bas
+OK: test/vb6-sample/[Include]/Components/ByteString.cls
+OK: test/vb6-sample/[Include]/Components/CFolderBrowser.cls
+OK: test/vb6-sample/[Include]/Components/CommonDialog.cls
+OK: test/vb6-sample/[Include]/Components/CommonDialogLite.cls
+OK: test/vb6-sample/[Include]/Components/dao.bas
+OK: test/vb6-sample/[Include]/Components/Data Source.cls
+OK: test/vb6-sample/[Include]/Components/Debug.bas
+OK: test/vb6-sample/[Include]/Components/DGSwsHTTP.cls
+OK: test/vb6-sample/[Include]/Components/DlgOpenDir.bas
+OK: test/vb6-sample/[Include]/Components/Download.cls
+OK: test/vb6-sample/[Include]/Components/DownloadEx.cls
+OK: test/vb6-sample/[Include]/Components/DownloadProgress.cls
+OK: test/vb6-sample/[Include]/Components/Dumper.bas
+OK: test/vb6-sample/[Include]/Components/enuArrHandle.cls
+OK: test/vb6-sample/[Include]/Components/FileDialog.cls
+OK: test/vb6-sample/[Include]/Components/FileEncrypt.bas
+OK: test/vb6-sample/[Include]/Components/FileExecutor.bas
+OK: test/vb6-sample/[Include]/Components/FileStreamIn.cls
+OK: test/vb6-sample/[Include]/Components/FileSystem.bas
+OK: test/vb6-sample/[Include]/Components/FolderBrowser.bas
+OK: test/vb6-sample/[Include]/Components/FolderBrowser.cls
+OK: test/vb6-sample/[Include]/Components/form.bas
+OK: test/vb6-sample/[Include]/Components/Forms.bas
+OK: test/vb6-sample/[Include]/Components/GAlgorithms.cls
+OK: test/vb6-sample/[Include]/Components/GApiFileSystem.cls
+OK: test/vb6-sample/[Include]/Components/GApiHelper.cls
+OK: test/vb6-sample/[Include]/Components/GApiTime.cls
+OK: test/vb6-sample/[Include]/Components/GApp.cls
+OK: test/vb6-sample/[Include]/Components/GAppSetting.cls
+OK: test/vb6-sample/[Include]/Components/GArrays.cls
+OK: test/vb6-sample/[Include]/Components/GBytes.cls
+OK: test/vb6-sample/[Include]/Components/Gdao.cls
+OK: test/vb6-sample/[Include]/Components/GDebug.cls
+OK: test/vb6-sample/[Include]/Components/GDlgOpenDir.cls
+OK: test/vb6-sample/[Include]/Components/GDumper.cls
+OK: test/vb6-sample/[Include]/Components/GFileEncrypt.cls
+OK: test/vb6-sample/[Include]/Components/GFileExecutor.cls
+OK: test/vb6-sample/[Include]/Components/GFILEFUNC.cls
+OK: test/vb6-sample/[Include]/Components/GFileSystem.cls
+OK: test/vb6-sample/[Include]/Components/GFolderBrowser.cls
+OK: test/vb6-sample/[Include]/Components/Gform.cls
+OK: test/vb6-sample/[Include]/Components/GForms.cls
+OK: test/vb6-sample/[Include]/Components/GgcHtmlWeb.cls
+OK: test/vb6-sample/[Include]/Components/GgCIni.cls
+OK: test/vb6-sample/[Include]/Components/GgCShell32.cls
+OK: test/vb6-sample/[Include]/Components/GgCString.cls
+OK: test/vb6-sample/[Include]/Components/GHM.cls
+OK: test/vb6-sample/[Include]/Components/GHtmlDOM.cls
+OK: test/vb6-sample/[Include]/Components/GHtmlWeb.cls
+FAIL: test/vb6-sample/[Include]/Components/GHttpHeader.cls | test/vb6-sample/[Include]/Components/GHttpHeader.cls	Parse:    0.82 ms	  6347 bytes/ms	(ERROR [107, 19] - [107, 21])
+OK: test/vb6-sample/[Include]/Components/GIni.cls
+OK: test/vb6-sample/[Include]/Components/GInternet.cls
+OK: test/vb6-sample/[Include]/Components/GLanguage.cls
+OK: test/vb6-sample/[Include]/Components/GlassicIO.cls
+OK: test/vb6-sample/[Include]/Components/GLayout.cls
+FAIL: test/vb6-sample/[Include]/Components/GLightShell.cls | test/vb6-sample/[Include]/Components/GLightShell.cls	Parse:    1.40 ms	 14531 bytes/ms	(ERROR [57, 17] - [57, 33])
+OK: test/vb6-sample/[Include]/Components/GLpffile.cls
+OK: test/vb6-sample/[Include]/Components/GMain.cls
+OK: test/vb6-sample/[Include]/Components/GMDebug.cls
+OK: test/vb6-sample/[Include]/Components/GMFileSystem.cls
+OK: test/vb6-sample/[Include]/Components/GMFolderBrowser.cls
+OK: test/vb6-sample/[Include]/Components/GMParse.cls
+OK: test/vb6-sample/[Include]/Components/GMusic.cls
+OK: test/vb6-sample/[Include]/Components/GMUtility.cls
+OK: test/vb6-sample/[Include]/Components/GMZlib.cls
+OK: test/vb6-sample/[Include]/Components/GObjectHelper.cls
+FAIL: test/vb6-sample/[Include]/Components/GomboboxHelper.cls | test/vb6-sample/[Include]/Components/GomboboxHelper.cls	Parse:    0.35 ms	  3072 bytes/ms	(ERROR [17, 0] - [17, 3])
+FAIL: test/vb6-sample/[Include]/Components/GParse.cls | test/vb6-sample/[Include]/Components/GParse.cls	Parse:    1.32 ms	  8867 bytes/ms	(ERROR [294, 40] - [294, 52])
+OK: test/vb6-sample/[Include]/Components/GPrivateProfile.cls
+OK: test/vb6-sample/[Include]/Components/GQuickWork.cls
+OK: test/vb6-sample/[Include]/Components/GRandom.cls
+FAIL: test/vb6-sample/[Include]/Components/GRegistry.cls | test/vb6-sample/[Include]/Components/GRegistry.cls	Parse:    2.26 ms	  9084 bytes/ms	(ERROR [28, 2] - [28, 3])
+OK: test/vb6-sample/[Include]/Components/GShell.cls
+OK: test/vb6-sample/[Include]/Components/GShell32.cls
+FAIL: test/vb6-sample/[Include]/Components/GSort.cls | test/vb6-sample/[Include]/Components/GSort.cls	Parse:    2.19 ms	  9740 bytes/ms	(ERROR [52, 42] - [52, 47])
+OK: test/vb6-sample/[Include]/Components/GStdFonts.cls
+OK: test/vb6-sample/[Include]/Components/GString.cls
+OK: test/vb6-sample/[Include]/Components/GStrings.cls
+OK: test/vb6-sample/[Include]/Components/GSubclass.cls
+OK: test/vb6-sample/[Include]/Components/GSystem.cls
+OK: test/vb6-sample/[Include]/Components/GTestCStringMap.cls
+OK: test/vb6-sample/[Include]/Components/GTimer.cls
+OK: test/vb6-sample/[Include]/Components/GToPY.cls
+OK: test/vb6-sample/[Include]/Components/GUnzip.cls
+OK: test/vb6-sample/[Include]/Components/GUseZipProtocol.cls
+OK: test/vb6-sample/[Include]/Components/GUtility.cls
+OK: test/vb6-sample/[Include]/Components/GVBSource.cls
+OK: test/vb6-sample/[Include]/Components/GWindows.cls
+OK: test/vb6-sample/[Include]/Components/GWinInet.cls
+OK: test/vb6-sample/[Include]/Components/GZlib.cls
+OK: test/vb6-sample/[Include]/Components/HM.bas
+OK: test/vb6-sample/[Include]/Components/HtmlDOM.bas
+OK: test/vb6-sample/[Include]/Components/HTMLProperty.cls
+OK: test/vb6-sample/[Include]/Components/HtmlWeb.bas
+OK: test/vb6-sample/[Include]/Components/HTTPConnection.cls
+FAIL: test/vb6-sample/[Include]/Components/HttpHeader.bas | test/vb6-sample/[Include]/Components/HttpHeader.bas	Parse:    0.83 ms	  6041 bytes/ms	(ERROR [99, 19] - [99, 21])
+FAIL: test/vb6-sample/[Include]/Components/HttpHeader.cls | test/vb6-sample/[Include]/Components/HttpHeader.cls	Parse:    1.02 ms	  6813 bytes/ms	(ERROR [46, 20] - [46, 23])
+OK: test/vb6-sample/[Include]/Components/IApp.cls
+OK: test/vb6-sample/[Include]/Components/ICharStream.cls
+OK: test/vb6-sample/[Include]/Components/IDownloadClient.cls
+FAIL: test/vb6-sample/[Include]/Components/Infozip/GInfoUnzip.cls | test/vb6-sample/[Include]/Components/Infozip/GInfoUnzip.cls	Parse:    0.31 ms	  1908 bytes/ms	(ERROR [62, 23] - [62, 24])
+FAIL: test/vb6-sample/[Include]/Components/Infozip/GInfoZip.cls | test/vb6-sample/[Include]/Components/Infozip/GInfoZip.cls	Parse:    0.34 ms	  1857 bytes/ms	(ERROR [23, 21] - [23, 22])
+OK: test/vb6-sample/[Include]/Components/Infozip/GInfozipShared.cls
+OK: test/vb6-sample/[Include]/Components/Infozip/InfoUnzip.bas
+OK: test/vb6-sample/[Include]/Components/Infozip/InfoUnZip.cls
+OK: test/vb6-sample/[Include]/Components/Infozip/InfoZip.bas
+OK: test/vb6-sample/[Include]/Components/Infozip/InfoZip.cls
+OK: test/vb6-sample/[Include]/Components/Infozip/InfoZipItem.cls
+FAIL: test/vb6-sample/[Include]/Components/Infozip/InfoZipItems.cls | test/vb6-sample/[Include]/Components/Infozip/InfoZipItems.cls	Parse:    0.41 ms	  7143 bytes/ms	(ERROR [85, 23] - [85, 24])
+OK: test/vb6-sample/[Include]/Components/Infozip/InfozipShared.bas
+OK: test/vb6-sample/[Include]/Components/Ini.bas
+OK: test/vb6-sample/[Include]/Components/iniText.cls
+OK: test/vb6-sample/[Include]/Components/Internet.bas
+OK: test/vb6-sample/[Include]/Components/InterNetGet.cls
+OK: test/vb6-sample/[Include]/Components/ISetting.cls
+OK: test/vb6-sample/[Include]/Components/ISubclass.cls
+OK: test/vb6-sample/[Include]/Components/IWinHttp.cls
+OK: test/vb6-sample/[Include]/Components/IWinHttpClient.cls
+OK: test/vb6-sample/[Include]/Components/Language.bas
+OK: test/vb6-sample/[Include]/Components/lassicIO.bas
+OK: test/vb6-sample/[Include]/Components/Layout.bas
+OK: test/vb6-sample/[Include]/Components/Localizer.cls
+OK: test/vb6-sample/[Include]/Components/Lpffile.bas
+OK: test/vb6-sample/[Include]/Components/Main.bas
+OK: test/vb6-sample/[Include]/Components/MakeZhComment.cls
+OK: test/vb6-sample/[Include]/Components/Map.cls
+OK: test/vb6-sample/[Include]/Components/MDebug.bas
+OK: test/vb6-sample/[Include]/Components/MFileSystem.bas
+OK: test/vb6-sample/[Include]/Components/MFolderBrowser.bas
+OK: test/vb6-sample/[Include]/Components/MParse.bas
+OK: test/vb6-sample/[Include]/Components/MRU.cls
+FAIL: test/vb6-sample/[Include]/Components/MRUFileList.cls | test/vb6-sample/[Include]/Components/MRUFileList.cls	Parse:    0.63 ms	  6228 bytes/ms	(ERROR [138, 9] - [138, 10])
+OK: test/vb6-sample/[Include]/Components/Music.bas
+OK: test/vb6-sample/[Include]/Components/MUtility.bas
+FAIL: test/vb6-sample/[Include]/Components/MYFAV.cls | test/vb6-sample/[Include]/Components/MYFAV.cls	Parse:    0.53 ms	  4323 bytes/ms	(ERROR [33, 9] - [33, 11])
+OK: test/vb6-sample/[Include]/Components/MZlib.bas
+OK: test/vb6-sample/[Include]/Components/Object.cls
+OK: test/vb6-sample/[Include]/Components/ObjectHelper.bas
+FAIL: test/vb6-sample/[Include]/Components/omboboxHelper.bas | test/vb6-sample/[Include]/Components/omboboxHelper.bas	Parse:    0.36 ms	  2464 bytes/ms	(ERROR [9, 0] - [9, 3])
+OK: test/vb6-sample/[Include]/Components/ommonDialogLite.cls
+OK: test/vb6-sample/[Include]/Components/omplex Data Consumer.cls
+OK: test/vb6-sample/[Include]/Components/PathCollection.cls
+OK: test/vb6-sample/[Include]/Components/PrivateProfile.bas
+OK: test/vb6-sample/[Include]/Components/QuickWork.bas
+FAIL: test/vb6-sample/[Include]/Components/ReaderViaHtml.cls | test/vb6-sample/[Include]/Components/ReaderViaHtml.cls	Parse:    2.57 ms	  5210 bytes/ms	(ERROR [208, 48] - [209, 0])
+FAIL: test/vb6-sample/[Include]/Components/RecentFile.cls | test/vb6-sample/[Include]/Components/RecentFile.cls	Parse:    0.60 ms	  7679 bytes/ms	(ERROR [67, 34] - [67, 41])
+FAIL: test/vb6-sample/[Include]/Components/Reg.cls | test/vb6-sample/[Include]/Components/Reg.cls	Parse:    1.50 ms	  8008 bytes/ms	(ERROR [186, 22] - [186, 34])
+FAIL: test/vb6-sample/[Include]/Components/Registry.bas | test/vb6-sample/[Include]/Components/Registry.bas	Parse:    1.88 ms	 10828 bytes/ms	(ERROR [20, 2] - [20, 3])
+OK: test/vb6-sample/[Include]/Components/Registry.cls
+OK: test/vb6-sample/[Include]/Components/Rss.cls
+OK: test/vb6-sample/[Include]/Components/Setting.cls
+OK: test/vb6-sample/[Include]/Components/Shell.bas
+OK: test/vb6-sample/[Include]/Components/Shell32.bas
+OK: test/vb6-sample/[Include]/Components/ssreader/BookInfo.cls
+OK: test/vb6-sample/[Include]/Components/ssreader/gMSSReader.cls
+FAIL: test/vb6-sample/[Include]/Components/SSRLib.bas | test/vb6-sample/[Include]/Components/SSRLib.bas	Parse:    1.21 ms	  6773 bytes/ms	(ERROR [43, 16] - [43, 18])
+OK: test/vb6-sample/[Include]/Components/StdFonts.bas
+OK: test/vb6-sample/[Include]/Components/StrCollection.cls
+OK: test/vb6-sample/[Include]/Components/String.bas
+OK: test/vb6-sample/[Include]/Components/String.cls
+OK: test/vb6-sample/[Include]/Components/StringAnalyser.cls
+OK: test/vb6-sample/[Include]/Components/StringBuilder.cls
+OK: test/vb6-sample/[Include]/Components/StringBuilder(Copyed).cls
+OK: test/vb6-sample/[Include]/Components/StringChinese.cls
+OK: test/vb6-sample/[Include]/Components/StringCollection.cls
+OK: test/vb6-sample/[Include]/Components/StringLink.cls
+OK: test/vb6-sample/[Include]/Components/StringMap.cls
+OK: test/vb6-sample/[Include]/Components/Subclass.cls
+OK: test/vb6-sample/[Include]/Components/System.bas
+OK: test/vb6-sample/[Include]/Components/TempFile.cls
+OK: test/vb6-sample/[Include]/Components/TestCStringMap.bas
+OK: test/vb6-sample/[Include]/Components/Timer.bas
+OK: test/vb6-sample/[Include]/Components/Timer.cls
+OK: test/vb6-sample/[Include]/Components/ToPY.bas
+OK: test/vb6-sample/[Include]/Components/Unzip.bas
+OK: test/vb6-sample/[Include]/Components/Unzip.cls
+OK: test/vb6-sample/[Include]/Components/UseZipProtocol.bas
+OK: test/vb6-sample/[Include]/Components/UTF8.cls
+OK: test/vb6-sample/[Include]/Components/Utility.bas
+FAIL: test/vb6-sample/[Include]/Components/VBSetting.cls | test/vb6-sample/[Include]/Components/VBSetting.cls	Parse:    0.66 ms	  7014 bytes/ms	(MISSING identifier [111, 43] - [111, 43])
+OK: test/vb6-sample/[Include]/Components/VBSource.bas
+OK: test/vb6-sample/[Include]/Components/Windows.bas
+FAIL: test/vb6-sample/[Include]/Components/WinHTTP.cls | test/vb6-sample/[Include]/Components/WinHTTP.cls	Parse:    2.30 ms	  6729 bytes/ms	(ERROR [255, 0] - [255, 3])
+OK: test/vb6-sample/[Include]/Components/WinHttpDownload.cls
+OK: test/vb6-sample/[Include]/Components/WinHttpDownloadEx.cls
+FAIL: test/vb6-sample/[Include]/Components/WinHttpSimple_OLD.cls | test/vb6-sample/[Include]/Components/WinHttpSimple_OLD.cls	Parse:    2.00 ms	  8636 bytes/ms	(ERROR [273, 0] - [273, 3])
+FAIL: test/vb6-sample/[Include]/Components/WinHttpSimple.cls | test/vb6-sample/[Include]/Components/WinHttpSimple.cls	Parse:    2.07 ms	  8676 bytes/ms	(ERROR [292, 0] - [292, 3])
+OK: test/vb6-sample/[Include]/Components/WinInet.bas
+OK: test/vb6-sample/[Include]/Components/Zlib.bas
+OK: test/vb6-sample/[Include]/Components/Zlib.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/AppPath.bas
+FAIL: test/vb6-sample/[Include]/HardcodeVB/BugFilt.cls | test/vb6-sample/[Include]/HardcodeVB/BugFilt.cls	Parse:    0.73 ms	  7820 bytes/ms	(ERROR [189, 45] - [190, 0])
+OK: test/vb6-sample/[Include]/HardcodeVB/BugWizMain.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/Cards.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/About.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Allocator.cls
+FAIL: test/vb6-sample/[Include]/HardcodeVB/Components/ButterFly.cls | test/vb6-sample/[Include]/HardcodeVB/Components/ButterFly.cls	Parse:    0.59 ms	  6199 bytes/ms	(ERROR [101, 33] - [101, 36])
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Bytes.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Casts.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/ColorPicker.cls
+FAIL: test/vb6-sample/[Include]/HardcodeVB/Components/ComCtl.cls | test/vb6-sample/[Include]/HardcodeVB/Components/ComCtl.cls	Parse:    0.83 ms	  4893 bytes/ms	(ERROR [48, 0] - [117, 0])
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/ComDlg.cls
+FAIL: test/vb6-sample/[Include]/HardcodeVB/Components/Draw.cls | test/vb6-sample/[Include]/HardcodeVB/Components/Draw.cls	Parse:    1.13 ms	  7197 bytes/ms	(ERROR [201, 32] - [201, 44])
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Drive.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Drives.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/DriveWlk.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/EnumVar.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Errors.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Executive.cls
+FAIL: test/vb6-sample/[Include]/HardcodeVB/Components/ExeType.cls | test/vb6-sample/[Include]/HardcodeVB/Components/ExeType.cls	Parse:    1.50 ms	  3779 bytes/ms	(ERROR [141, 45] - [142, 0])
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/FileInfo.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/FileTool.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Filter.cls
+FAIL: test/vb6-sample/[Include]/HardcodeVB/Components/FoldTool.cls | test/vb6-sample/[Include]/HardcodeVB/Components/FoldTool.cls	Parse:    2.18 ms	  9911 bytes/ms	(ERROR [568, 67] - [569, 0])
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/GDITool.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/IAnimation.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/IFileNotifier.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/IFilter.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Instance.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/ISortHelp.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/ISubclass.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/IVarWlk.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/IWinHelp.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Keyboard.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/List.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/ListWalk.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Math.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/MinMax.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/ModTool.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Module.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Notify.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Notify.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Objects.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/OpenPic.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Palette.cls
+FAIL: test/vb6-sample/[Include]/HardcodeVB/Components/PalTool.cls | test/vb6-sample/[Include]/HardcodeVB/Components/PalTool.cls	Parse:    1.90 ms	  6800 bytes/ms	(ERROR [59, 28] - [59, 38])
+FAIL: test/vb6-sample/[Include]/HardcodeVB/Components/Parse.cls | test/vb6-sample/[Include]/HardcodeVB/Components/Parse.cls	Parse:    1.45 ms	  8153 bytes/ms	(ERROR [299, 40] - [299, 52])
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/PicGlass.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/PicTool.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Process.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/ProcTool.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Random.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/RegItem.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/RegItemWlk.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/RegNode.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/RegNodeWlk.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/RegTool.cls
+FAIL: test/vb6-sample/[Include]/HardcodeVB/Components/Settings.cls | test/vb6-sample/[Include]/HardcodeVB/Components/Settings.cls	Parse:    1.58 ms	  3759 bytes/ms	(ERROR [0, 0] - [190, 0])
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Shared.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Shared.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/ShareStr.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Short.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Shortcut.cls
+FAIL: test/vb6-sample/[Include]/HardcodeVB/Components/Sort.cls | test/vb6-sample/[Include]/HardcodeVB/Components/Sort.cls	Parse:    2.21 ms	  9721 bytes/ms	(ERROR [56, 42] - [56, 47])
+FAIL: test/vb6-sample/[Include]/HardcodeVB/Components/SortHelp.cls | test/vb6-sample/[Include]/HardcodeVB/Components/SortHelp.cls	Parse:    0.89 ms	  4717 bytes/ms	(ERROR [41, 53] - [42, 0])
+FAIL: test/vb6-sample/[Include]/HardcodeVB/Components/Split.cls | test/vb6-sample/[Include]/HardcodeVB/Components/Split.cls	Parse:    3.27 ms	  7488 bytes/ms	(ERROR [422, 56] - [422, 72])
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Stack.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Subclass.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Subclass.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/SysMenu.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/System.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Timer.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Timer.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/TrayIcon.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/UseFile.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/UseFolder.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/UseRegItems.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Utility.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Vector.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/VectorBool.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/VectorBoolWalker.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/VectorDbl.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/VectorDblWalker.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/VectorInt.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/VectorIntWalker.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/VectorLng.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/VectorLngWalker.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/VectorSng.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/VectorSngWalker.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/VectorStr.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/VectorStrWalker.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/VectorWlk.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Version.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/Video.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/WinAny.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Components/WinIter.cls
+FAIL: test/vb6-sample/[Include]/HardcodeVB/Components/WinTool.cls | test/vb6-sample/[Include]/HardcodeVB/Components/WinTool.cls	Parse:    1.81 ms	  6101 bytes/ms	(ERROR [0, 0] - [353, 0])
+OK: test/vb6-sample/[Include]/HardcodeVB/Controls/ListEnums.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Controls/ListItemWlk.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/CtlTool.bas
+FAIL: test/vb6-sample/[Include]/HardcodeVB/DrivesO.cls | test/vb6-sample/[Include]/HardcodeVB/DrivesO.cls	Parse:    0.38 ms	  4095 bytes/ms	(ERROR [45, 25] - [45, 26])
+OK: test/vb6-sample/[Include]/HardcodeVB/EnumProc.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/FileData.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/FileData.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/GlobModFilt.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/GlobWizMain.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/IStack.cls
+FAIL: test/vb6-sample/[Include]/HardcodeVB/LocalModule/BrowseBack.bas | test/vb6-sample/[Include]/HardcodeVB/LocalModule/BrowseBack.bas	Parse:    0.34 ms	  5024 bytes/ms	(ERROR [12, 67] - [13, 0])
+OK: test/vb6-sample/[Include]/HardcodeVB/LocalModule/Bytes.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/LocalModule/ComDlg.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/LocalModule/CtlTool.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/LocalModule/Debug.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/LocalModule/Declare.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/LocalModule/EnumVar.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/LocalModule/Errors.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/LocalModule/Gobals.bas
+FAIL: test/vb6-sample/[Include]/HardcodeVB/LocalModule/LightShell.bas | test/vb6-sample/[Include]/HardcodeVB/LocalModule/LightShell.bas	Parse:    1.42 ms	 14191 bytes/ms	(ERROR [49, 17] - [49, 33])
+OK: test/vb6-sample/[Include]/HardcodeVB/LocalModule/Link.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/LocalModule/P_About.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/LocalModule/P_Drive.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/LocalModule/P_Drives.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/LocalModule/P_IWinHelp.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/LocalModule/P_Keyboard.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/LocalModule/P_Module.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/LocalModule/P_Process.cls
+FAIL: test/vb6-sample/[Include]/HardcodeVB/LocalModule/P_Split.cls | test/vb6-sample/[Include]/HardcodeVB/LocalModule/P_Split.cls	Parse:    2.86 ms	  8566 bytes/ms	(ERROR [422, 56] - [422, 72])
+OK: test/vb6-sample/[Include]/HardcodeVB/LocalModule/P_Vector.cls
+FAIL: test/vb6-sample/[Include]/HardcodeVB/LocalModule/Parse.bas | test/vb6-sample/[Include]/HardcodeVB/LocalModule/Parse.bas	Parse:    1.33 ms	  8947 bytes/ms	(ERROR [302, 40] - [302, 52])
+OK: test/vb6-sample/[Include]/HardcodeVB/LocalModule/PicTool.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/LocalModule/Utility.bas
+FAIL: test/vb6-sample/[Include]/HardcodeVB/LocalModule/VB6Funcs.bas | test/vb6-sample/[Include]/HardcodeVB/LocalModule/VB6Funcs.bas	Parse:    0.61 ms	  7388 bytes/ms	(ERROR [96, 42] - [96, 54])
+OK: test/vb6-sample/[Include]/HardcodeVB/MenuItem.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/MenuList.cls
+FAIL: test/vb6-sample/[Include]/HardcodeVB/ModGlobDelFilt.cls | test/vb6-sample/[Include]/HardcodeVB/ModGlobDelFilt.cls	Parse:    1.32 ms	  6841 bytes/ms	(ERROR [111, 41] - [112, 0])
+OK: test/vb6-sample/[Include]/HardcodeVB/ModGlobFilt.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Null.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/ParseO.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/PrivPubFilt.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Problem.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/PubPrivFilt.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/RegTlb.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/RegTlbOld.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/ResProc.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/Sieve.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/Sieve.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Sieve/SieveBasExeN.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Sieve/SieveBasExeP.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Sieve/SieveGlobalN.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Sieve/SieveGlobalP.cls
+FAIL: test/vb6-sample/[Include]/HardcodeVB/SListbox.cls | test/vb6-sample/[Include]/HardcodeVB/SListbox.cls	Parse:    2.09 ms	  7533 bytes/ms	(ERROR [552, 53] - [553, 0])
+OK: test/vb6-sample/[Include]/HardcodeVB/SortOld.bas
+FAIL: test/vb6-sample/[Include]/HardcodeVB/SortRec.bas | test/vb6-sample/[Include]/HardcodeVB/SortRec.bas	Parse:    0.64 ms	  7574 bytes/ms	(ERROR [44, 34] - [44, 39])
+OK: test/vb6-sample/[Include]/HardcodeVB/StackCol.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/StackLst.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/StackVec.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/Thread.bas
+FAIL: test/vb6-sample/[Include]/HardcodeVB/TimeIt.bas | test/vb6-sample/[Include]/HardcodeVB/TimeIt.bas	Parse:    7.09 ms	  8596 bytes/ms	(ERROR [39, 35] - [39, 41])
+FAIL: test/vb6-sample/[Include]/HardcodeVB/TSort.bas | test/vb6-sample/[Include]/HardcodeVB/TSort.bas	Parse:    0.36 ms	  3310 bytes/ms	(ERROR [14, 53] - [15, 0])
+OK: test/vb6-sample/[Include]/HardcodeVB/TSysMenu.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/VB6ToVB5Main.bas
+OK: test/vb6-sample/[Include]/HardcodeVB/VBVerFilt.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/WFileHlp.cls
+FAIL: test/vb6-sample/[Include]/HardcodeVB/WFormHlp.cls | test/vb6-sample/[Include]/HardcodeVB/WFormHlp.cls	Parse:    0.38 ms	  5992 bytes/ms	(MISSING identifier [39, 38] - [39, 38])
+OK: test/vb6-sample/[Include]/HardcodeVB/Window.cls
+OK: test/vb6-sample/[Include]/HardcodeVB/WinFind.cls
+OK: test/vb6-sample/[Include]/LocalModules/7zip.bas
+OK: test/vb6-sample/[Include]/LocalModules/Algorithms.bas
+OK: test/vb6-sample/[Include]/LocalModules/ApiFileSystem.bas
+OK: test/vb6-sample/[Include]/LocalModules/ApiHelper.bas
+OK: test/vb6-sample/[Include]/LocalModules/ApiTime.bas
+OK: test/vb6-sample/[Include]/LocalModules/App.bas
+OK: test/vb6-sample/[Include]/LocalModules/App.cls
+OK: test/vb6-sample/[Include]/LocalModules/AppendString.cls
+OK: test/vb6-sample/[Include]/LocalModules/AppSetting.bas
+OK: test/vb6-sample/[Include]/LocalModules/Arrays.bas
+OK: test/vb6-sample/[Include]/LocalModules/AssistComboBox.cls
+OK: test/vb6-sample/[Include]/LocalModules/AutoSetting.cls
+OK: test/vb6-sample/[Include]/LocalModules/bookUrl.cls
+OK: test/vb6-sample/[Include]/LocalModules/Bytes.bas
+OK: test/vb6-sample/[Include]/LocalModules/ByteString.cls
+OK: test/vb6-sample/[Include]/LocalModules/CommonDialog.cls
+OK: test/vb6-sample/[Include]/LocalModules/CommonDialogLite.cls
+OK: test/vb6-sample/[Include]/LocalModules/dao.bas
+OK: test/vb6-sample/[Include]/LocalModules/Data Source.cls
+OK: test/vb6-sample/[Include]/LocalModules/Debug.bas
+OK: test/vb6-sample/[Include]/LocalModules/DGSwsHTTP.cls
+OK: test/vb6-sample/[Include]/LocalModules/DlgOpenDir.bas
+OK: test/vb6-sample/[Include]/LocalModules/Download.cls
+OK: test/vb6-sample/[Include]/LocalModules/DownloadEx.cls
+OK: test/vb6-sample/[Include]/LocalModules/DownloadProgress.cls
+OK: test/vb6-sample/[Include]/LocalModules/Dumper.bas
+FAIL: test/vb6-sample/[Include]/LocalModules/File.bas | test/vb6-sample/[Include]/LocalModules/File.bas	Parse:    4.22 ms	  8191 bytes/ms	(ERROR [1101, 16] - [1101, 18])
+OK: test/vb6-sample/[Include]/LocalModules/FileDialog.cls
+OK: test/vb6-sample/[Include]/LocalModules/FileEncrypt.bas
+OK: test/vb6-sample/[Include]/LocalModules/FileExecutor.bas
+OK: test/vb6-sample/[Include]/LocalModules/FileStreamIn.cls
+OK: test/vb6-sample/[Include]/LocalModules/FileSystem.bas
+OK: test/vb6-sample/[Include]/LocalModules/FolderBrowser.bas
+OK: test/vb6-sample/[Include]/LocalModules/FolderBrowser.cls
+OK: test/vb6-sample/[Include]/LocalModules/form.bas
+OK: test/vb6-sample/[Include]/LocalModules/Forms.bas
+OK: test/vb6-sample/[Include]/LocalModules/HM.bas
+OK: test/vb6-sample/[Include]/LocalModules/HtmlDOM.bas
+OK: test/vb6-sample/[Include]/LocalModules/HTMLProperty.cls
+OK: test/vb6-sample/[Include]/LocalModules/HtmlWeb.bas
+OK: test/vb6-sample/[Include]/LocalModules/HTTPConnection.cls
+FAIL: test/vb6-sample/[Include]/LocalModules/HttpHeader.bas | test/vb6-sample/[Include]/LocalModules/HttpHeader.bas	Parse:    0.84 ms	  6020 bytes/ms	(ERROR [99, 19] - [99, 21])
+FAIL: test/vb6-sample/[Include]/LocalModules/HttpHeader.cls | test/vb6-sample/[Include]/LocalModules/HttpHeader.cls	Parse:    1.28 ms	  5429 bytes/ms	(ERROR [46, 20] - [46, 23])
+OK: test/vb6-sample/[Include]/LocalModules/IApp.cls
+OK: test/vb6-sample/[Include]/LocalModules/ICharStream.cls
+OK: test/vb6-sample/[Include]/LocalModules/IDownloadClient.cls
+OK: test/vb6-sample/[Include]/LocalModules/infozip/InfoUnzip.bas
+OK: test/vb6-sample/[Include]/LocalModules/infozip/InfoUnZip.cls
+OK: test/vb6-sample/[Include]/LocalModules/infozip/InfoZip.bas
+OK: test/vb6-sample/[Include]/LocalModules/infozip/InfoZip.cls
+OK: test/vb6-sample/[Include]/LocalModules/infozip/InfoZipItem.cls
+FAIL: test/vb6-sample/[Include]/LocalModules/infozip/InfoZipItems.cls | test/vb6-sample/[Include]/LocalModules/infozip/InfoZipItems.cls	Parse:    0.51 ms	  5733 bytes/ms	(ERROR [85, 23] - [85, 24])
+OK: test/vb6-sample/[Include]/LocalModules/infozip/InfozipShared.bas
+OK: test/vb6-sample/[Include]/LocalModules/Ini.bas
+OK: test/vb6-sample/[Include]/LocalModules/iniText.cls
+OK: test/vb6-sample/[Include]/LocalModules/Internet.bas
+OK: test/vb6-sample/[Include]/LocalModules/InterNetGet.cls
+OK: test/vb6-sample/[Include]/LocalModules/ISetting.cls
+OK: test/vb6-sample/[Include]/LocalModules/ISubclass.cls
+OK: test/vb6-sample/[Include]/LocalModules/IWinHttp.cls
+OK: test/vb6-sample/[Include]/LocalModules/IWinHttpClient.cls
+OK: test/vb6-sample/[Include]/LocalModules/Language.bas
+OK: test/vb6-sample/[Include]/LocalModules/lassicIO.bas
+OK: test/vb6-sample/[Include]/LocalModules/Layout.bas
+FAIL: test/vb6-sample/[Include]/LocalModules/LightShell.bas | test/vb6-sample/[Include]/LocalModules/LightShell.bas	Parse:    1.53 ms	 13154 bytes/ms	(ERROR [49, 17] - [49, 33])
+FAIL: test/vb6-sample/[Include]/LocalModules/LiNInI_ISetting.cls | test/vb6-sample/[Include]/LocalModules/LiNInI_ISetting.cls	Parse:    3.03 ms	  6799 bytes/ms	(ERROR [240, 23] - [240, 34])
+FAIL: test/vb6-sample/[Include]/LocalModules/LiNInI_Standalone.cls | test/vb6-sample/[Include]/LocalModules/LiNInI_Standalone.cls	Parse:    2.68 ms	  7126 bytes/ms	(ERROR [249, 23] - [249, 34])
+FAIL: test/vb6-sample/[Include]/LocalModules/LiNInI.cls | test/vb6-sample/[Include]/LocalModules/LiNInI.cls	Parse:    1.57 ms	  6639 bytes/ms	(ERROR [342, 47] - [347, 23])
+OK: test/vb6-sample/[Include]/LocalModules/Localizer.cls
+OK: test/vb6-sample/[Include]/LocalModules/Lpffile.bas
+OK: test/vb6-sample/[Include]/LocalModules/Main.bas
+OK: test/vb6-sample/[Include]/LocalModules/MakeZhComment.cls
+OK: test/vb6-sample/[Include]/LocalModules/Map.cls
+OK: test/vb6-sample/[Include]/LocalModules/MDebug.bas
+OK: test/vb6-sample/[Include]/LocalModules/MenuArrHandle.cls
+OK: test/vb6-sample/[Include]/LocalModules/MFileSystem.bas
+OK: test/vb6-sample/[Include]/LocalModules/MFolderBrowser.bas
+OK: test/vb6-sample/[Include]/LocalModules/MParse.bas
+OK: test/vb6-sample/[Include]/LocalModules/MRU.cls
+FAIL: test/vb6-sample/[Include]/LocalModules/MRUFileList.cls | test/vb6-sample/[Include]/LocalModules/MRUFileList.cls	Parse:    0.66 ms	  5915 bytes/ms	(ERROR [138, 9] - [138, 10])
+OK: test/vb6-sample/[Include]/LocalModules/Music.bas
+OK: test/vb6-sample/[Include]/LocalModules/MUtility.bas
+FAIL: test/vb6-sample/[Include]/LocalModules/MYFAV.cls | test/vb6-sample/[Include]/LocalModules/MYFAV.cls	Parse:    0.52 ms	  4369 bytes/ms	(ERROR [33, 9] - [33, 11])
+OK: test/vb6-sample/[Include]/LocalModules/MZlib.bas
+OK: test/vb6-sample/[Include]/LocalModules/Object.cls
+OK: test/vb6-sample/[Include]/LocalModules/ObjectHelper.bas
+FAIL: test/vb6-sample/[Include]/LocalModules/omboboxHelper.bas | test/vb6-sample/[Include]/LocalModules/omboboxHelper.bas	Parse:    0.35 ms	  2547 bytes/ms	(ERROR [9, 0] - [9, 3])
+OK: test/vb6-sample/[Include]/LocalModules/ommonDialogLite.cls
+OK: test/vb6-sample/[Include]/LocalModules/omplex Data Consumer.cls
+OK: test/vb6-sample/[Include]/LocalModules/PathCollection.cls
+OK: test/vb6-sample/[Include]/LocalModules/PrivateProfile.bas
+OK: test/vb6-sample/[Include]/LocalModules/QuickWork.bas
+FAIL: test/vb6-sample/[Include]/LocalModules/ReaderViaHtml.cls | test/vb6-sample/[Include]/LocalModules/ReaderViaHtml.cls	Parse:    2.08 ms	  6434 bytes/ms	(ERROR [208, 48] - [209, 0])
+FAIL: test/vb6-sample/[Include]/LocalModules/RecentFile.cls | test/vb6-sample/[Include]/LocalModules/RecentFile.cls	Parse:    0.58 ms	  7856 bytes/ms	(ERROR [67, 34] - [67, 41])
+FAIL: test/vb6-sample/[Include]/LocalModules/Reg.cls | test/vb6-sample/[Include]/LocalModules/Reg.cls	Parse:    1.52 ms	  7881 bytes/ms	(ERROR [186, 22] - [186, 34])
+FAIL: test/vb6-sample/[Include]/LocalModules/Registry.bas | test/vb6-sample/[Include]/LocalModules/Registry.bas	Parse:    1.73 ms	 11744 bytes/ms	(ERROR [20, 2] - [20, 3])
+OK: test/vb6-sample/[Include]/LocalModules/Registry.cls
+OK: test/vb6-sample/[Include]/LocalModules/Rss.cls
+OK: test/vb6-sample/[Include]/LocalModules/Setting.cls
+OK: test/vb6-sample/[Include]/LocalModules/Shell32.bas
+OK: test/vb6-sample/[Include]/LocalModules/ssreader/BookInfo.cls
+FAIL: test/vb6-sample/[Include]/LocalModules/ssreader/BookTask.cls | test/vb6-sample/[Include]/LocalModules/ssreader/BookTask.cls	Parse:    2.06 ms	 10304 bytes/ms	(ERROR [577, 0] - [577, 3])
+OK: test/vb6-sample/[Include]/LocalModules/ssreader/BookTester.cls
+OK: test/vb6-sample/[Include]/LocalModules/ssreader/BookURL.cls
+OK: test/vb6-sample/[Include]/LocalModules/ssreader/ITaskNotify.cls
+OK: test/vb6-sample/[Include]/LocalModules/ssreader/JPGBookHandler.cls
+FAIL: test/vb6-sample/[Include]/LocalModules/ssreader/SSReader.bas | test/vb6-sample/[Include]/LocalModules/ssreader/SSReader.bas	Parse:    5.70 ms	 10011 bytes/ms	(ERROR [262, 44] - [262, 47])
+OK: test/vb6-sample/[Include]/LocalModules/ssreader/TaskDownloader_OLD.cls
+OK: test/vb6-sample/[Include]/LocalModules/ssreader/TaskDownloader.cls
+OK: test/vb6-sample/[Include]/LocalModules/ssreader/TaskRuner.cls
+FAIL: test/vb6-sample/[Include]/LocalModules/SSRLib.bas | test/vb6-sample/[Include]/LocalModules/SSRLib.bas	Parse:    1.14 ms	  7220 bytes/ms	(ERROR [43, 16] - [43, 18])
+OK: test/vb6-sample/[Include]/LocalModules/StdFonts.bas
+OK: test/vb6-sample/[Include]/LocalModules/StrCollection.cls
+OK: test/vb6-sample/[Include]/LocalModules/String.bas
+OK: test/vb6-sample/[Include]/LocalModules/String.cls
+OK: test/vb6-sample/[Include]/LocalModules/StringAnalyser.cls
+OK: test/vb6-sample/[Include]/LocalModules/StringBuilder.cls
+OK: test/vb6-sample/[Include]/LocalModules/StringBuilder(Copyed).cls
+OK: test/vb6-sample/[Include]/LocalModules/StringChinese.cls
+OK: test/vb6-sample/[Include]/LocalModules/StringCollection.cls
+OK: test/vb6-sample/[Include]/LocalModules/StringLink.cls
+OK: test/vb6-sample/[Include]/LocalModules/StringMap.cls
+OK: test/vb6-sample/[Include]/LocalModules/Subclass.cls
+OK: test/vb6-sample/[Include]/LocalModules/System.bas
+OK: test/vb6-sample/[Include]/LocalModules/TempFile.cls
+OK: test/vb6-sample/[Include]/LocalModules/TestCStringMap.bas
+OK: test/vb6-sample/[Include]/LocalModules/Timer.bas
+OK: test/vb6-sample/[Include]/LocalModules/Timer.cls
+OK: test/vb6-sample/[Include]/LocalModules/ToPY.bas
+OK: test/vb6-sample/[Include]/LocalModules/Unzip.bas
+OK: test/vb6-sample/[Include]/LocalModules/Unzip.cls
+OK: test/vb6-sample/[Include]/LocalModules/UseZipProtocol.bas
+OK: test/vb6-sample/[Include]/LocalModules/UTF8.cls
+OK: test/vb6-sample/[Include]/LocalModules/Utility.bas
+FAIL: test/vb6-sample/[Include]/LocalModules/VBExe.bas | test/vb6-sample/[Include]/LocalModules/VBExe.bas	Parse:    0.19 ms	  1965 bytes/ms	(ERROR [7, 8] - [7, 16])
+FAIL: test/vb6-sample/[Include]/LocalModules/VBSetting.cls | test/vb6-sample/[Include]/LocalModules/VBSetting.cls	Parse:    0.99 ms	  7213 bytes/ms	(MISSING identifier [183, 43] - [183, 43])
+OK: test/vb6-sample/[Include]/LocalModules/VBSource.bas
+OK: test/vb6-sample/[Include]/LocalModules/Windows.bas
+FAIL: test/vb6-sample/[Include]/LocalModules/WinHTTP.cls | test/vb6-sample/[Include]/LocalModules/WinHTTP.cls	Parse:    2.29 ms	  6767 bytes/ms	(ERROR [255, 0] - [255, 3])
+OK: test/vb6-sample/[Include]/LocalModules/WinHttpDownload.cls
+OK: test/vb6-sample/[Include]/LocalModules/WinHttpDownloadEx.cls
+FAIL: test/vb6-sample/[Include]/LocalModules/WinHttpSimple_OLD.cls | test/vb6-sample/[Include]/LocalModules/WinHttpSimple_OLD.cls	Parse:    2.02 ms	  8572 bytes/ms	(ERROR [273, 0] - [273, 3])
+FAIL: test/vb6-sample/[Include]/LocalModules/WinHttpSimple.cls | test/vb6-sample/[Include]/LocalModules/WinHttpSimple.cls	Parse:    2.10 ms	  8640 bytes/ms	(ERROR [296, 0] - [296, 3])
+OK: test/vb6-sample/[Include]/LocalModules/WinInet.bas
+OK: test/vb6-sample/[Include]/LocalModules/zbook/ZBook.bas
+FAIL: test/vb6-sample/[Include]/LocalModules/zbook/ZBookComment.cls | test/vb6-sample/[Include]/LocalModules/zbook/ZBookComment.cls	Parse:    1.34 ms	  9379 bytes/ms	(ERROR [125, 24] - [125, 26])
+OK: test/vb6-sample/[Include]/LocalModules/zbook/ZBookMake.bas
+FAIL: test/vb6-sample/[Include]/LocalModules/zbook/ZBookmark.cls | test/vb6-sample/[Include]/LocalModules/zbook/ZBookmark.cls	Parse:    0.53 ms	  6233 bytes/ms	(ERROR [43, 13] - [43, 22])
+FAIL: test/vb6-sample/[Include]/LocalModules/zbook/ZBookTemplate.bas | test/vb6-sample/[Include]/LocalModules/zbook/ZBookTemplate.bas	Parse:    2.64 ms	  4690 bytes/ms	(ERROR [211, 59] - [211, 65])
+OK: test/vb6-sample/[Include]/LocalModules/Zlib.bas
+OK: test/vb6-sample/[Include]/LocalModules/Zlib.cls
+OK: test/vb6-sample/[Library]/ssreader/CBookInfo.cls
+FAIL: test/vb6-sample/[Library]/ssreader/MSSReader.bas | test/vb6-sample/[Library]/ssreader/MSSReader.bas	Parse:    2.06 ms	  8287 bytes/ms	(ERROR [110, 44] - [110, 47])
+OK: test/vb6-sample/[Samples]/vbhash/Demo1/AHash.cls
+OK: test/vb6-sample/[Samples]/vbhash/Demo1/Collect.cls
+OK: test/vb6-sample/[Samples]/vbhash/Demo1/CStopWatch.cls
+OK: test/vb6-sample/[Samples]/vbhash/Demo1/Node.cls
+OK: test/vb6-sample/[Samples]/vbhash/Demo1/OHash.bas
+OK: test/vb6-sample/[Samples]/vbhash/Demo1/OHash.cls
+OK: test/vb6-sample/[Samples]/vbhash/Demo1/Test.bas
+OK: test/vb6-sample/[Template]/Interface/IContructor.cls
+OK: test/vb6-sample/[Template]/Interface/IDestructor.cls
+OK: test/vb6-sample/[Template]/Interface/IObject.cls
+OK: test/vb6-sample/[Template]/Interface/IObjectFirend.cls
+OK: test/vb6-sample/[Template]/Projects/CApp.cls
+FAIL: test/vb6-sample/[Template]/Projects/cHandle.cls | test/vb6-sample/[Template]/Projects/cHandle.cls	Parse:    0.44 ms	  1928 bytes/ms	(MISSING ":" [14, 29] - [14, 29])
+OK: test/vb6-sample/[Template]/Projects/dhtml.bas
+OK: test/vb6-sample/[Template]/Projects/LProjectApp.cls
+OK: test/vb6-sample/[Template]/Projects/LProjectMain.bas
+OK: test/vb6-sample/ArchReader/CArchive.cls
+OK: test/vb6-sample/ArchReader/CDeclaration.bas
+OK: test/vb6-sample/ArchReader/CDocumentInfo.cls
+OK: test/vb6-sample/ArchReader/Class1.cls
+OK: test/vb6-sample/ArchReader/Core/CDocument.cls
+OK: test/vb6-sample/ArchReader/Core/CReader.cls
+OK: test/vb6-sample/ArchReader/Core/IDocumentHandler.cls
+OK: test/vb6-sample/ArchReader/Core/IReader.cls
+OK: test/vb6-sample/ArchReader/Core/IReaderHandler.cls
+OK: test/vb6-sample/ArchReader/Core/IViewer.cls
+OK: test/vb6-sample/ArchReader/Core/IViewerHandler.cls
+OK: test/vb6-sample/ArchReader/Core/MDefinition.bas
+OK: test/vb6-sample/ArchReader/CProcesser.cls
+OK: test/vb6-sample/ArchReader/CStringPair.cls
+OK: test/vb6-sample/ArchReader/CURLInfo.cls
+OK: test/vb6-sample/ArchReader/modShareFunction.bas
+OK: test/vb6-sample/ArchReader/modZhPReader.bas
+FAIL: test/vb6-sample/ArchReader/modZhReader.bas | test/vb6-sample/ArchReader/modZhReader.bas	Parse:    2.20 ms	  5903 bytes/ms	(ERROR [190, 48] - [191, 0])
+OK: test/vb6-sample/ArchReader/modZhSReader.bas
+OK: test/vb6-sample/ArtCorridor/Source/Main.bas
+OK: test/vb6-sample/ArtCorridor/Source/modShareFunction.bas
+FAIL: test/vb6-sample/bas/app.bas | test/vb6-sample/bas/app.bas	Parse:    0.30 ms	  3664 bytes/ms	(ERROR [35, 12] - [35, 14])
+OK: test/vb6-sample/bas/ChmMake.bas
+OK: test/vb6-sample/bas/Common.bas
+FAIL: test/vb6-sample/bas/file.bas | test/vb6-sample/bas/file.bas	Parse:    2.94 ms	  7692 bytes/ms	(ERROR [209, 0] - [210, 0])
+FAIL: test/vb6-sample/bas/HTMLFILE.bas | test/vb6-sample/bas/HTMLFILE.bas	Parse:    0.76 ms	  4999 bytes/ms	(ERROR [44, 14] - [44, 26])
+FAIL: test/vb6-sample/bas/kerak.bas | test/vb6-sample/bas/kerak.bas	Parse:    0.96 ms	  4790 bytes/ms	(ERROR [50, 12] - [50, 14])
+FAIL: test/vb6-sample/bas/kerak2.bas | test/vb6-sample/bas/kerak2.bas	Parse:    1.02 ms	  4348 bytes/ms	(ERROR [77, 12] - [77, 14])
+OK: test/vb6-sample/bas/lpffile.bas
+FAIL: test/vb6-sample/bas/modLReader.bas | test/vb6-sample/bas/modLReader.bas	Parse:    1.58 ms	  7622 bytes/ms	(ERROR [310, 11] - [310, 21])
+OK: test/vb6-sample/bas/PDFlin.bas
+OK: test/vb6-sample/bas/PDG.bas
+OK: test/vb6-sample/bas/PDGPRO.bas
+OK: test/vb6-sample/bas/PDGVIEW.bas
+OK: test/vb6-sample/bas/string.bas
+OK: test/vb6-sample/bas/system.bas
+OK: test/vb6-sample/bas/ZIPReaderPUBLIC.bas
+OK: test/vb6-sample/bas/ZtmMake.bas
+OK: test/vb6-sample/bas/ZTMReader.bas
+OK: test/vb6-sample/bas/ZTMReaderbeta.bas
+OK: test/vb6-sample/BinTree/btString.cls
+OK: test/vb6-sample/BinTree/cHashTable.cls
+OK: test/vb6-sample/BinTree/cStringVentor.cls
+OK: test/vb6-sample/bookUrl/CbookUrl.cls
+OK: test/vb6-sample/bookUrl/CHander.cls
+OK: test/vb6-sample/bookUrl/MBookUrl.bas
+OK: test/vb6-sample/chmMake/ChmMake.bas
+OK: test/vb6-sample/class/Crss.cls
+FAIL: test/vb6-sample/class/MYFAV.cls | test/vb6-sample/class/MYFAV.cls	Parse:    0.55 ms	  4144 bytes/ms	(ERROR [33, 9] - [33, 11])
+FAIL: test/vb6-sample/class/ZTM.cls | test/vb6-sample/class/ZTM.cls	Parse:    0.50 ms	  4725 bytes/ms	(ERROR [40, 16] - [40, 18])
+OK: test/vb6-sample/ClassTemplate/ClassBuilder/App.cls
+OK: test/vb6-sample/ClassTemplate/ClassBuilder/Class1.cls
+OK: test/vb6-sample/ClassTemplate/ClassBuilder/FilterHelper.bas
+OK: test/vb6-sample/ClassTemplate/ClassBuilder/IFilterReporter.cls
+OK: test/vb6-sample/ClassTemplate/ClassBuilder/ITemplateFilter.cls
+OK: test/vb6-sample/ClassTemplate/ClassBuilder/ITypeInfo.cls
+OK: test/vb6-sample/ClassTemplate/ClassBuilder/Main.bas
+OK: test/vb6-sample/ClassTemplate/ClassBuilder/Parse.bas
+OK: test/vb6-sample/ClassTemplate/ClassBuilder/Settings.bas
+OK: test/vb6-sample/ClassTemplate/ClassBuilder/TextBoxReportor.cls
+FAIL: test/vb6-sample/ClassTemplate/ClassBuilder/Type.cls | test/vb6-sample/ClassTemplate/ClassBuilder/Type.cls	Parse:    0.85 ms	  4725 bytes/ms	(ERROR [65, 14] - [65, 20])
+OK: test/vb6-sample/ClassTemplate/ClassBuilder/TypeStyle.cls
+FAIL: test/vb6-sample/ClassTemplate/ClassTemplate.bas | test/vb6-sample/ClassTemplate/ClassTemplate.bas	Parse:    0.77 ms	  6415 bytes/ms	(ERROR [108, 67] - [108, 74])
+OK: test/vb6-sample/ClassTemplate/Filters/FilterConstVar.cls
+OK: test/vb6-sample/ClassTemplate/Filters/FilterModule.cls
+OK: test/vb6-sample/ClassTemplate/Filters/FilterTypeName.cls
+OK: test/vb6-sample/ClassTemplate/Filters/FilterTypeOP.cls
+FAIL: test/vb6-sample/ClassTemplate/TemplateBuilder.cls | test/vb6-sample/ClassTemplate/TemplateBuilder.cls	Parse:    0.63 ms	  5683 bytes/ms	(MISSING ":" [37, 34] - [37, 34])
+OK: test/vb6-sample/ClassTemplate/TemplateHelper.bas
+OK: test/vb6-sample/ClassTemplate/TemplateType.bas
+OK: test/vb6-sample/ClassTemplate/TemplateType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLAType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLBType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLCType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLDType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLEType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLFType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLGType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLHType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLIType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLJType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLKType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLLType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLMType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLNType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLOType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLPType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLQType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLRType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLSType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLTType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLUType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLVType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLWType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLXType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLYType.cls
+OK: test/vb6-sample/ClassTemplate/TemplateType/TPLZType.cls
+OK: test/vb6-sample/ClassTemplate/Test.bas
+OK: test/vb6-sample/ClassTemplate/TypeInfo.bas
+OK: test/vb6-sample/CreateFolderIndex/MMAIN.bas
+OK: test/vb6-sample/dllFolder_Browser/cBrowseForFolder.cls
+FAIL: test/vb6-sample/dllFolder_Browser/cCaptureBF.cls | test/vb6-sample/dllFolder_Browser/cCaptureBF.cls	Parse:    0.76 ms	  8533 bytes/ms	(ERROR [179, 3] - [179, 11])
+OK: test/vb6-sample/dllFolder_Browser/ICaptureBF.cls
+FAIL: test/vb6-sample/dllFolder_Browser/mBrowseForFolder.bas | test/vb6-sample/dllFolder_Browser/mBrowseForFolder.bas	Parse:    2.20 ms	  2279 bytes/ms	(ERROR [61, 66] - [62, 0])
+OK: test/vb6-sample/dllFolder_Browser/mDebugMsg.bas
+OK: test/vb6-sample/Fac/CJob.cls
+OK: test/vb6-sample/Fac/CMoney.cls
+OK: test/vb6-sample/Fac/CProduct.cls
+OK: test/vb6-sample/Fac/CWorker.cls
+OK: test/vb6-sample/Fac/CWorkFlow.cls
+OK: test/vb6-sample/Fac/CWorkRecord.cls
+OK: test/vb6-sample/Fac/CWorks.cls
+OK: test/vb6-sample/fgbookUrl/CbookUrl.cls
+OK: test/vb6-sample/fgbookUrl/CHander.cls
+OK: test/vb6-sample/fgbookUrl/MBookUrl.bas
+OK: test/vb6-sample/FirefoxPortableLoader/MMain.bas
+OK: test/vb6-sample/FolderBrowser/FolderBrowser.bas
+OK: test/vb6-sample/FolderBrowser/FolderBrowser.cls
+OK: test/vb6-sample/FolderBrowser/Test.bas
+OK: test/vb6-sample/GetssLib/Modules/MTaskman.bas
+OK: test/vb6-sample/GetssLib/SSLibTaskman/CApp.cls
+OK: test/vb6-sample/GetssLib/SSLibTaskman/Class1.cls
+OK: test/vb6-sample/GetssLib/SSLibTaskman/Context/Handler.cls
+FAIL: test/vb6-sample/GetssLib/SSLibTaskman/CTask.cls | test/vb6-sample/GetssLib/SSLibTaskman/CTask.cls	Parse:    2.01 ms	 10990 bytes/ms	(ERROR [598, 0] - [598, 3])
+OK: test/vb6-sample/GetssLib/SSLibTaskman/ITaskNotify.cls
+FAIL: test/vb6-sample/GetssLib/SSLibTaskman/sslib.bas | test/vb6-sample/GetssLib/SSLibTaskman/sslib.bas	Parse:    1.07 ms	  6001 bytes/ms	(ERROR [46, 44] - [46, 47])
+OK: test/vb6-sample/HtmlParser/Module1.bas
+OK: test/vb6-sample/HtmlParser/MTEST.bas
+FAIL: test/vb6-sample/iebho/cHanderForMimima.cls | test/vb6-sample/iebho/cHanderForMimima.cls	Parse:    0.39 ms	  3270 bytes/ms	(MISSING ":" [15, 29] - [15, 29])
+FAIL: test/vb6-sample/iebho/cHandleForIElOG.cls | test/vb6-sample/iebho/cHandleForIElOG.cls	Parse:    0.36 ms	  7202 bytes/ms	(MISSING ":" [14, 29] - [14, 29])
+FAIL: test/vb6-sample/iebho/CToolKit.cls | test/vb6-sample/iebho/CToolKit.cls	Parse:    0.31 ms	  5760 bytes/ms	(MISSING ":" [15, 29] - [15, 29])
+OK: test/vb6-sample/IeSaveText/IeSaveText.cls
+OK: test/vb6-sample/IncludeAll/ModuleMain.bas
+OK: test/vb6-sample/InvisibleRun/MMain.bas
+OK: test/vb6-sample/lBlueSky/modHttpServer.bas
+FAIL: test/vb6-sample/lContextMenu/Handler.cls | test/vb6-sample/lContextMenu/Handler.cls	Parse:    1.69 ms	  8548 bytes/ms	(MISSING ":" [43, 17] - [43, 17])
+OK: test/vb6-sample/lContextMenu/IContextMenuCallback.cls
+OK: test/vb6-sample/lContextMenu/mdlContextMenu.bas
+OK: test/vb6-sample/lContextMenu/mdlFilesFromIDO.bas
+OK: test/vb6-sample/lContextMenu/mdlFunctions.bas
+FAIL: test/vb6-sample/LExplorer/modLExplorer.bas | test/vb6-sample/LExplorer/modLExplorer.bas	Parse:    3.24 ms	  6265 bytes/ms	(ERROR [509, 59] - [509, 65])
+OK: test/vb6-sample/lin-zip/IInternetProtocolInfo.cls
+OK: test/vb6-sample/lin-zip/Mlin-zip.bas
+OK: test/vb6-sample/lin-zip/modReadFunc.bas
+FAIL: test/vb6-sample/lin-zip/zipHandler.cls | test/vb6-sample/lin-zip/zipHandler.cls	Parse:    2.27 ms	  8096 bytes/ms	(MISSING ":" [16, 18] - [16, 18])
+OK: test/vb6-sample/LiNVBLib/CApp.cls
+OK: test/vb6-sample/LiNVBLib/Class1.cls
+OK: test/vb6-sample/LiNVBLib/MMain.bas
+OK: test/vb6-sample/LiNVBLib/Module1.bas
+OK: test/vb6-sample/LiNVBLib/MTEST.bas
+OK: test/vb6-sample/LoadWow/Main.bas
+OK: test/vb6-sample/Lookout/lookout.bas
+OK: test/vb6-sample/LTest/modTest.bas
+OK: test/vb6-sample/lUseZip/CPathNameCollection.cls
+OK: test/vb6-sample/lUseZip/cUnZip.cls
+OK: test/vb6-sample/lUseZip/cZip.cls
+OK: test/vb6-sample/lUseZip/CZipItem.cls
+FAIL: test/vb6-sample/lUseZip/CZitItems.cls | test/vb6-sample/lUseZip/CZitItems.cls	Parse:    0.43 ms	  6797 bytes/ms	(ERROR [85, 23] - [85, 24])
+OK: test/vb6-sample/lUseZip/gCUtility.cls
+OK: test/vb6-sample/lUseZip/modShareFunction.bas
+OK: test/vb6-sample/lUseZip/MTestZip.bas
+OK: test/vb6-sample/lUseZip/mUnzip.bas
+OK: test/vb6-sample/lUseZip/mZip.bas
+OK: test/vb6-sample/lUseZip/UnzipConstants.cls
+OK: test/vb6-sample/MakeZhC/MakeZhc.bas
+OK: test/vb6-sample/MyMusic/rebuilddir.bas
+OK: test/vb6-sample/netCanoe/clsLakefront.cls
+OK: test/vb6-sample/NextPage/JetCar.cls
+OK: test/vb6-sample/NextPage/NextPage.bas
+OK: test/vb6-sample/oevbext/imageGarden.cls
+OK: test/vb6-sample/practiceCOM/contextText.cls
+OK: test/vb6-sample/QuickWork/Inet.cls
+FAIL: test/vb6-sample/QuickWork/mainQuickWork.bas | test/vb6-sample/QuickWork/mainQuickWork.bas	Parse:    3.54 ms	  8167 bytes/ms	(ERROR [508, 21] - [508, 23])
+OK: test/vb6-sample/QuickWork/MFileSystem.bas
+OK: test/vb6-sample/QuickWork/Module1.bas
+OK: test/vb6-sample/rssbho/forIE.cls
+FAIL: test/vb6-sample/rssbho/RSSBHO.cls | test/vb6-sample/rssbho/RSSBHO.cls	Parse:    1.72 ms	  6962 bytes/ms	(MISSING ":" [73, 29] - [73, 29])
+OK: test/vb6-sample/SSDownload/CAutoSetting.cls
+OK: test/vb6-sample/SSDownload/CiniText.cls
+OK: test/vb6-sample/SSDownload/CLiNInI.cls
+OK: test/vb6-sample/SSDownload/CSetting.cls
+FAIL: test/vb6-sample/ssLibBase/MSSReader.bas | test/vb6-sample/ssLibBase/MSSReader.bas	Parse:    1.14 ms	  7173 bytes/ms	(ERROR [43, 16] - [43, 18])
+FAIL: test/vb6-sample/ssMdbQuery/Mainfrm.bas | test/vb6-sample/ssMdbQuery/Mainfrm.bas	Parse:    2.70 ms	  7142 bytes/ms	(MISSING identifier [296, 56] - [296, 56])
+OK: test/vb6-sample/SyncDirectory/CApp.cls
+OK: test/vb6-sample/TestVSS/Algorithms.bas
+OK: test/vb6-sample/toolKitIDLgen/CDummy.cls
+OK: test/vb6-sample/toolKitIDLgen/CTest.cls
+OK: test/vb6-sample/toolKitIDLgen/IArchiveItem.cls
+OK: test/vb6-sample/toolKitIDLgen/IArchiveItems.cls
+OK: test/vb6-sample/toolKitIDLgen/ILString.cls
+OK: test/vb6-sample/toolKitIDLgen/IUnzip.cls
+OK: test/vb6-sample/toolKitIDLgen/MTest.bas
+OK: test/vb6-sample/txtReader/modtxtReader.bas
+OK: test/vb6-sample/XUnpack/XUNPack.bas
+OK: test/vb6-sample/zhReader/Source/IReader.cls
+OK: test/vb6-sample/zhReader/Source/modShareFunction.bas
+OK: test/vb6-sample/zhReader/Source/modZhPReader.bas
+FAIL: test/vb6-sample/zhReader/Source/modZhReader.bas | test/vb6-sample/zhReader/Source/modZhReader.bas	Parse:    2.03 ms	  6398 bytes/ms	(ERROR [190, 48] - [191, 0])
+OK: test/vb6-sample/zhReader/Source/modZhSReader.bas
+OK: test/vb6-sample/zipLoader/zipLoader.bas
+OK: test/vb6-sample/zipProtocol/IInternetProtocolInfo.cls
+OK: test/vb6-sample/zipProtocol/modReadFunc.bas
+FAIL: test/vb6-sample/zipProtocol/zipHandler.cls | test/vb6-sample/zipProtocol/zipHandler.cls	Parse:    1.27 ms	  7358 bytes/ms	(MISSING ":" [43, 18] - [43, 18])
+OK: test/vb6-sample/zipProtocolBeta/IInternetProtocolInfo.cls
+OK: test/vb6-sample/zipProtocolBeta/modReadFunc.bas
+FAIL: test/vb6-sample/zipProtocolBeta/zipHandler.cls | test/vb6-sample/zipProtocolBeta/zipHandler.cls	Parse:    1.92 ms	 10109 bytes/ms	(MISSING ":" [43, 18] - [43, 18])
+OK: test/vb6-sample/zpShower/Source/Main.bas
+OK: test/vb6-sample/zpShower/Source/modShareFunction.bas
