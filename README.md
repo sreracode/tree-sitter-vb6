@@ -95,20 +95,54 @@ vim.filetype.add({
 
 ## Test status
 
-- **84/84** corpus tests passing
-- **192/197** [proleap-vb6-parser](https://github.com/uwol/proleap-vb6-parser) integration files parse clean
+- **90/90** corpus tests passing (`npx tree-sitter test`)
+- **781/784** real-world `.cls`/`.bas` files parse without errors (99.6%)
 
-Run integration tests:
+### Real-world test corpus
+
+`test/vb6-sample/` contains 784 `.cls` and `.bas` files sourced from the [badcodes/vb6](https://github.com/badcodes/vb6) open-source VB6 repository. A small number of files with non-standard or illegal syntax were removed from the original set.
+
+Parse results are cached in `test/vb6-errors.tsv` (format: `FAIL|filepath|error_node|source_line` or `OK|filepath||`).
+
+Rebuild the cache after grammar changes:
 
 ```bash
-find test/proleap -name "*.cls" -o -name "*.bas" -o -name "*.frm" | \
-  xargs npx tree-sitter parse | grep -c ERROR || echo "0 errors"
+find test/vb6-sample -name "*.cls" -o -name "*.bas" | sort | while read f; do
+  first=$(tree-sitter parse "$f" 2>/dev/null | grep -m1 "ERROR\|MISSING")
+  if [ -n "$first" ]; then
+    row=$(echo "$first" | grep -oP '\[(\d+),' | head -1 | tr -dc '0-9')
+    src=$(sed -n "$((row+1))p" "$f" 2>/dev/null)
+    printf 'FAIL|%s|%s|%s\n' "$f" "$first" "$src"
+  else
+    printf 'OK|%s||\n' "$f"
+  fi
+done > test/vb6-errors.tsv
+```
+
+Summarise results from the cache (no re-parsing needed):
+
+```bash
+awk -F'|' '$1=="FAIL"{c++} $1=="OK"{ok++} END{print "FAIL:"c, "OK:"ok}' test/vb6-errors.tsv
+```
+
+### Known failures (3 files)
+
+All three files use a conditional-compilation trick where `#If … #End If` wraps only the Sub/Function *signature* (not the body), with the shared body following `#End If`. This requires splitting a `sub_declaration` across a compiler-directive boundary, which is not supported by the current grammar.
+
+```vb
+#If fComponent Then
+Sub DrawImage(imlst As Object, ...)    ' signature only — no body here
+#Else
+Sub DrawImage(imlst As Control, ...)
+#End If
+    ImageList_Draw ...                  ' shared body
+End Sub
 ```
 
 ## Known limitations
 
 - `Circle` graphics statement (special `(x,y),radius` syntax)
-- `#If Win32 Then ... #End If` conditional compilation directives
+- `f(x).Method args` call syntax (method call on a function/index result without `Call` keyword)
 - VB6 keywords (`Sub`, `If`, `Dim`, etc.) are not syntax-highlighted — `kw()` uses case-insensitive regex which cannot be matched by string in tree-sitter queries
 
 ## Development
