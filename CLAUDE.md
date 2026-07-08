@@ -1,132 +1,120 @@
-# tree-sitter-vb6 — 待修 Grammar 問題
+# tree-sitter-vb6 — Grammar 維護手冊
 
-測試語料庫：`/tmp/vb6-sample/`（badcodes/vb6 clone，已刪除非法語法檔案）
-目前通過率：~90.5%（200 個 .cls/.bas 檔）
+## 正確率基準（不得退步）
 
-## 優先修復順序
+每次改 grammar.js 後必須全部通過：
 
-### 1. 多維陣列 LHS 賦值 `arr(i, j) = val`（最廣泛）
-
-**症狀**
-```vb
-mHeaderMap(1, 1) = sHeaderMap(0)
-result(0, i) = Trim$(Left$(s, n))
-```
-
-**原因**  
-`call_statement` 的 `_ambiguous_identifier optional(argument_list_no_parens)` 形式攔截了這個 pattern：
-- 把 `mHeaderMap` 當成 call 的 identifier
-- 把 `(1, 1) = sHeaderMap(0)` 當成 argument_list_no_parens
-- `(1, 1)` 在 parenthesized_expression 裡有 comma 所以 ERROR
-
-單維 `arr(1) = val` 也被誤解析為 call_statement（`(1) = x` 被當成比較式不報錯，但 AST 是錯的）。
-
-**修法方向**  
-在 `conflicts` 加入 `[$.assignment_statement, $.call_statement, $.index_expression]` 三方衝突，
-或在 `assignment_statement` 加 `prec` 讓它在 `lhs(index_expression) '='` 情境下優先。
-也可參考現有的 `array_copy_statement`（空括號版本）作為範本。
-
----
-
-### 2. 括號識別符 `[identifier]`
-
-**症狀**
-```vb
-Public Enum KeyRoot
-    [HKEY_CLASSES_ROOT] = &H80000000
-    [HKEY_CURRENT_CONFIG] = &H80000005
-End Enum
-Set NewEnum = mCol.[_NewEnum]
-```
-
-**原因**  
-Grammar 沒有 `'[' ... ']'` 這個 token 形式。VB6 允許用中括號包住關鍵字或含特殊字元的識別符。
-
-**修法方向**  
-在 `identifier` 或 `_ambiguous_identifier` 加入：
-```js
-token(seq('[', /[^\]]+/, ']'))
-```
-並在 `member_access_expression` 的 name field 也允許此形式。
-
----
-
-### 3. 巢狀 inline If
-
-**症狀**
-```vb
-If cMax <> -1 Then If c >= cMax Then Exit Do
-```
-
-**原因**  
-`inline_statement`（`inline_if_statement` 的 consequence）不允許另一個 `If` 作為子句。
-
-**修法方向**  
-在 `inline_statement` 加入 `$.inline_if_statement`：
-```js
-inline_statement: $ => choice(
-  $.inline_if_statement,   // 加這行
-  seq(kw('GoTo'), ...),
-  ...
-)
-```
-注意 `inline_if_statement` 本身引用 `inline_statement`，tree-sitter 允許這種遞迴。
-
----
-
-### 4. With 區塊方法在 inline If 內
-
-**症狀**
-```vb
-If iLo < iHi Then .Swap aTarget(iLo), aTarget(iHi)
-```
-
-**原因**  
-`inline_statement` 的 `seq($.with_member_access_expression, optional($.argument_list_no_parens))` 
-在 inline If 後應該可用，但有衝突未解決。待查 conflict 訊息。
-
----
-
-### 5. 數字行號（低優先）
-
-**症狀**
-```vb
-100 Add_UniqueItem = False
-200 GoTo 300
-```
-
-**原因**  
-Grammar 不支援 BASIC 式數字行號前綴。`label_statement` 只支援 `identifier ':'`。
-
-**修法方向**  
-在 `statement` 或 `block` 加入 `optional(integer_literal)` 前綴，或新增 `line_number_label` rule。
-
----
+| 測試集 | 基準 | 指令 |
+|--------|------|------|
+| corpus tests | **90/90** | `npx tree-sitter test` |
+| vb6-sample | **781/784** (99.6%) | 見下方 TSV 指令 |
+| proleap | **191/196** | `find test/proleap -name "*.cls" -o -name "*.bas" \| ...` |
 
 ## 工作流程
 
 ```bash
-cd /Users/asteroid/Code/tree-sitter-vb6
-
 # 修改 grammar.js 後
-npx tree-sitter generate
+npx tree-sitter generate        # Unresolved conflict → 必須修；unnecessary conflict → 可忽略
 
-# 跑 corpus test
+# corpus test（必須 90/90）
 npx tree-sitter test
 
-# 量測通過率（不要重新 parse 已知結果，直接跑）
-find /tmp/vb6-sample -name "*.cls" -o -name "*.bas" | sort | head -200 | while read f; do
-  npx tree-sitter parse "$f" 2>&1 | grep -q "ERROR\|MISSING" && echo "FAIL" || echo "OK"
-done | sort | uniq -c
+# vb6-sample 快速重測（用 tree-sitter binary，比 npx 快 4 倍）
+find test/vb6-sample -name "*.cls" -o -name "*.bas" | sort | while read f; do
+  result=$(tree-sitter parse "$f" 2>/dev/null | grep -m1 "ERROR\|MISSING")
+  if [ -n "$result" ]; then
+    row=$(echo "$result" | grep -oP '\[(\d+),' | head -1 | tr -dc '0-9')
+    src=$(sed -n "$((row+1))p" "$f" 2>/dev/null)
+    printf 'FAIL|%s|%s|%s\n' "$f" "$result" "$src"
+  else
+    printf 'OK|%s||\n' "$f"
+  fi
+done > test/vb6-errors.tsv
+
+awk -F'|' '$1=="FAIL"{c++} $1=="OK"{ok++} END{print "FAIL:"c, "OK:"ok}' test/vb6-errors.tsv
 
 # commit
-git add -A && git commit -m "fix(grammar): ..."
+git add grammar.js src/ test/corpus/ test/vb6-errors.tsv && git commit -m "fix(grammar): ..."
 ```
 
-## 注意事項
+---
 
-- `npx tree-sitter generate` 只要出現 `Unresolved conflict` 就不能繼續，必須在 `conflicts` array 加入對應的衝突宣告
-- `Warning: unnecessary conflicts` 可以忽略
-- 每次修完都要跑 `npx tree-sitter test` 確保 90 個 corpus test 全部通過
-- corpus test 失敗通常是因為 AST 結構改變，需要同步更新 `test/corpus/*.txt` 的期望輸出
-- 期望輸出的括號數容易數錯，用 `printf '...' | npx tree-sitter parse /dev/stdin` 看實際 AST 再對齊
+## 已知失敗（不計入通過率）
+
+### vb6-sample：3 個檔案
+位於 `test/vb6-sample/[Include]/HardcodeVB/Components/`（ComCtl.cls、Settings.cls、WinTool.cls）。
+
+Pattern：`#If … Then / Sub name(sig1) / #Else / Sub name(sig2) / #End If / 共用 body / End Sub`
+
+Sub signature 被 `#If` 切開，需要 grammar 跨 compiler-directive 邊界解析 sub_declaration，結構上很難支援。
+
+### proleap：5 個檔案
+- `DoLoop.cls` ×2：VBA 專屬語法（`f(x).Method` chain + 具名引數 `key1:=val`）
+- `MyClassArray.cls`：`f(x).Method args`（known limitation）
+- `SavePicture.cls`：`Circle` 圖形語句
+- `InvalidKeyword.cls`：刻意使用非法 keyword，測試 error recovery 用
+
+---
+
+## 已知語法限制
+
+- `Circle (x,y), r, color` — 特殊座標語法，需專用 rule（低優先）
+- `f(x).Method args` — 在 function/index 結果上呼叫方法，無 `Call` 關鍵字；GLR 無法穩定偏好 member_access 路徑
+- 數字行號前綴（`100 GoTo 200`）— BASIC 式行號，尚未支援
+- VB6 keywords 不會被 syntax highlight — `kw()` 產生 case-insensitive regex，tree-sitter query 無法用字串匹配
+
+---
+
+## 待改進（grammar 優雅性）
+
+### A. 格式化超長單行 rule（低風險）
+
+下列 rule 塞在單行，難以維護，應拆成多行：
+
+```
+open_statement     — 約 140 字元，Access/Lock/Len 子句全擠在一起
+do_loop_statement  — 三個 choice 各一行，每行超長
+mid_statement      — Mid/MidB/Mid$/MidB$ 加賦值全在一行
+lock_statement     — optional 嵌套複雜
+unlock_statement   — 同上
+on_error_statement — 多個 choice 混在 choice() 裡
+```
+
+純格式改動，不影響行為，改完只需確認 `npx tree-sitter generate` 無報錯。
+
+### B. 刪掉 unnecessary conflicts（清理雜訊）
+
+`npx tree-sitter generate` 目前警告以下 4 個 unnecessary conflicts：
+
+```js
+[$.expression, $.case_condition]
+[$.index_expression, $.call_statement]
+[$.print_statement, $.output_item]
+[$.call_statement, $.label_statement]
+```
+
+從 `conflicts` 陣列刪掉後跑 `npx tree-sitter test`，若 90/90 通過即可 commit。
+保留沒有害，但會讓 conflicts 清單失去信號價值（看不出哪些是真正必要的）。
+
+### C. `module_options` 試合併 `option_statement`（中等風險）
+
+目前 `module_options`（第 176 行）把所有 option 的 choice 手寫一遍，
+和 `option_statement`（第 794 行）完全重複。
+
+嘗試改成：
+```js
+module_options: $ => repeat1(choice($.option_statement, $._newline)),
+```
+
+可能新增一個 conflict（`$.module_options` 或 `$.module_body` 相關），加進 `conflicts` 即可。
+若 generate 成功且 90/90 + 781/784 + 191/196 全部通過，則是淨收益。
+若 generate 卡 Unresolved conflict 且無法解決，revert。
+
+---
+
+## 重要設計決策（不要改）
+
+- `indexed_assignment_statement` + `array_copy_statement`：arr(i,j)=val 和 arr()=val 的 workaround，不要合併進 assignment_statement，GLR 會衝突
+- `_ambiguous_identifier` 的 keyword alias 清單：每次 keyword-as-identifier 問題就加一條，沒有更好的辦法
+- `line_draw_statement` 獨立 rule：`obj.Line (x,y)-(x,y)` 語法太特殊，必須獨立
+- conflicts 數量（29 條）：VB6 語法本身高度模糊，這個數量合理
