@@ -92,6 +92,7 @@ vim.filetype.add({
 - Statements: assignment, `Let`, `Set`, `Call`, `ReDim`, `If`/`ElseIf`/`Else`, `Select Case`, `For`/`For Each`, `While`/`Wend`, `Do`/`Loop`, `With`, `GoTo`, `GoSub`, `On Error` (including `On Local Error`), `Resume`, all file I/O statements
 - Dot-prefix member access inside `With` blocks (`.Property = value`)
 - `Me` keyword, dotted type names (e.g. `VB.CommandButton`), `On Local Error GoTo`
+- `Option` directives parsed as `option_statement` nodes (queryable in tree-sitter queries)
 
 ## Test status
 
@@ -103,28 +104,7 @@ vim.filetype.add({
 
 `test/vb6-sample/` contains 784 `.cls` and `.bas` files sourced from the [badcodes/vb6](https://github.com/badcodes/vb6) open-source VB6 repository. A small number of files with non-standard or illegal syntax were removed from the original set.
 
-Parse results are cached in `test/vb6-errors.tsv` (format: `FAIL|filepath|error_node|source_line` or `OK|filepath||`).
-
-Rebuild the cache after grammar changes:
-
-```bash
-find test/vb6-sample -name "*.cls" -o -name "*.bas" | sort | while read f; do
-  first=$(tree-sitter parse "$f" 2>/dev/null | grep -m1 "ERROR\|MISSING")
-  if [ -n "$first" ]; then
-    row=$(echo "$first" | grep -oP '\[(\d+),' | head -1 | tr -dc '0-9')
-    src=$(sed -n "$((row+1))p" "$f" 2>/dev/null)
-    printf 'FAIL|%s|%s|%s\n' "$f" "$first" "$src"
-  else
-    printf 'OK|%s||\n' "$f"
-  fi
-done > test/vb6-errors.tsv
-```
-
-Summarise results from the cache (no re-parsing needed):
-
-```bash
-awk -F'|' '$1=="FAIL"{c++} $1=="OK"{ok++} END{print "FAIL:"c, "OK:"ok}' test/vb6-errors.tsv
-```
+Parse results are cached in `test/vb6-errors.tsv` (format: `FAIL|filepath|error_node|source_line` or `OK|filepath||`). See the Development section above for commands to rebuild the cache.
 
 ### Known failures (3 files)
 
@@ -152,8 +132,31 @@ The 5 remaining proleap failures are intentional or known limitations: 2× `DoLo
 
 ```bash
 npm install
-npx tree-sitter generate
-npx tree-sitter test
+npx tree-sitter generate        # must complete with no Unresolved conflicts
+npx tree-sitter test            # must be 90/90
+```
+
+Run the real-world test suites after grammar changes:
+
+```bash
+# vb6-sample (784 files, target: 781/784)
+find test/vb6-sample -name "*.cls" -o -name "*.bas" | sort | while read f; do
+  result=$(tree-sitter parse "$f" 2>/dev/null | grep -m1 "ERROR\|MISSING")
+  if [ -n "$result" ]; then
+    row=$(echo "$result" | grep -oP '\[(\d+),' | head -1 | tr -dc '0-9')
+    src=$(sed -n "$((row+1))p" "$f" 2>/dev/null)
+    printf 'FAIL|%s|%s|%s\n' "$f" "$result" "$src"
+  else
+    printf 'OK|%s||\n' "$f"
+  fi
+done > test/vb6-errors.tsv
+awk -F'|' '$1=="FAIL"{c++} $1=="OK"{ok++} END{print "FAIL:"c, "OK:"ok}' test/vb6-errors.tsv
+
+# proleap (196 files, target: 191/196)
+find test/proleap -name "*.cls" -o -name "*.bas" | sort | while read f; do
+  result=$(tree-sitter parse "$f" 2>/dev/null | grep -m1 "ERROR\|MISSING")
+  if [ -n "$result" ]; then printf 'FAIL|%s\n' "$f"; else printf 'OK|%s\n' "$f"; fi
+done | awk -F'|' '$1=="FAIL"{c++} $1=="OK"{ok++} END{print "FAIL:"c, "OK:"ok}'
 ```
 
 ## References
