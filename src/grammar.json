@@ -456,124 +456,8 @@
         "type": "CHOICE",
         "members": [
           {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SEQ",
-                    "members": [
-                      {
-                        "type": "TOKEN",
-                        "content": {
-                          "type": "PATTERN",
-                          "value": "[oO][pP][tT][iI][oO][nN]"
-                        }
-                      },
-                      {
-                        "type": "TOKEN",
-                        "content": {
-                          "type": "PATTERN",
-                          "value": "[eE][xX][pP][lL][iI][cC][iI][tT]"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "type": "SEQ",
-                    "members": [
-                      {
-                        "type": "TOKEN",
-                        "content": {
-                          "type": "PATTERN",
-                          "value": "[oO][pP][tT][iI][oO][nN]"
-                        }
-                      },
-                      {
-                        "type": "TOKEN",
-                        "content": {
-                          "type": "PATTERN",
-                          "value": "[bB][aA][sS][eE]"
-                        }
-                      },
-                      {
-                        "type": "PATTERN",
-                        "value": "[01]"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "SEQ",
-                    "members": [
-                      {
-                        "type": "TOKEN",
-                        "content": {
-                          "type": "PATTERN",
-                          "value": "[oO][pP][tT][iI][oO][nN]"
-                        }
-                      },
-                      {
-                        "type": "TOKEN",
-                        "content": {
-                          "type": "PATTERN",
-                          "value": "[cC][oO][mM][pP][aA][rR][eE]"
-                        }
-                      },
-                      {
-                        "type": "CHOICE",
-                        "members": [
-                          {
-                            "type": "TOKEN",
-                            "content": {
-                              "type": "PATTERN",
-                              "value": "[bB][iI][nN][aA][rR][yY]"
-                            }
-                          },
-                          {
-                            "type": "TOKEN",
-                            "content": {
-                              "type": "PATTERN",
-                              "value": "[tT][eE][xX][tT]"
-                            }
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "SEQ",
-                    "members": [
-                      {
-                        "type": "TOKEN",
-                        "content": {
-                          "type": "PATTERN",
-                          "value": "[oO][pP][tT][iI][oO][nN]"
-                        }
-                      },
-                      {
-                        "type": "TOKEN",
-                        "content": {
-                          "type": "PATTERN",
-                          "value": "[pP][rR][iI][vV][aA][tT][eE]"
-                        }
-                      },
-                      {
-                        "type": "TOKEN",
-                        "content": {
-                          "type": "PATTERN",
-                          "value": "[mM][oO][dD][uU][lL][eE]"
-                        }
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_terminator"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "option_statement"
           },
           {
             "type": "SYMBOL",
@@ -9373,10 +9257,6 @@
       "label_statement"
     ],
     [
-      "call_statement",
-      "label_statement"
-    ],
-    [
       "sub_declaration",
       "dim_statement"
     ],
@@ -9405,20 +9285,12 @@
       "on_error_statement"
     ],
     [
-      "print_statement",
-      "output_item"
-    ],
-    [
       "label_statement",
       "_terminator"
     ],
     [
       "inline_if_statement",
       "block_if_statement"
-    ],
-    [
-      "case_condition",
-      "expression"
     ],
     [
       "expression",
@@ -9481,10 +9353,6 @@
     [
       "line_input_statement",
       "_ambiguous_identifier"
-    ],
-    [
-      "call_statement",
-      "index_expression"
     ],
     [
       "load_statement",

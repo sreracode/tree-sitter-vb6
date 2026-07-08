@@ -34,7 +34,8 @@ Option Explicit
 --------------------------------------------------------------------------------
 
 (source_file
-  (module_options))
+  (module_options
+    (option_statement)))
 
 ================================================================================
 Combined module header and options
@@ -54,7 +55,8 @@ Option Explicit
       (identifier))
     (literal
       (string_literal)))
-  (module_options))
+  (module_options
+    (option_statement)))
 
 ================================================================================
 Attribute with multi-value (comma-separated)
