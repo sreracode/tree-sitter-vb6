@@ -1,0 +1,87 @@
+================================================================================
+BeginProperty block without GUID (Font)
+================================================================================
+
+Begin VB.TextBox Text1
+   BeginProperty Font
+      Name            =   "Courier New"
+      Size            =   9
+   EndProperty
+End
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (form_block
+    type: (dotted_name
+      (identifier)
+      (identifier))
+    name: (identifier)
+    (property_block
+      name: (identifier)
+      (form_property
+        name: (identifier)
+        value: (literal
+          (string_literal)))
+      (form_property
+        name: (identifier)
+        value: (literal
+          (integer_literal))))))
+
+================================================================================
+BeginProperty block with indexed name and GUID (ListView ColumnHeader)
+================================================================================
+
+Begin MSComctlLib.ListView ListView1
+   BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628}
+      Key             =   "title"
+      Text            =   "Title"
+   EndProperty
+End
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (form_block
+    type: (dotted_name
+      (identifier)
+      (identifier))
+    name: (identifier)
+    (property_block
+      name: (identifier)
+      (integer_literal)
+      guid: (guid_literal)
+      (form_property
+        name: (identifier)
+        value: (literal
+          (string_literal)))
+      (form_property
+        name: (identifier)
+        value: (literal
+          (string_literal))))))
+
+================================================================================
+BeginProperty block with GUID, no index (Font on ActiveX control)
+================================================================================
+
+Begin ComctlLib.TreeView tv1
+   BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851}
+      Name            =   "MS Sans Serif"
+   EndProperty
+End
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (form_block
+    type: (dotted_name
+      (identifier)
+      (identifier))
+    name: (identifier)
+    (property_block
+      name: (identifier)
+      guid: (guid_literal)
+      (form_property
+        name: (identifier)
+        value: (literal
+          (string_literal))))))

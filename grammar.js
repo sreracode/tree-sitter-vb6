@@ -138,7 +138,7 @@ module.exports = grammar({
       field('type', $.dotted_name),
       field('name', $._ambiguous_identifier),
       $._terminator,
-      repeat(choice($.form_property, $.form_block, $._newline)),
+      repeat(choice($.form_property, $.form_block, $.property_block, $._newline)),
       kw('End'),
       $._terminator,
     ),
@@ -150,6 +150,21 @@ module.exports = grammar({
       field('value', choice($.frx_reference, $.literal)),
       $._terminator,
     ),
+
+    property_block: $ => seq(
+      kw('BeginProperty'),
+      field('name', $._ambiguous_identifier),
+      optional(seq('(', $.integer_literal, ')')),
+      optional(field('guid', $.guid_literal)),
+      $._terminator,
+      repeat(choice($.form_property, $.property_block, $._newline)),
+      kw('EndProperty'),
+      $._terminator,
+    ),
+
+    guid_literal: $ => token(seq(
+      '{', /[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}/, '}',
+    )),
 
     frx_reference: $ => token(seq('"', /[^"\r\n]*/, '"', ':', /[0-9A-Fa-f]+/)),
 

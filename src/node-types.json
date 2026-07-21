@@ -1336,6 +1336,10 @@
         {
           "type": "form_property",
           "named": true
+        },
+        {
+          "type": "property_block",
+          "named": true
         }
       ]
     }
@@ -2530,6 +2534,50 @@
         },
         {
           "type": "output_list",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "property_block",
+    "named": true,
+    "fields": {
+      "guid": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "guid_literal",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "form_property",
+          "named": true
+        },
+        {
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "property_block",
           "named": true
         }
       ]
@@ -3890,6 +3938,10 @@
     "named": false
   },
   {
+    "type": "beginproperty",
+    "named": false
+  },
+  {
     "type": "binary",
     "named": false
   },
@@ -4054,6 +4106,10 @@
     "named": false
   },
   {
+    "type": "endproperty",
+    "named": false
+  },
+  {
     "type": "enum",
     "named": false
   },
@@ -4116,6 +4172,10 @@
   {
     "type": "goto",
     "named": false
+  },
+  {
+    "type": "guid_literal",
+    "named": true
   },
   {
     "type": "identifier",
