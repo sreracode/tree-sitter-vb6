@@ -372,6 +372,10 @@
               },
               {
                 "type": "SYMBOL",
+                "name": "shortcut_literal"
+              },
+              {
+                "type": "SYMBOL",
                 "name": "literal"
               }
             ]
@@ -533,6 +537,22 @@
           {
             "type": "PATTERN",
             "value": "[0-9A-Fa-f]+"
+          }
+        ]
+      }
+    },
+    "shortcut_literal": {
+      "type": "TOKEN",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "^"
+          },
+          {
+            "type": "PATTERN",
+            "value": "[A-Za-z0-9]"
           }
         ]
       }
@@ -1807,6 +1827,10 @@
         {
           "type": "SYMBOL",
           "name": "line_draw_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "dangling_continuation"
         }
       ]
     },
@@ -1870,6 +1894,67 @@
         {
           "type": "SYMBOL",
           "name": "expression"
+        }
+      ]
+    },
+    "dangling_continuation": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "TOKEN",
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[&+][^\\r\\n]*"
+                }
+              },
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "string_literal"
+                  },
+                  {
+                    "type": "TOKEN",
+                    "content": {
+                      "type": "PATTERN",
+                      "value": "[^\\r\\n]*"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_ambiguous_identifier"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": ","
+                  },
+                  {
+                    "type": "TOKEN",
+                    "content": {
+                      "type": "PATTERN",
+                      "value": "[^\\r\\n]*"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_terminator"
         }
       ]
     },
@@ -5666,8 +5751,17 @@
           "type": "FIELD",
           "name": "label",
           "content": {
-            "type": "SYMBOL",
-            "name": "_ambiguous_identifier"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_ambiguous_identifier"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "integer_literal"
+              }
+            ]
           }
         },
         {
@@ -5695,8 +5789,17 @@
           "type": "FIELD",
           "name": "label",
           "content": {
-            "type": "SYMBOL",
-            "name": "_ambiguous_identifier"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_ambiguous_identifier"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "integer_literal"
+              }
+            ]
           }
         },
         {
@@ -6115,8 +6218,17 @@
           "type": "FIELD",
           "name": "name",
           "content": {
-            "type": "SYMBOL",
-            "name": "_ambiguous_identifier"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_ambiguous_identifier"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "integer_literal"
+              }
+            ]
           }
         },
         {
@@ -10961,6 +11073,10 @@
     [
       "label_statement",
       "_terminator"
+    ],
+    [
+      "label_statement",
+      "literal"
     ],
     [
       "inline_if_statement",

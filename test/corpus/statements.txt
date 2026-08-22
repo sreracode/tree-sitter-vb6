@@ -1592,3 +1592,89 @@ End Sub
           value: (expression
             (literal
               (integer_literal))))))))
+
+================================================================================
+Menu shortcut literal in form property
+================================================================================
+
+Begin VB.Menu mnU
+    Caption = "Tarif"
+    Shortcut = ^T
+End
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (form_block
+    type: (dotted_name
+      (identifier)
+      (identifier))
+    name: (identifier)
+    (form_property
+      name: (identifier)
+      value: (literal
+        (string_literal)))
+    (form_property
+      name: (identifier)
+      value: (shortcut_literal))))
+
+================================================================================
+Numeric label
+================================================================================
+
+Sub Main()
+1:
+    x = 1
+    GoTo 1
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (label_statement
+            name: (integer_literal)))
+        (statement
+          (assignment_statement
+            target: (identifier)
+            value: (expression
+              (literal
+                (integer_literal)))))
+        (statement
+          (goto_statement
+            label: (integer_literal)))))))
+
+================================================================================
+Dangling continuation recovery (commented-out multi-line call)
+================================================================================
+
+Sub Main()
+'   MsgBox "Error: " & Err.Number & vbCrLf & _
+           "Pastikan:" & vbCrLf & _
+           "1. NodeMCU terhubung", _
+           vbCritical, "Error Port COM"
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      (comment)
+      body: (block
+        (statement
+          (dangling_continuation
+            value: (string_literal)))
+        (statement
+          (dangling_continuation
+            value: (string_literal)))
+        (statement
+          (dangling_continuation
+            value: (identifier)))))))

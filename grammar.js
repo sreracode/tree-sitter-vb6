@@ -52,6 +52,8 @@ module.exports = grammar({
     [$.statement, $.on_error_statement],
     // label_statement: identifier ':' vs identifier followed by ':' as terminator
     [$.label_statement, $._terminator],
+    // numeric label: integer_literal ':' vs integer_literal as expression terminator
+    [$.label_statement, $.literal],
     // inline_if vs block_if: 'If expr Then' could start either
     [$.inline_if_statement, $.block_if_statement],
     // new_expression vs expression ambiguity in with_statement (With New ...)
@@ -147,7 +149,7 @@ module.exports = grammar({
       field('name', $._left_hand_side),
       '=',
       optional('-'),
-      field('value', choice($.frx_reference, $.literal)),
+      field('value', choice($.frx_reference, $.shortcut_literal, $.literal)),
       $._terminator,
     ),
 
@@ -167,6 +169,9 @@ module.exports = grammar({
     )),
 
     frx_reference: $ => token(seq('"', /[^"\r\n]*/, '"', ':', /[0-9A-Fa-f]+/)),
+
+    // Menu shortcut keys in .frm files: Shortcut = ^U, ^T, etc.
+    shortcut_literal: $ => token(seq('^', /[A-Za-z0-9]/)),
 
     attribute_statement: $ => seq(
       kw('Attribute'),
@@ -331,12 +336,28 @@ module.exports = grammar({
       $.error_statement,
       $.reset_statement,
       $.line_draw_statement,
+      $.dangling_continuation,
     ),
 
     subscripts: $ => commaSep1($.subscript),
     subscript: $ => seq(
       optional(seq($.expression, kw('To'))),
       $.expression,
+    ),
+
+    // Recovery: partially commented-out multi-line expressions leave
+    // continuation lines dangling. VB6 compiles these as comments, so
+    // treat the leftover as a comment-like node. Shapes:
+    //   "    & \"...\" _"              (leading operator)
+    //   "    \"...\" & ... _"          (leading string literal)
+    //   "    vbCritical, \"...\""      (orphaned call arguments)
+    dangling_continuation: $ => seq(
+      field('value', choice(
+        token(/[&+][^\r\n]*/),
+        seq($.string_literal, token(/[^\r\n]*/)),
+        seq($._ambiguous_identifier, ',', token(/[^\r\n]*/)),
+      )),
+      $._terminator,
     ),
 
     // ── Full expression hierarchy ──
@@ -727,8 +748,8 @@ module.exports = grammar({
       kw('End'), kw('With'),
       $._terminator,
     ),
-    goto_statement: $ => seq(kw('GoTo'), field('label', $._ambiguous_identifier), $._terminator),
-    gosub_statement: $ => seq(kw('GoSub'), field('label', $._ambiguous_identifier), $._terminator),
+    goto_statement: $ => seq(kw('GoTo'), field('label', choice($._ambiguous_identifier, $.integer_literal)), $._terminator),
+    gosub_statement: $ => seq(kw('GoSub'), field('label', choice($._ambiguous_identifier, $.integer_literal)), $._terminator),
     return_statement: $ => seq(kw('Return'), $._terminator),
     on_error_statement: $ => choice(
       seq(kw('On'), optional(kw('Local')), kw('Error'), kw('GoTo'),
@@ -744,7 +765,7 @@ module.exports = grammar({
     on_goto_statement: $ => seq(kw('On'), $.expression, kw('GoTo'), commaSep1($._ambiguous_identifier), $._terminator),
     on_gosub_statement: $ => seq(kw('On'), $.expression, kw('GoSub'), commaSep1($._ambiguous_identifier), $._terminator),
     resume_statement: $ => seq(kw('Resume'), optional(choice(kw('Next'), $._ambiguous_identifier)), $._terminator),
-    label_statement: $ => seq(field('name', $._ambiguous_identifier), ':', $._terminator),
+    label_statement: $ => seq(field('name', choice($._ambiguous_identifier, $.integer_literal)), ':', $._terminator),
     mid_statement: $ => prec(2, seq(
       choice(kw('Mid'), kw('MidB'), /Mid\$/, /MidB\$/),
       '(', $.expression, ',', $.expression, optional(seq(',', $.expression)), ')',
