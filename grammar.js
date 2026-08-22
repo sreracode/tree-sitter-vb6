@@ -349,6 +349,7 @@ module.exports = grammar({
       $.unary_expression,
       $.binary_expression,
       $.member_access_expression,
+      $.bang_expression,
       $.with_member_access_expression,
       $.index_expression,
       $.call_expression,
@@ -415,6 +416,13 @@ module.exports = grammar({
       field('name', $._ambiguous_identifier),
     )),
 
+    // Bang operator: Rs!field — VB6 recordset field access (ADO idiom)
+    bang_expression: $ => prec.left(10, seq(
+      field('object', $.expression),
+      '!',
+      field('name', $._ambiguous_identifier),
+    )),
+
     index_expression: $ => prec(9, seq(
       field('object', $.expression),
       '(',
@@ -445,6 +453,7 @@ module.exports = grammar({
 
     _left_hand_side: $ => choice(
       $.member_access_expression,
+      $.bang_expression,
       $.with_member_access_expression,
       $.index_expression,
       $._ambiguous_identifier,
@@ -1065,7 +1074,7 @@ module.exports = grammar({
     ),
 
     identifier: $ => token(choice(
-      /[A-Za-z_][A-Za-z_0-9]*[$%&!#@]?/,
+      /[A-Za-z_][A-Za-z_0-9]*[$%&#@]?/,
       seq('[', /[^\]\r\n]+/, ']'),
     )),
 

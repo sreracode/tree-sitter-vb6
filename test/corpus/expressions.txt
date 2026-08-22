@@ -310,3 +310,56 @@ End Sub
             value: (expression
               (literal
                 (string_literal)))))))))
+
+================================================================================
+Bang operator (recordset field access)
+================================================================================
+
+Sub Main()
+    Set x = Rs!field
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (set_statement
+            target: (identifier)
+            value: (expression
+              (bang_expression
+                object: (expression
+                  (identifier))
+                name: (identifier)))))))))
+
+================================================================================
+Bang operator with member access object
+================================================================================
+
+Sub Main()
+    x = Rs.Fields!tgl
+End Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (module_body
+    (sub_declaration
+      name: (identifier)
+      parameters: (parameter_list)
+      body: (block
+        (statement
+          (assignment_statement
+            target: (identifier)
+            value: (expression
+              (bang_expression
+                object: (expression
+                  (member_access_expression
+                    object: (expression
+                      (identifier))
+                    name: (identifier)))
+                name: (identifier)))))))))
