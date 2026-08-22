@@ -56,6 +56,8 @@ module.exports = grammar({
     [$.label_statement, $.literal],
     // inline_if vs block_if: 'If expr Then' could start either
     [$.inline_if_statement, $.block_if_statement],
+    // inline_if colon-separated statements vs ':' as terminator
+    [$.inline_if_statement, $._terminator],
     // new_expression vs expression ambiguity in with_statement (With New ...)
     [$.expression, $.new_expression],
     // inline_statement has member_access_expression overlapping with expression
@@ -110,6 +112,15 @@ module.exports = grammar({
       optional($.module_config),
     ),
 
+    object_declaration: $ => seq(
+      kw('Object'),
+      '=',
+      $.string_literal,
+      ';',
+      $.string_literal,
+      $._terminator,
+    ),
+
     module_config: $ => seq(
       kw('BEGIN'),
       $._terminator,
@@ -123,15 +134,6 @@ module.exports = grammar({
       '=',
       optional('-'),
       field('value', $.literal),
-      $._terminator,
-    ),
-
-    object_declaration: $ => seq(
-      kw('Object'),
-      '=',
-      $.string_literal,
-      ';',
-      $.string_literal,
       $._terminator,
     ),
 
@@ -351,14 +353,25 @@ module.exports = grammar({
     //   "    & \"...\" _"              (leading operator)
     //   "    \"...\" & ... _"          (leading string literal)
     //   "    vbCritical, \"...\""      (orphaned call arguments)
-    dangling_continuation: $ => seq(
+    //   "    ByVal hwnd As Long, _"    (declare params, ends with _)
+    //   "    IIf(harike = 5, ..."       (commented-out IIf continuation)
+    //   "    vkduser & _"               (identifier + & continuation)
+    //   "    vrupiah(...) & ..."        (call expr continuation)
+    //   "    * vnilai1 * ..."           (leading * continuation)
+    dangling_continuation: $ => prec(1, seq(
       field('value', choice(
+        token(/(ByVal|ByRef|Optional|ParamArray)[^\r\n]*/),
         token(/[&+][^\r\n]*/),
         seq($.string_literal, token(/[^\r\n]*/)),
         seq($._ambiguous_identifier, ',', token(/[^\r\n]*/)),
+        seq($._ambiguous_identifier, '(', token(/[^\r\n]*/)),
+        seq($._ambiguous_identifier, choice('&', '*'), token(/[^\r\n]*/)),
+        seq($.call_expression, token(/[^\r\n]*/)),
+        seq($.parenthesized_expression, token(/[^\r\n]*/)),
+        seq('*', token(/[^\r\n]*/)),
       )),
       $._terminator,
-    ),
+    )),
 
     // ── Full expression hierarchy ──
     expression: $ => choice(
@@ -437,11 +450,11 @@ module.exports = grammar({
       field('name', $._ambiguous_identifier),
     )),
 
-    // Bang operator: Rs!field — VB6 recordset field access (ADO idiom)
-    bang_expression: $ => prec.left(10, seq(
-      field('object', $.expression),
-      '!',
-      field('name', $._ambiguous_identifier),
+    // Bang operator: Rs!field — VB6 recordset field access (ADO idiom).
+    // Bare form "!field" (no object) is legal inside With blocks.
+    bang_expression: $ => prec.left(10, choice(
+      seq(field('object', $.expression), '!', field('name', $._ambiguous_identifier)),
+      seq('!', field('name', $._ambiguous_identifier)),
     )),
 
     index_expression: $ => prec(9, seq(
@@ -602,7 +615,8 @@ module.exports = grammar({
       field('condition', $.expression),
       kw('Then'),
       field('consequence', $.inline_statement),
-      optional(seq(kw('Else'), field('alternative', $.inline_statement))),
+      repeat(seq(':', $.inline_statement)),
+      optional(seq(kw('Else'), field('alternative', $.inline_statement), repeat(seq(':', $.inline_statement)))),
       $._terminator,
     )),
 
@@ -610,8 +624,8 @@ module.exports = grammar({
     inline_statement: $ => choice(
       // Nested inline if: no terminator (the outer inline_if_statement provides it)
       prec.right(2, seq(kw('If'), field('condition', $.expression), kw('Then'), field('consequence', $.inline_statement), optional(seq(kw('Else'), field('alternative', $.inline_statement))))),
-      seq(kw('GoTo'), field('label', $._ambiguous_identifier)),
-      seq(kw('GoSub'), field('label', $._ambiguous_identifier)),
+      seq(kw('GoTo'), field('label', choice($._ambiguous_identifier, $.integer_literal))),
+      seq(kw('GoSub'), field('label', choice($._ambiguous_identifier, $.integer_literal))),
       seq(kw('Return')),
       seq(kw('Exit'), choice(kw('Sub'), kw('Function'), kw('Property'), kw('For'), kw('Do'))),
       seq(kw('Resume'), optional(choice(kw('Next'), $._ambiguous_identifier))),
@@ -753,7 +767,7 @@ module.exports = grammar({
     return_statement: $ => seq(kw('Return'), $._terminator),
     on_error_statement: $ => choice(
       seq(kw('On'), optional(kw('Local')), kw('Error'), kw('GoTo'),
-        field('label', $._ambiguous_identifier), $._terminator),
+        field('label', choice($._ambiguous_identifier, $.integer_literal)), $._terminator),
       $.on_error_resume_next_statement,
       seq(kw('On'), optional(kw('Local')), kw('Error'), kw('GoTo'), '0', $._terminator),
     ),
@@ -819,7 +833,7 @@ module.exports = grammar({
     get_statement: $ => seq(kw('Get'), optional('#'), $.expression, ',', optional($.expression), ',', field('variable', $.expression), $._terminator),
     put_statement: $ => seq(kw('Put'), optional('#'), $.expression, ',', optional($.expression), ',', field('data', $.expression), $._terminator),
     seek_statement: $ => seq(kw('Seek'), optional('#'), $.expression, ',', field('position', $.expression), $._terminator),
-    beep_statement: $ => seq(kw('Beep'), $._terminator),
+    beep_statement: $ => seq(kw('Beep'), optional(seq(field('frequency', $.expression), ',', field('duration', $.expression))), $._terminator),
     stop_statement: $ => seq(kw('Stop'), $._terminator),
     end_statement: $ => seq(kw('End'), $._terminator),
     kill_statement: $ => seq(kw('Kill'), field('path', $.expression), $._terminator),
@@ -832,7 +846,7 @@ module.exports = grammar({
     date_statement: $ => prec(2, seq(kw('Date'), '=', field('value', $.expression), $._terminator)),
     time_statement: $ => prec(2, seq(kw('Time'), '=', field('value', $.expression), $._terminator)),
     load_statement: $ => seq(kw('Load'), field('object', $.expression), $._terminator),
-    unload_statement: $ => seq(kw('Unload'), field('object', $.expression), $._terminator),
+    unload_statement: $ => seq(kw('Unload'), optional(field('object', $.expression)), $._terminator),
     send_keys_statement: $ => seq(kw('SendKeys'), field('keys', $.expression), optional(seq(',', field('wait', $.expression))), $._terminator),
     app_activate_statement: $ => seq(kw('AppActivate'), field('title', $.expression), optional(seq(',', field('wait', $.expression))), $._terminator),
     save_setting_statement: $ => seq(kw('SaveSetting'), $.argument, ',', $.argument, ',', $.argument, optional(seq(',', $.argument)), $._terminator),
@@ -1021,12 +1035,12 @@ module.exports = grammar({
 
     dim_statement: $ => seq(
       choice(kw('Dim'), kw('Static'), kw('Public'), kw('Private')),
-      optional(kw('WithEvents')),
       commaSep1($.variable_declarator),
       $._terminator,
     ),
 
     variable_declarator: $ => seq(
+      optional(kw('WithEvents')),
       field('name', $._ambiguous_identifier),
       optional($.type_hint),
       optional(seq('(', optional($.subscripts), ')')),
