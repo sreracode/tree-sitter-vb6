@@ -534,7 +534,7 @@ module.exports = grammar({
     ),
 
     redim_declarator: $ => seq(
-      field('name', seq($._ambiguous_identifier, repeat(seq('.', $._ambiguous_identifier)))),
+      field('name', seq(optional('.'), $._ambiguous_identifier, repeat(seq('.', $._ambiguous_identifier)))),
       optional($.type_hint),
       '(',
       field('dimensions', $.subscripts),
@@ -909,6 +909,7 @@ module.exports = grammar({
     declare_declaration: $ => seq(
       optional($.visibility),
       kw('Declare'),
+      optional(kw('PtrSafe')),
       choice(kw('Function'), kw('Sub')),
       field('name', $._ambiguous_identifier),
       optional($.type_hint),

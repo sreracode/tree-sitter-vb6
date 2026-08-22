@@ -3354,6 +3354,18 @@
             "type": "SEQ",
             "members": [
               {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": "."
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              },
+              {
                 "type": "SYMBOL",
                 "name": "_ambiguous_identifier"
               },
@@ -9197,6 +9209,26 @@
           },
           "named": false,
           "value": "declare"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "TOKEN",
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[pP][tT][rR][sS][aA][fF][eE]"
+                }
+              },
+              "named": false,
+              "value": "ptrsafe"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "CHOICE",

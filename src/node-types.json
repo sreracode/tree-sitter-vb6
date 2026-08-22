@@ -4422,6 +4422,10 @@
     "named": false
   },
   {
+    "type": "ptrsafe",
+    "named": false
+  },
+  {
     "type": "public",
     "named": false
   },
